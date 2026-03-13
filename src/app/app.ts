@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ProductCard } from "./components/product-card/product-card";
+import { ProductCard } from "./shared/components/product-card/product-card";
 
 @Component({
   selector: 'app-root',
