@@ -5,14 +5,15 @@ import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 
 @Component({
-  selector: 'app-product-list',
+  selector: 'app-home',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './product-list.html',
+  templateUrl: './home.html',
 })
-export class ProductList implements OnInit {
+export class Home implements OnInit {
 
-  products: any[] = [];
+  featuredProducts: any[] = [];
+  categories: string[] = [];
 
   constructor(
     private productService: ProductService,
@@ -20,7 +21,10 @@ export class ProductList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.products = this.productService.getAll();
+    const products = this.productService.getAll();
+
+    this.featuredProducts = products.slice(0, 6);
+    this.categories = [...new Set(products.map(p => p.category))];
   }
 
   addToCart(product: any) {
