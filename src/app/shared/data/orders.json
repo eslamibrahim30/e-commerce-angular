@@ -1,0 +1,44 @@
+[
+  {
+    "id": "ord-1",
+    "userId": "user-1",
+    "date": "2023-10-15T10:30:00Z",
+    "status": "Delivered",
+    "total": 119.98,
+    "items": [
+      { "productId": "p-1", "quantity": 1, "price": 99.99 },
+      { "productId": "p-5", "quantity": 1, "price": 19.99 }
+    ]
+  },
+  {
+    "id": "ord-2",
+    "userId": "user-2",
+    "date": "2023-11-02T14:45:00Z",
+    "status": "Processing",
+    "total": 699.00,
+    "items": [
+      { "productId": "p-2", "quantity": 1, "price": 699.00 }
+    ]
+  },
+  {
+    "id": "ord-3",
+    "userId": "user-1",
+    "date": "2023-11-20T09:15:00Z",
+    "status": "Shipped",
+    "total": 45.00,
+    "items": [
+      { "productId": "p-9", "quantity": 1, "price": 45.00 }
+    ]
+  },
+  {
+    "id": "ord-4",
+    "userId": "user-3",
+    "date": "2023-12-05T16:20:00Z",
+    "status": "Pending",
+    "total": 155.00,
+    "items": [
+      { "productId": "p-7", "quantity": 1, "price": 120.00 },
+      { "productId": "p-15", "quantity": 1, "price": 35.00 }
+    ]
+  }
+]
