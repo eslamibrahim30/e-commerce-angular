@@ -1,0 +1,79 @@
+/* Container */
+.zora-select-wrapper {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* Label Style */
+.zora-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+/* Custom Select Style */
+.custom-zora-select {
+  appearance: none; /* يخفي السهم الافتراضي للمتصفح */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  height: 50px;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0 15px;
+  font-size: 1rem;
+  color: var(--text-main);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+/* Hover & Focus States */
+.custom-zora-select:hover {
+  border-color: var(--zora-teal);
+}
+
+.custom-zora-select:focus {
+  outline: none;
+  border-color: var(--zora-gold);
+  box-shadow: 0 0 0 4px var(--zora-teal-glow);
+  background-color: #fff;
+}
+
+/* Error State */
+.custom-zora-select.is-invalid {
+  border-color: #dc3545 !important;
+}
+
+.zora-error-msg {
+  color: #dc3545;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+}
+
+/* Custom Arrow Icon */
+.input-container {
+  position: relative;
+}
+
+.select-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* عشان ميعطلش الكليك على الـ select */
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Dark Mode Support */
+[data-theme='dark'] .custom-zora-select {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
