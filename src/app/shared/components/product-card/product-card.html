@@ -1,27 +1,26 @@
 <div class="card h-100 shadow-sm border-0 zora-product-card" appHoverGlow>
-  
+
   @if (product.oldPrice && product.oldPrice > product.price) {
-    <span class="badge-discount">
-      -{{ getDiscountPercentage() }}%
-    </span>
+  <span class="badge-discount">
+    -{{ getDiscountPercentage() }}%
+  </span>
   }
 
   <div class="image-container p-3">
-    <img [src]="product.image" [alt]="product.title" class="card-img-top img-fluid">
+    <img [src]="product.image" [alt]="product.name" class="card-img-top img-fluid">
   </div>
 
   <div class="card-body d-flex flex-column">
-    <small class="category-tag">{{ product.category }}</small>
-    <h5 class="card-title text-truncate">{{ product.title }}</h5>
-    
+    <h5 class="card-title text-truncate">{{ product.name }}</h5>
+
     <div class="mt-auto">
       <div class="price-wrapper d-flex align-items-center mb-3">
         <span class="current-price">{{ product.price | currency }}</span>
         @if (product.oldPrice) {
-          <del class="old-price ml-2">{{ product.oldPrice | currency }}</del>
+        <del class="old-price ml-2">{{ product.oldPrice | currency }}</del>
         }
       </div>
-      
+
       <button class="btn btn-zora-gold btn-block rounded-pill" (click)="onAdd()">
         Add to Cart
       </button>

@@ -1,9 +1,11 @@
 export interface Product {
-  id: number;
-  title: string;
+  id: string;
+  name: string;
   price: number;
+  oldPrice?: number;    // Optional: Only exists if the item is on sale
+  categoryId: string;
+  description: string;
   image: string;
-  category: string;
-  oldPrice?: number;
-  isFeatured?: boolean;
+  stock: number;
+  isFeatured?: boolean; // Optional: Defaults to undefined (falsy) if not set
 }
