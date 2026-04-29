@@ -1,6 +1,5 @@
 <div class="container mt-5" *ngIf="product">
   <div class="row">
-
     <div class="col-md-6">
       <img [src]="product.imageUrl" class="w-100 rounded shadow" />
     </div>
@@ -14,20 +13,21 @@
 
       <p>
         Stock:
-        <span class="fw-bold" [class.text-success]="product.stock > 0" [class.text-danger]="product.stock === 0">
+        <span
+          class="fw-bold"
+          [class.text-success]="product.stock > 0"
+          [class.text-danger]="product.stock === 0"
+        >
           {{ product.stock > 0 ? 'Available' : 'Out of Stock' }}
         </span>
       </p>
 
       <div class="mb-3">
         <label>Quantity:</label>
-        <input type="number" [(ngModel)]="qty" min="1" class="form-control w-25">
+        <input type="number" [(ngModel)]="qty" min="1" class="form-control w-25" />
       </div>
 
-      <button class="btn btn-success" (click)="addToCart()">
-        Add to Cart
-      </button>
+      <button class="btn btn-success" (click)="addToCart()">Add to Cart</button>
     </div>
-
   </div>
 </div>
