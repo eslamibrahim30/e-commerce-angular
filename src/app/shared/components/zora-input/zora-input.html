@@ -1,0 +1,18 @@
+<div class="form-group mb-3">
+  <label class="form-label font-weight-bold text-secondary">{{ label }}</label>
+  
+  <input 
+    [type]="type" 
+    [formControl]="$any(control)"
+    [class.is-invalid]="isInvalid"
+    class="form-control zora-form-control" 
+    [placeholder]="placeholder">
+
+  @if (isInvalid) {
+    <div class="invalid-feedback animate__animated animate__fadeIn">
+      @if (control?.errors?.['required']) { <span>{{ label }} مطلوب.</span> }
+      @if (control?.errors?.['email']) { <span>برجاء إدخال إيميل صحيح.</span> }
+      @if (control?.errors?.['minlength']) { <span>القيمة قصيرة جداً.</span> }
+    </div>
+  }
+</div>
