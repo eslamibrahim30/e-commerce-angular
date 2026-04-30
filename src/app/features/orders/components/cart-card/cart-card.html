@@ -1,0 +1,47 @@
+<div
+            class="flex gap-6 bg-white dark:bg-neutral-900 p-5 rounded-2xl shadow hover:shadow-lg transition"
+          >
+            <!-- Product Image -->
+            <img [src]="item().image" class="w-28 h-28 object-cover rounded-xl" />
+
+            <!-- Product Info -->
+            <div class="flex flex-col justify-between w-full">
+              <div class="flex justify-between">
+                <h3 class="font-semibold text-lg">
+                  {{ item().name }}
+                </h3>
+
+                <button
+                  class="text-red-500 hover:text-red-700 transition"
+                  (click)="removeItem(item().id)"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <p class="text-gray-500 dark:text-gray-400">${{ item().price }}</p>
+
+              <!-- Quantity -->
+              <div class="flex items-center gap-4 mt-2">
+                <button
+                  class="w-8 h-8 rounded-lg bg-gray-200 dark:bg-neutral-700 hover:scale-110 transition"
+                  (click)="decreaseQty(item().id)"
+                >
+                  −
+                </button>
+
+                <span class="font-medium">
+                  {{ item().quantity }}
+                </span>
+
+                <button
+                  class="w-8 h-8 rounded-lg bg-gray-200 dark:bg-neutral-700 hover:scale-110 transition"
+                  (click)="increaseQty(item().id)"
+                >
+                  +
+                </button>
+              </div>
+
+              <p class="font-semibold mt-2">Subtotal: ${{ item().price * item().quantity }}</p>
+            </div>
+          </div>

@@ -1,0 +1,62 @@
+<div class="lg:col-span-2 space-y-6">
+  <!-- Shipping Info -->
+  <div class="bg-white dark:bg-neutral-900 p-6 rounded-2xl shadow">
+    <h2 class="text-xl font-bold mb-6">Shipping Information</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input
+        placeholder="First Name"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+      />
+      <input
+        placeholder="Last Name"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+      />
+      <input
+        placeholder="Email Address"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37] md:col-span-2"
+      />
+      <input
+        placeholder="Phone Number"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37] md:col-span-2"
+      />
+      <input
+        placeholder="Street Address"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37] md:col-span-2"
+      />
+      <input
+        placeholder="City"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+      />
+      <input
+        placeholder="Postal Code"
+        class="w-full p-3 rounded-xl border border-gray-200 dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800 outline-none focus:ring-2 focus:ring-[#D4AF37]"
+      />
+    </div>
+  </div>
+
+  <!-- Payment -->
+  <div class="bg-white dark:bg-neutral-900 p-6 rounded-2xl shadow">
+    <h2 class="text-xl font-bold mb-6">Payment Method</h2>
+
+    <!-- Payment Options -->
+    <div class="grid gap-4">
+      <!-- Cash -->
+      <label
+        class="flex items-center gap-4 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 cursor-pointer hover:border-[#D4AF37] transition"
+      >
+        <input type="radio" name="payment" value="cod" (change)="paymentMethod = 'cod'" checked />
+
+        <div>
+          <p class="font-semibold">Cash on Delivery</p>
+          <p class="text-sm text-gray-500">Pay when your order arrives</p>
+        </div>
+      </label>
+
+
+    </div>
+
+    <!-- Card Details -->
+
+  </div>
+</div>
