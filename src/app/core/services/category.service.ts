@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { Category } from '../../shared/models/category.model';
 import categoriesData from '../../shared/data/categories.json';
 
@@ -8,6 +8,12 @@ import categoriesData from '../../shared/data/categories.json';
 export class CategoryService {
   private readonly STORAGE_KEY = 'categories_data';
 
+  /** Internal writable signal — single source of truth */
+  private _categories = signal<Category[]>(this.loadFromStorage());
+
+  /** Public readonly signal for consumers */
+  readonly categories = this._categories.asReadonly();
+
   constructor() {
     this.initData();
   }
@@ -15,39 +21,43 @@ export class CategoryService {
   private initData(): void {
     if (!localStorage.getItem(this.STORAGE_KEY)) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(categoriesData));
+      this._categories.set(categoriesData as Category[]);
     }
   }
 
-  getAll(): Category[] {
+  /**
+   * Looks up a single category by ID.
+   * Returns undefined if not found.
+   */
+  getById(id: string): Category | undefined {
+    return this._categories().find(c => c.id === id);
+  }
+
+  add(category: Category): void {
+    this._categories.update(cats => [...cats, category]);
+    this.persist();
+  }
+
+  update(id: string, categoryData: Partial<Category>): void {
+    this._categories.update(cats =>
+      cats.map(c => c.id === id ? { ...c, ...categoryData } : c)
+    );
+    this.persist();
+  }
+
+  delete(id: string): void {
+    this._categories.update(cats => cats.filter(c => c.id !== id));
+    this.persist();
+  }
+
+  /** Reads initial data from localStorage */
+  private loadFromStorage(): Category[] {
     const data = localStorage.getItem(this.STORAGE_KEY);
     return data ? JSON.parse(data) : [];
   }
 
-  getById(id: string): Category | undefined {
-    return this.getAll().find(c => c.id === id);
-  }
-
-  add(category: Category): void {
-    const categories = this.getAll();
-    categories.push(category);
-    this.save(categories);
-  }
-
-  update(id: string, categoryData: Partial<Category>): void {
-    const categories = this.getAll();
-    const index = categories.findIndex(c => c.id === id);
-    if (index !== -1) {
-      categories[index] = { ...categories[index], ...categoryData };
-      this.save(categories);
-    }
-  }
-
-  delete(id: string): void {
-    const categories = this.getAll().filter(c => c.id !== id);
-    this.save(categories);
-  }
-
-  private save(categories: Category[]): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(categories));
+  /** Syncs the current signal value to localStorage */
+  private persist(): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._categories()));
   }
 }
