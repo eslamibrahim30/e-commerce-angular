@@ -9,3 +9,7 @@ export interface Product {
   stock: number;
   isFeatured?: boolean; // Optional: Defaults to undefined (falsy) if not set
 }
+
+export interface ProductDisplay extends Product {
+  category: string; // Resolved category name from categoryId
+}

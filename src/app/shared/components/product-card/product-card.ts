@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Product } from '../../models/product.model';
-import { HoverGlowDirective } from '../../directives/hover-glow';
+import { HoverGlowDirective } from '../../directives/hover-glow/hover-glow';
 
 @Component({
   selector: 'app-product-card',
