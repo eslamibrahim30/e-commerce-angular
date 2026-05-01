@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { OrderSummary } from '../../../shared/components/order-summary/order-summary';
 import { CartService } from '../../../core/services/cart.service';
@@ -10,18 +10,11 @@ import { CartCard } from '../components/cart-card/cart-card';
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })
-export class Cart implements OnInit {
+export class Cart  {
   isLoading: WritableSignal<boolean> = signal(false);
-  cartItems: WritableSignal<ICart> = signal({
-      userId: '',
-      items: [],
-      totalPrice: 0,
-      totalQuantity: 0
-  });
-  constructor(private readonly cartService: CartService) {}
-  ngOnInit(): void {
-    this.cartItems.set(this.cartService.getCart());
-  }
+  private cartService=inject(CartService)
+  cartItems=this.cartService.cart
+
 
 
 
