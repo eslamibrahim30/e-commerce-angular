@@ -4,21 +4,24 @@ import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 
+import { ProductCard } from '../../../shared/components/product-card/product-card';
+
+import { ZoraModalComponent } from '../../../shared/components/zora-modal/zora-modal';
+
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProductCard, ZoraModalComponent],
   templateUrl: './home.html',
 })
 export class Home {
+  showModal = false;
 
   private productService = inject(ProductService);
   private cartService = inject(CartService);
 
-  /** First 6 products — reactively derived from the products signal */
   featuredProducts = computed(() => this.productService.products().slice(0, 6));
 
-  /** Unique category names — reactively derived from the products signal */
   categories = computed(() =>
     [...new Set(this.productService.products().map(p => p.category))]
   );
@@ -31,6 +34,6 @@ export class Home {
       image: product.imageUrl,
       quantity: 1
     });
-    alert('Added to cart ✅');
+    this.showModal = true;
   }
 }
