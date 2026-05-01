@@ -1,0 +1,20 @@
+.zora-form-control {
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+  background-color: var(--card-bg);
+  color: var(--text-main);
+}
+
+.zora-form-control:focus {
+  border-color: var(--zora-gold);
+  box-shadow: 0 0 0 4px var(--zora-teal-glow);
+  outline: none;
+}
+
+.invalid-feedback {
+  font-weight: 500;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}

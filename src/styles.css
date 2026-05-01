@@ -1,12 +1,9 @@
-/* --- ZORA BRAND VARIABLES --- */
 :root {
-  /* Brand Identity */
   --zora-gold: #D4AF37;
   --zora-gold-hover: #b8860b;
   --zora-teal: #0b7974;
   --zora-teal-glow: rgba(11, 121, 116, 0.4);
 
-  /* Default Light Mode */
   --bg-color: #FAFAFA;
   --card-bg: #FFFFFF;
   --text-main: #2D2D2D;
@@ -16,7 +13,6 @@
 }
 
 [data-theme='dark'] {
-  /* Dark Mode Overrides */
   --bg-color: #121212;
   --card-bg: #1E1E1E;
   --text-main: #E0E0E0;
@@ -25,7 +21,6 @@
   --border-color: #333333;
 }
 
-/* --- GLOBAL STYLES --- */
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
@@ -34,7 +29,6 @@ body {
   margin: 0;
 }
 
-/* Custom Bootstrap Button Overrides */
 .btn-primary {
   background-color: var(--zora-gold) !important;
   border-color: var(--zora-gold) !important;
@@ -62,4 +56,26 @@ body {
   border-radius: 12px;
   padding: 1.5rem;
   transition: transform 0.2s;
+}
+
+.btn-zora-gold {
+    background-color: var(--zora-gold) !important;
+    color: white !important; 
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-zora-gold:hover, 
+.btn-zora-gold:active, 
+.btn-zora-gold:focus,
+.btn-zora-gold:not(:disabled):not(.disabled):active {
+    background-color: #b8860b !important; 
+    color: white !important; 
+    box-shadow: 0 4px 12px var(--zora-teal-glow);
+    text-decoration: none;
+}
+
+.btn-zora-gold:disabled {
+    color: rgba(255, 255, 255, 0.8) !important;
+    cursor: not-allowed;
 }
