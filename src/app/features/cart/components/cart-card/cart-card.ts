@@ -1,6 +1,6 @@
 import { Component, input, InputSignal } from '@angular/core';
 import { ICart } from '../../../../shared/models/interfaces/cart';
-import { CartService } from '../../cart/services/cart-service';
+import { CartService } from '../../../orders/cart/services/cart-service';
 
 @Component({
   selector: 'app-cart-card',
