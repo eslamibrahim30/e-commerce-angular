@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-detail.html',
 })
 export class ProductDetail implements OnInit {
@@ -20,7 +20,7 @@ export class ProductDetail implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('productId')!;
@@ -32,7 +32,7 @@ export class ProductDetail implements OnInit {
       productId: this.product.id,
       name: this.product.name,
       price: this.product.price,
-      imageUrl: this.product.imageUrl,
+      image: this.product.imageUrl,
       quantity: this.qty
     });
 

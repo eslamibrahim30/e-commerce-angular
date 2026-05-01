@@ -18,7 +18,7 @@ export class Home implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const products = this.productService.getAll();
@@ -32,7 +32,7 @@ export class Home implements OnInit {
       productId: product.id,
       name: product.name,
       price: product.price,
-      imageUrl: product.imageUrl,
+      image: product.imageUrl,
       quantity: 1
     });
     alert('Added to cart ✅');
