@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
@@ -11,28 +11,29 @@ import { FormsModule } from '@angular/forms';
   imports: [CommonModule, FormsModule],
   templateUrl: './product-detail.html',
 })
-export class ProductDetail implements OnInit {
+export class ProductDetail {
 
-  product: any;
+  private route = inject(ActivatedRoute);
+  private productService = inject(ProductService);
+  private cartService = inject(CartService);
+
   qty: number = 1;
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService,
-    private cartService: CartService
-  ) { }
-
-  ngOnInit(): void {
+  /** Reactively look up the product from the signal by route param */
+  product = computed(() => {
     const id = this.route.snapshot.paramMap.get('productId')!;
-    this.product = this.productService.getById(id);
-  }
+    return this.productService.getById(id);
+  });
 
   addToCart() {
+    const p = this.product();
+    if (!p) return;
+
     this.cartService.add({
-      productId: this.product.id,
-      name: this.product.name,
-      price: this.product.price,
-      image: this.product.imageUrl,
+      productId: p.id,
+      name: p.name,
+      price: p.price,
+      image: p.image,
       quantity: this.qty
     });
 
