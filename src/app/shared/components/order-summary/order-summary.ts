@@ -1,6 +1,8 @@
 import { Component, signal, WritableSignal } from '@angular/core';
-import { ICart } from '../../models/interfaces/cart';
-import { CartService } from '../../../features/orders/cart/services/cart-service';
+
+import { CartService } from '../../../core/services/cart.service';
+import { Cart } from '../../models/cart.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',
@@ -9,14 +11,35 @@ import { CartService } from '../../../features/orders/cart/services/cart-service
   styleUrl: './order-summary.css',
 })
 export class OrderSummary {
-  cartItems: WritableSignal<ICart[]> = signal([]);
-  subtotal: WritableSignal<number> = signal(0);
-  constructor(private readonly cartService: CartService) {}
+  cartItems: WritableSignal<Cart> = signal({
+    userId: '',
+    items: [],
+    totalPrice: 0,
+    totalQuantity: 0,
+  });
+  loading = false;
+  isCartRoute = false;
+  constructor(
+
+    private readonly cartService: CartService,
+    private router: Router,
+  ) {}
   ngOnInit(): void {
-    this.cartService.cart$.subscribe({
-      next: (res) => this.cartItems.set(res),
-      error: (err) => console.log(err),
-    });
-    this.subtotal.set(this.cartService.subtotal);
+    this.cartItems.set(this.cartService.getCart());
+    this.isCartRoute = this.router.url.includes('cart');
+  }
+
+  handleOrder() {
+    this.loading = true;
+
+    setTimeout(() => {
+      if (this.isCartRoute) {
+        this.router.navigate(['/checkout']);
+      } else {
+        this.router.navigate(['/order-confirmation']);
+      }
+
+      this.loading = false;
+    }, 800); // simulate API call
   }
 }

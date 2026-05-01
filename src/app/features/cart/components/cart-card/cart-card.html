@@ -1,47 +1,56 @@
-<div
-            class="flex gap-6 bg-white dark:bg-neutral-900 p-5 rounded-2xl shadow hover:shadow-lg transition"
-          >
-            <!-- Product Image -->
-            <img [src]="item().image" class="w-28 h-28 object-cover rounded-xl" />
+<div class="cart-card d-flex gap-4 bg-white p-3 rounded-4 shadow-sm align-items-start">
 
-            <!-- Product Info -->
-            <div class="flex flex-col justify-between w-full">
-              <div class="flex justify-between">
-                <h3 class="font-semibold text-lg">
-                  {{ item().name }}
-                </h3>
+  <!-- Product Image -->
+  <img
+    [src]="item().image"
+    class="rounded"
+    style="width:110px;height:110px;object-fit:cover;"
+  />
 
-                <button
-                  class="text-red-500 hover:text-red-700 transition"
-                  (click)="removeItem(item().id)"
-                >
-                  ✕
-                </button>
-              </div>
+  <!-- Product Info -->
+  <div class="d-flex flex-column justify-content-between w-100">
 
-              <p class="text-gray-500 dark:text-gray-400">${{ item().price }}</p>
+    <div class="d-flex justify-content-between">
+      <h5 class="fw-semibold mb-0">
+        {{ item().name }}
+      </h5>
 
-              <!-- Quantity -->
-              <div class="flex items-center gap-4 mt-2">
-                <button
-                  class="w-8 h-8 rounded-lg bg-gray-200 dark:bg-neutral-700 hover:scale-110 transition"
-                  (click)="decreaseQty(item().id)"
-                >
-                  −
-                </button>
+      <button
+        class="btn btn-sm text-danger"
+        (click)="removeItem(item().productId)"
+      >
+        <i class="fa-solid fa-trash text-danger"></i>
+      </button>
+    </div>
 
-                <span class="font-medium">
-                  {{ item().quantity }}
-                </span>
+    <p class="text-muted mb-1">${{ item().price }}</p>
 
-                <button
-                  class="w-8 h-8 rounded-lg bg-gray-200 dark:bg-neutral-700 hover:scale-110 transition"
-                  (click)="increaseQty(item().id)"
-                >
-                  +
-                </button>
-              </div>
+    <!-- Quantity -->
+    <div class="d-flex align-items-center gap-3 mt-2">
 
-              <p class="font-semibold mt-2">Subtotal: ${{ item().price * item().quantity }}</p>
-            </div>
-          </div>
+      <button
+        class="btn btn-light btn-sm"
+        (click)="decreaseQty(item().productId)"
+      >
+        −
+      </button>
+
+      <span class="fw-medium">
+        {{ item().quantity }}
+      </span>
+
+      <button
+        class="btn btn-light btn-sm"
+        (click)="increaseQty(item().productId)"
+      >
+        +
+      </button>
+
+    </div>
+
+    <p class="fw-semibold mt-2 mb-0">
+      Subtotal: ${{ item().price * item().quantity }}
+    </p>
+
+  </div>
+</div>

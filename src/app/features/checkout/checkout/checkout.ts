@@ -9,4 +9,6 @@ import { OrderSummary } from '../../../shared/components/order-summary/order-sum
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
-export class Checkout {}
+export class Checkout {
+  
+}

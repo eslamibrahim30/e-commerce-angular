@@ -1,6 +1,6 @@
 import { Component, input, InputSignal } from '@angular/core';
-import { ICart } from '../../../../shared/models/interfaces/cart';
-import { CartService } from '../../../orders/cart/services/cart-service';
+import { CartService } from '../../../../core/services/cart.service';
+import { CartItem } from '../../../../shared/models/cart.model';
 
 @Component({
   selector: 'app-cart-card',
@@ -9,17 +9,29 @@ import { CartService } from '../../../orders/cart/services/cart-service';
   styleUrl: './cart-card.css',
 })
 export class CartCard {
-  item: InputSignal<ICart> = input.required<ICart>();
+  item: InputSignal<CartItem> = input.required<CartItem>();
   constructor(private readonly cartService: CartService) {}
-  increaseQty(id: number) {
-    return this.cartService.increaseQty(id);
+  increaseQty(productId: string) {
+    const item = this.cartService.getItems().find((i) => i.productId === productId);
+    if (!item) return;
+
+    this.cartService.updateQty(productId, item.quantity + 1);
   }
 
-  decreaseQty(id: number) {
-    return this.cartService.decreaseQty(id);
+  decreaseQty(productId: string) {
+    const item = this.cartService.getItems().find((i) => i.productId === productId);
+    if (!item) return;
+
+    const newQty = item.quantity - 1;
+
+    if (newQty <= 0) {
+      this.cartService.remove(productId);
+    } else {
+      this.cartService.updateQty(productId, newQty);
+    }
   }
 
-  removeItem(id: number) {
-    return this.cartService.removeItem(id);
+  removeItem(productId: string) {
+    this.cartService.remove(productId);
   }
 }
