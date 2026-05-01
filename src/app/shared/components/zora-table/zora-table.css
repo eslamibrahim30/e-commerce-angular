@@ -1,0 +1,35 @@
+.zora-table-card {
+  background: var(--card-bg);
+  border-radius: 15px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.thead-zora {
+  background-color: var(--zora-teal);
+  color: white;
+}
+
+.thead-zora th {
+  font-weight: 600;
+  border: none;
+  padding: 15px;
+  text-transform: capitalize;
+}
+
+.table td {
+  padding: 15px;
+  vertical-align: middle;
+  color: var(--text-main);
+  border-top: 1px solid var(--border-color);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(212, 175, 55, 0.05); 
+  cursor: pointer;
+}
+
+.empty-state i {
+  color: var(--zora-gold);
+  opacity: 0.5;
+}

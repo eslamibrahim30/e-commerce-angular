@@ -1,0 +1,27 @@
+[
+  {
+    "id": "cat-1",
+    "name": "Electronics",
+    "description": "Gadgets, devices, and accessories"
+  },
+  {
+    "id": "cat-2",
+    "name": "Clothing",
+    "description": "Apparel for men and women"
+  },
+  {
+    "id": "cat-3",
+    "name": "Home & Garden",
+    "description": "Furniture, decor, and gardening tools"
+  },
+  {
+    "id": "cat-4",
+    "name": "Sports",
+    "description": "Equipment and apparel for sports"
+  },
+  {
+    "id": "cat-5",
+    "name": "Toys",
+    "description": "Games and toys for kids of all ages"
+  }
+]
