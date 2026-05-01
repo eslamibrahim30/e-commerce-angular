@@ -9,9 +9,11 @@
 <div class="container mb-5">
   <h4 class="mb-3">Categories</h4>
   <div class="d-flex gap-2 flex-wrap">
-    <button class="btn btn-outline-dark" *ngFor="let cat of categories">
-      {{ cat }}
-    </button>
+    @for (cat of categories(); track cat) {
+      <button class="btn btn-outline-dark">
+        {{ cat }}
+      </button>
+    }
   </div>
 </div>
 
@@ -20,25 +22,27 @@
   <h4 class="mb-4">Featured Products</h4>
 
   <div class="row g-4">
-    <div class="col-md-4" *ngFor="let p of featuredProducts">
-      <div class="card h-100 shadow-sm border-0">
+    @for (p of featuredProducts(); track p.id) {
+      <div class="col-md-4">
+        <div class="card h-100 shadow-sm border-0">
 
-        <img [src]="p.image" class="card-img-top" style="height:200px; object-fit:cover;" />
+          <img [src]="p.image" class="card-img-top" style="height:200px; object-fit:cover;" />
 
-        <div class="card-body text-center">
-          <h5>{{ p.name }}</h5>
-          <p class="text-primary fw-bold">${{ p.price }}</p>
+          <div class="card-body text-center">
+            <h5>{{ p.name }}</h5>
+            <p class="text-primary fw-bold">${{ p.price }}</p>
 
-          <a [routerLink]="['/products', p.id]" class="btn btn-outline-secondary btn-sm me-2">
-            View
-          </a>
+            <a [routerLink]="['/products', p.id]" class="btn btn-outline-secondary btn-sm me-2">
+              View
+            </a>
 
-          <button class="btn btn-primary btn-sm" (click)="addToCart(p)">
-            Add to Cart
-          </button>
+            <button class="btn btn-primary btn-sm" (click)="addToCart(p)">
+              Add to Cart
+            </button>
+          </div>
+
         </div>
-
       </div>
-    </div>
+    }
   </div>
 </div>

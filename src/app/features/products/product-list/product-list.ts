@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
@@ -10,18 +10,13 @@ import { CartService } from '../../../core/services/cart.service';
   imports: [CommonModule, RouterModule],
   templateUrl: './product-list.html',
 })
-export class ProductList implements OnInit {
+export class ProductList {
 
-  products: any[] = [];
+  private productService = inject(ProductService);
+  private cartService = inject(CartService);
 
-  constructor(
-    private productService: ProductService,
-    private cartService: CartService
-  ) { }
-
-  ngOnInit(): void {
-    this.products = this.productService.getAll();
-  }
+  /** Directly bind the products signal — no ngOnInit needed */
+  products = this.productService.products;
 
   addToCart(product: any) {
     this.cartService.add({
