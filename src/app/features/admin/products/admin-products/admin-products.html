@@ -1,6 +1,6 @@
 <p>admin-products works!</p>
 <div class="admin-layout">
-  <app-admin-sidebar />
+  <app-admin-sidebar></app-admin-sidebar>
 
   <main class="admin-main">
     <div class="container-fluid px-0 px-lg-4">
@@ -28,36 +28,35 @@
                 class="form-control ps-5 py-2"
                 [ngModel]="searchQuery()"
                 (ngModelChange)="searchQuery.set($event); onFilterChange()"
-                placeholder="Search name, ID or description..."
+                placeholder="Search by name, ID or description..."
               />
             </div>
           </div>
 
           <div class="col-12 col-xl-7">
             <div class="row g-2">
-              <div class="col-12 col-sm-4">
-                <select class="form-select" [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event); onFilterChange()">
+              <div class="col-12 col-md-4">
+                <select class="form-select py-2" [ngModel]="selectedCategory()" (ngModelChange)="selectedCategory.set($event); onFilterChange()">
                   <option value="">All Categories</option>
                   <option *ngFor="let cat of categories()" [value]="cat.id">{{ cat.name }}</option>
                 </select>
               </div>
-              <div class="col-12 col-sm-4">
-                <select class="form-select" [ngModel]="stockFilter()" (ngModelChange)="stockFilter.set($event); onFilterChange()">
-                  <option value="">All Stock</option>
+              <div class="col-12 col-md-4">
+                <select class="form-select py-2" [ngModel]="stockFilter()" (ngModelChange)="stockFilter.set($event); onFilterChange()">
+                  <option value="">All Stock Status</option>
                   <option value="instock">In Stock (>10)</option>
                   <option value="low">Low Stock (1-10)</option>
-                  <option value="out">Out of Stock</option>
+                  <option value="out">Out of Stock (0)</option>
                 </select>
               </div>
-              <div class="col-12 col-sm-4">
-                <select class="form-select" [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)">
+              <div class="col-12 col-md-4">
+                <select class="form-select py-2" [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)">
                   <option value="name-asc">Sort: A-Z</option>
                   <option value="name-desc">Sort: Z-A</option>
                   <option value="price-asc">Price: Low-High</option>
                   <option value="price-desc">Price: High-Low</option>
                   <option value="stock-asc">Stock: Low-High</option>
                   <option value="stock-desc">Stock: High-Low</option>
-                  <option value="sold-desc">Sold: High-Low</option>
                 </select>
               </div>
             </div>
@@ -67,83 +66,85 @@
 
       <!-- Table Section -->
       <div class="card overflow-hidden border-0 shadow-sm mb-5">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0 zora-table">
-            <thead>
-              <tr>
-                <th class="ps-4">Product Details</th>
-                <th>Category</th>
-                <th>Pricing</th>
-                <th>Inventory</th>
-                <th>Featured</th>
-                <th class="pe-4 text-end">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let p of paginatedProducts()">
-                <td class="ps-4">
-                  <div class="d-flex align-items-center gap-3">
-                    <div class="position-relative">
-                      <img [src]="p.image" class="rounded shadow-sm" style="width: 48px; height: 48px; object-fit: cover; background: var(--bg-color);" [alt]="p.name" />
-                      <div *ngIf="p.stock === 0" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded d-flex align-items-center justify-content-center">
-                        <span class="text-white fw-bold" style="font-size: 8px;">OUT</span>
+        <div class="zora-table-container">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0 zora-table">
+              <thead>
+                <tr>
+                  <th class="ps-4">Product Details</th>
+                  <th>Category</th>
+                  <th>Pricing</th>
+                  <th>Inventory</th>
+                  <th>Featured</th>
+                  <th class="pe-4 text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of paginatedProducts()">
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center gap-3">
+                      <div class="position-relative">
+                        <img [src]="p.image" class="rounded shadow-sm" style="width: 48px; height: 48px; object-fit: cover; background: var(--bg-color);" [alt]="p.name" />
+                        <div *ngIf="p.stock === 0" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded d-flex align-items-center justify-content-center">
+                          <span class="text-white fw-bold" style="font-size: 8px;">OUT</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="fw-bold text-main">{{ p.name }}</div>
+                        <div class="text-muted small font-monospace opacity-75" style="font-size: 11px;">#{{ p.id }}</div>
                       </div>
                     </div>
-                    <div>
-                      <div class="fw-bold text-main">{{ p.name }}</div>
-                      <div class="text-muted small font-monospace opacity-75" style="font-size: 11px;">#{{ p.id }}</div>
+                  </td>
+                  <td><span class="badge zora-badge-muted border rounded-pill">{{ p.category }}</span></td>
+                  <td>
+                    <div class="d-flex flex-column">
+                      <span class="fw-bold price-text">{{ p.price | currency }}</span>
+                      <span *ngIf="p.oldPrice" class="text-muted text-decoration-line-through small" style="font-size: 11px;">{{ p.oldPrice | currency }}</span>
                     </div>
-                  </div>
-                </td>
-                <td><span class="badge zora-badge-muted border rounded-pill">{{ p.category }}</span></td>
-                <td>
-                  <div class="d-flex flex-column">
-                    <span class="fw-bold price-text">{{ p.price | currency }}</span>
-                    <span *ngIf="p.oldPrice" class="text-muted text-decoration-line-through small" style="font-size: 11px;">{{ p.oldPrice | currency }}</span>
-                  </div>
-                </td>
-                <td>
-                  <div class="d-flex flex-column gap-1">
-                    <span class="badge rounded-pill px-3 py-1 w-fit" [ngClass]="getStockBootstrapClass(p.stock)" style="width: fit-content; font-size: 11px;">
-                      {{ p.stock }} in stock
-                    </span>
-                    <div class="progress" style="height: 4px; width: 80px; background: var(--bg-color);">
-                      <div class="progress-bar" [ngClass]="p.stock > 10 ? 'bg-success' : (p.stock > 0 ? 'bg-warning' : 'bg-danger')" [style.width.%]="p.stock > 100 ? 100 : p.stock"></div>
+                  </td>
+                  <td>
+                    <div class="d-flex flex-column gap-1">
+                      <span class="badge rounded-pill px-3 py-1 w-fit" [ngClass]="getStockBootstrapClass(p.stock)" style="width: fit-content; font-size: 11px;">
+                        {{ p.stock }} in stock
+                      </span>
+                      <div class="progress" style="height: 4px; width: 80px; background: var(--bg-color);">
+                        <div class="progress-bar" [ngClass]="p.stock > 10 ? 'bg-success' : (p.stock > 0 ? 'bg-warning' : 'bg-danger')" [style.width.%]="p.stock > 100 ? 100 : p.stock"></div>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch m-0">
-                    <input class="form-check-input" type="checkbox" [checked]="p.isFeatured" (change)="productService.update(p.id, { isFeatured: !p.isFeatured })" style="cursor: pointer;">
-                  </div>
-                </td>
-                <td class="pe-4 text-end">
-                  <div class="d-flex justify-content-end gap-1">
-                    <button class="btn btn-sm btn-icon-hover p-2" (click)="openEditModal(p)" title="Edit">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                    </button>
-                    <button class="btn btn-sm btn-icon-hover text-danger p-2" (click)="openDeleteModal(p)" title="Delete">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <tr *ngIf="paginatedProducts().length === 0">
-                <td colspan="7" class="text-center py-5">
-                  <div class="py-4">
-                    <svg class="text-muted opacity-25 mb-3" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <p class="text-muted fw-medium">No products match your filters</p>
-                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" (click)="searchQuery.set(''); selectedCategory.set(''); stockFilter.set('')">Clear All Filters</button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch m-0">
+                      <input class="form-check-input" type="checkbox" [checked]="p.isFeatured" (change)="productService.update(p.id, { isFeatured: !p.isFeatured })" style="cursor: pointer;">
+                    </div>
+                  </td>
+                  <td class="pe-4 text-end">
+                    <div class="d-flex justify-content-end gap-1">
+                      <button class="btn btn-sm btn-icon-hover p-2" (click)="openEditModal(p)" title="Edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                      </button>
+                      <button class="btn btn-sm btn-icon-hover text-danger p-2" (click)="openDeleteModal(p)" title="Delete">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="paginatedProducts().length === 0">
+                  <td colspan="6" class="text-center py-5">
+                    <div class="py-4">
+                      <svg class="text-muted opacity-25 mb-3" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                      <p class="text-muted fw-medium">No products match your filters</p>
+                      <button class="btn btn-sm btn-outline-primary rounded-pill px-3" (click)="searchQuery.set(''); selectedCategory.set(''); stockFilter.set('')">Clear All Filters</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
 
         <!-- Pagination Footer -->
-        <div class="pagination-container" *ngIf="filteredProducts().length > 0">
-          <div class="text-muted small fw-medium d-none d-md-block">
+        <div class="zora-pagination-footer" *ngIf="filteredProducts().length > 0">
+          <div class="text-muted small fw-medium">
             Showing <span class="text-main fw-bold">{{ (currentPage() - 1) * pageSize() + 1 }}</span> to
             <span class="text-main fw-bold">{{ currentPage() * pageSize() > filteredProducts().length ? filteredProducts().length : currentPage() * pageSize() }}</span> of
             <span class="text-main fw-bold">{{ filteredProducts().length }}</span> products
@@ -192,53 +193,49 @@
       </div>
       <div class="modal-body p-4">
         <div class="row g-3">
-          <div class="col-12">
+          <div class="col-12 col-md-6">
             <label class="form-label small fw-bold text-muted text-uppercase">Product Name</label>
-            <input class="form-control" [(ngModel)]="form.name" placeholder="e.g. Wireless Headphones" />
+            <input type="text" class="form-control" [(ngModel)]="form.name" placeholder="e.g. Wireless Headphones">
           </div>
-          <div class="col-md-6">
-            <label class="form-label small fw-bold text-muted text-uppercase">Price ($)</label>
-            <input type="number" class="form-control" [(ngModel)]="form.price" placeholder="99.99" />
-          </div>
-          <div class="col-md-6">
-            <label class="form-label small fw-bold text-muted text-uppercase">Old Price ($)</label>
-            <input type="number" class="form-control" [(ngModel)]="form.oldPrice" placeholder="129.99" />
-          </div>
-          <div class="col-md-6">
+          <div class="col-12 col-md-6">
             <label class="form-label small fw-bold text-muted text-uppercase">Category</label>
             <select class="form-select" [(ngModel)]="form.categoryId">
-              <option value="">Select category</option>
+              <option value="">Select Category</option>
               <option *ngFor="let cat of categories()" [value]="cat.id">{{ cat.name }}</option>
             </select>
           </div>
-          <div class="col-md-6">
-            <label class="form-label small fw-bold text-muted text-uppercase">Stock</label>
-            <input type="number" class="form-control" [(ngModel)]="form.stock" placeholder="0" />
+          <div class="col-12 col-md-4">
+            <label class="form-label small fw-bold text-muted text-uppercase">Price ($)</label>
+            <input type="number" class="form-control" [(ngModel)]="form.price">
           </div>
-          <div class="col-12">
-            <label class="form-label small fw-bold text-muted text-uppercase">Image URL</label>
-            <input class="form-control" [(ngModel)]="form.image" placeholder="https://..." />
+          <div class="col-12 col-md-4">
+            <label class="form-label small fw-bold text-muted text-uppercase">Old Price ($)</label>
+            <input type="number" class="form-control" [(ngModel)]="form.oldPrice" placeholder="Optional">
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label small fw-bold text-muted text-uppercase">Stock Level</label>
+            <input type="number" class="form-control" [(ngModel)]="form.stock">
           </div>
           <div class="col-12">
             <label class="form-label small fw-bold text-muted text-uppercase">Description</label>
-            <textarea class="form-control" [(ngModel)]="form.description" rows="3" placeholder="Product description..."></textarea>
+            <textarea class="form-control" rows="3" [(ngModel)]="form.description"></textarea>
           </div>
           <div class="col-12">
-            <div class="form-check form-switch mt-2">
-              <input class="form-check-input" type="checkbox" [(ngModel)]="form.isFeatured" id="featuredSwitch">
-              <label class="form-check-label fw-bold text-muted" for="featuredSwitch">Mark as Featured Product</label>
+            <label class="form-label small fw-bold text-muted text-uppercase">Image URL</label>
+            <input type="text" class="form-control" [(ngModel)]="form.image" placeholder="https://...">
+          </div>
+          <div class="col-12">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="featuredSwitch" [(ngModel)]="form.isFeatured">
+              <label class="form-check-label fw-bold" for="featuredSwitch">Featured Product</label>
             </div>
           </div>
         </div>
-        <div class="alert alert-danger mt-3 py-2 px-3 small border-0" *ngIf="formError">
-          {{ formError }}
-        </div>
+        <div *ngIf="formError" class="alert alert-danger mt-3 py-2 small">{{ formError }}</div>
       </div>
-      <div class="modal-footer px-4 py-3 bg-light border-top">
-        <button type="button" class="btn btn-link text-decoration-none text-muted" (click)="closeModal()">Cancel</button>
-        <button type="button" class="btn btn-primary px-4" (click)="saveProduct()">
-          {{ editingId ? 'Save Changes' : 'Add Product' }}
-        </button>
+      <div class="modal-footer px-4 py-3 bg-light">
+        <button type="button" class="btn btn-light rounded-pill px-4" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-primary rounded-pill px-4" (click)="saveProduct()">{{ editingId ? 'Save Changes' : 'Add Product' }}</button>
       </div>
     </div>
   </div>
@@ -246,21 +243,16 @@
 
 <!-- Delete Confirmation Modal -->
 <div class="modal d-block" *ngIf="showDeleteModal" tabindex="-1" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
-  <div class="modal-dialog modal-dialog-centered modal-sm">
-    <div class="modal-content shadow border-0 rounded-4">
-      <div class="modal-header border-0 pb-0 pe-3 pt-3">
-        <button type="button" class="btn-close" (click)="showDeleteModal = false"></button>
+  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
+    <div class="modal-content shadow-lg border-0 rounded-4 p-4 text-center">
+      <div class="mb-4 text-danger opacity-75">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
       </div>
-      <div class="modal-body text-center px-4 pt-0 pb-4">
-        <div class="mb-3 text-danger">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        </div>
-        <h5 class="fw-bold mb-2">Delete Product?</h5>
-        <p class="text-muted small mb-4">Are you sure you want to delete <strong>{{ deletingProduct?.name }}</strong>? This cannot be undone.</p>
-        <div class="d-grid gap-2">
-          <button type="button" class="btn btn-danger" (click)="confirmDelete()">Delete Forever</button>
-          <button type="button" class="btn btn-link text-decoration-none text-muted" (click)="showDeleteModal = false">Cancel</button>
-        </div>
+      <h4 class="fw-bold mb-2">Delete Product?</h4>
+      <p class="text-muted small mb-4">Are you sure you want to delete <strong>{{ deletingProduct?.name }}</strong>? This action cannot be undone.</p>
+      <div class="d-grid gap-2">
+        <button type="button" class="btn btn-danger py-2 rounded-pill shadow-sm" (click)="confirmDelete()">Delete Forever</button>
+        <button type="button" class="btn btn-light py-2 rounded-pill text-muted" (click)="showDeleteModal = false">Cancel</button>
       </div>
     </div>
   </div>

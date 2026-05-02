@@ -32,7 +32,7 @@ export class AdminOrders {
 
   // Pagination state
   currentPage = signal(1);
-  pageSize = signal(5);
+  pageSize = signal(10);
 
   allOrders = computed(() => this.orderService.getAll());
 

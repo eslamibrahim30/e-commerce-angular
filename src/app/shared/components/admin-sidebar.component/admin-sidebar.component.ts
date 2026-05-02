@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 
@@ -11,6 +11,15 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 })
 export class AdminSidebar {
   private router = inject(Router);
+  isOpen = signal(false);
+
+  toggleSidebar() {
+    this.isOpen.update(v => !v);
+  }
+
+  closeSidebar() {
+    this.isOpen.set(false);
+  }
 
   menuItems = [
     { 

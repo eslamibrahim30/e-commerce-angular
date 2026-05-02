@@ -35,7 +35,7 @@ export class AdminProducts implements OnInit {
 
   // Pagination state
   currentPage = signal(1);
-  pageSize = signal(5);
+  pageSize = signal(10);
 
   categories = this.categoryService.categories;
 

@@ -1,6 +1,6 @@
 <p>dashboard works!</p>
 <div class="admin-layout">
-  <app-admin-sidebar />
+  <app-admin-sidebar></app-admin-sidebar>
 
   <main class="admin-main">
     <div class="container-fluid px-0 px-lg-4">
@@ -13,9 +13,9 @@
           <p class="page-sub mb-0">Welcome back, {{ today }} — here's your store at a glance.</p>
         </div>
         <div class="d-flex gap-2">
-          <button class="btn btn-glass d-flex align-items-center gap-2 px-3 py-2 rounded-3 text-muted small">
+          <button class="btn btn-glass d-flex align-items-center gap-2 px-3 py-2 rounded-3 text-muted small" (click)="searchQuery.set('')">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-            <span>Filter</span>
+            <span>Reset Filters</span>
           </button>
           <button class="btn btn-primary shadow-sm d-flex align-items-center gap-2 px-3 py-2 rounded-3 small">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
@@ -98,8 +98,14 @@
                 <p class="text-muted small mb-0">Distribution across your store</p>
               </div>
               <div class="btn-group btn-group-sm rounded-pill border p-1 bg-light">
-                <button class="btn btn-sm px-3 rounded-pill active border-0">Bar</button>
-                <button class="btn btn-sm px-3 rounded-pill border-0 text-muted">Stacked</button>
+                <button class="btn btn-sm px-3 rounded-pill border-0 transition-all" 
+                        [class.bg-white]="chartType() === 'bar'"
+                        [class.shadow-sm]="chartType() === 'bar'"
+                        (click)="chartType.set('bar')">Bar</button>
+                <button class="btn btn-sm px-3 rounded-pill border-0 text-muted transition-all"
+                        [class.bg-white]="chartType() === 'stacked'"
+                        [class.shadow-sm]="chartType() === 'stacked'"
+                        (click)="chartType.set('stacked')">Stacked</button>
               </div>
             </div>
             <div style="height: 320px;">
@@ -143,7 +149,8 @@
               </div>
               <button class="btn btn-sm btn-link text-decoration-none small fw-bold" routerLink="/admin/orders">View All</button>
             </div>
-            <div class="table-responsive">
+            <div class="zora-table-container">
+              <div class="table-responsive">
               <table class="table table-hover align-middle mb-0">
                 <thead class="bg-light bg-opacity-50">
                   <tr>
@@ -172,6 +179,7 @@
                   </tr>
                 </tbody>
               </table>
+            </div>
             </div>
           </div>
         </div>

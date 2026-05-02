@@ -1,3 +1,34 @@
+.mobile-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1100;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--zora-primary);
+  border: none;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1040;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .zora-sidebar {
   width: 280px;
   height: 100vh;
@@ -9,7 +40,11 @@
   display: flex;
   flex-direction: column;
   z-index: 1050;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.zora-sidebar.open {
+  transform: translateX(0) !important;
 }
 
 .logo-box {
@@ -58,10 +93,7 @@
 @media (max-width: 991.98px) {
   .zora-sidebar {
     transform: translateX(-100%);
-  }
-  
-  .zora-sidebar.show {
-    transform: translateX(0);
+    box-shadow: 20px 0 50px rgba(0,0,0,0.1);
   }
 }
 

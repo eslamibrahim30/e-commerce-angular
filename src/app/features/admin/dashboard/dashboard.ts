@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild, AfterViewInit, effect } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild, AfterViewInit, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
@@ -27,13 +27,16 @@ export class Dashboard implements AfterViewInit {
   @ViewChild('stockDoughnut') stockDoughnutRef!: ElementRef;
 
   private charts: any[] = [];
+  chartType = signal<'bar' | 'stacked'>('bar');
+  searchQuery = signal('');
 
   constructor() {
-    // Effect to auto-update charts when data changes
+    // Effect to auto-update charts when data changes or toggle changes
     effect(() => {
       // Access signals to trigger dependency tracking
       this.productService.products();
       this.orderService.orders();
+      this.chartType(); // Re-render when toggle changes
 
       // Re-initialize charts if they already exist
       if (this.charts.length > 0) {
@@ -125,37 +128,79 @@ export class Dashboard implements AfterViewInit {
   }
 
   private buildBarChart() {
-    const data = this.productService.getCountByCategory();
     const textColor = this.getChartTextColor();
     const gridColor = this.getChartGridColor();
+    const type = this.chartType();
+
+    let config: any;
+
+    if (type === 'bar') {
+      const data = this.productService.getCountByCategory();
+      config = {
+        type: 'bar',
+        data: {
+          labels: data.map(d => d.categoryName),
+          datasets: [{
+            label: 'Total Products',
+            data: data.map(d => d.count),
+            backgroundColor: '#0B7974',
+            borderRadius: 8,
+            barThickness: 32
+          }]
+        }
+      };
+    } else {
+      // Stacked mode: Stock levels per category
+      const categories = this.categoryService.categories();
+      const allProducts = this.productService.getAllRaw();
+      
+      const labels = categories.map(c => c.name);
+      const inStockData = categories.map(c => allProducts.filter(p => p.categoryId === c.id && p.stock > 10).length);
+      const lowStockData = categories.map(c => allProducts.filter(p => p.categoryId === c.id && p.stock > 0 && p.stock <= 10).length);
+      const outStockData = categories.map(c => allProducts.filter(p => p.categoryId === c.id && p.stock === 0).length);
+
+      config = {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [
+            { label: 'In Stock', data: inStockData, backgroundColor: '#10b981', barThickness: 32 },
+            { label: 'Low Stock', data: lowStockData, backgroundColor: '#f59e0b', barThickness: 32 },
+            { label: 'Out of Stock', data: outStockData, backgroundColor: '#ef4444', barThickness: 32 }
+          ]
+        },
+        options: {
+          scales: {
+            x: { stacked: true },
+            y: { stacked: true }
+          }
+        }
+      };
+    }
 
     const chart = new Chart(this.barChartRef.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: data.map(d => d.categoryName),
-        datasets: [{
-          label: 'Products',
-          data: data.map(d => d.count),
-          backgroundColor: '#0B7974', // Teal from theme
-          borderRadius: 8,
-          barThickness: 32
-        }]
-      },
+      ...config,
       options: {
+        ...config.options,
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { display: false },
+          legend: { 
+            display: type === 'stacked',
+            labels: { color: textColor, font: { size: 11, weight: '600' } }
+          },
           tooltip: { backgroundColor: '#1E1E1E', titleColor: '#E0E0E0', bodyColor: '#E0E0E0' }
         },
         scales: {
           y: {
+            ...config.options?.scales?.y,
             beginAtZero: true,
             border: { display: false },
             grid: { color: gridColor },
             ticks: { color: textColor }
           },
           x: {
+            ...config.options?.scales?.x,
             border: { display: false },
             grid: { display: false },
             ticks: { color: textColor }
