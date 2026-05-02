@@ -128,7 +128,7 @@ export class AdminCategories {
     if (this.editingId) {
       this.categoryService.update(this.editingId, payload);
     } else {
-      this.categoryService.add(payload);
+      this.categoryService.add({ ...payload, id: `cat-${Date.now()}` });
     }
     this.closeModal();
   }

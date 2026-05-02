@@ -60,7 +60,7 @@
 .zora-table thead th {
   background: rgba(var(--zora-primary-rgb), 0.03);
   font-size: 11px;
-  text-uppercase: uppercase;
+  text-transform: uppercase;
   letter-spacing: 0.1em;
   font-weight: 700;
   color: var(--text-muted);
