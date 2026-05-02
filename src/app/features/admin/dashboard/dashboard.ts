@@ -56,7 +56,7 @@ export class Dashboard implements AfterViewInit {
   get customerCount() { return this.userService.customerCount(); }
   get productCount() { return this.productService.count(); }
   get categoryCount() { return this.categoryService.count(); }
-  get categories() { return this.categoryService.categories; }
+  get categories() { return this.categoryService.categories(); }
 
   // Stock computed stats
   inStockCount() { return this.productService.getAllRaw().filter(p => p.stock > 10).length; }
