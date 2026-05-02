@@ -1,0 +1,97 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-color);
+}
+
+.admin-main {
+  margin-left: 260px;
+  flex: 1;
+  padding: 32px 0;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Sold Progress Bar */
+.sold-progress {
+  width: 60px;
+  height: 4px;
+  background: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.sold-bar {
+  height: 100%;
+  background: var(--zora-primary);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sold-clickable-no {
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.sold-clickable-no:hover {
+  color: var(--zora-primary) !important;
+  border-bottom-color: var(--zora-primary);
+}
+
+.product-name-cell {
+  font-size: 14px;
+  letter-spacing: -0.01em;
+}
+
+/* Search Box Customization */
+.search-box .form-control {
+  font-size: 14px !important;
+  font-weight: 500;
+}
+
+.search-box .search-icon {
+  opacity: 0.5;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content-custom {
+  background: var(--card-bg);
+  width: 100%; max-width: 600px;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+  border: 1px solid var(--border-color);
+}
+
+.modal-title-custom {
+  font-size: 24px; font-weight: 700;
+  margin-bottom: 24px; color: var(--text-main);
+}
+
+@media (max-width: 991.98px) {
+  .admin-main {
+    margin-left: 0;
+    padding: 80px 16px 32px;
+  }
+}

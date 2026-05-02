@@ -1,1 +1,206 @@
 <p>dashboard works!</p>
+<div class="admin-layout">
+  <app-admin-sidebar />
+
+  <main class="admin-main">
+    <div class="container-fluid px-0 px-lg-4">
+      <header class="admin-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-5">
+        <div>
+          <h1 class="page-title mb-1">Dashboard</h1>
+          <p class="page-sub mb-0">Welcome back — here's your store at a glance.</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-light border shadow-none d-flex align-items-center gap-2 px-3 py-2 rounded-3 text-muted small">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+            <span>Filter</span>
+          </button>
+          <select class="form-select shadow-none border rounded-3 text-muted small" style="width: 160px; height: 38px;">
+            <option>All Categories</option>
+            <option *ngFor="let cat of categories()">{{ cat.name }}</option>
+          </select>
+        </div>
+      </header>
+
+      <!-- Stat Cards Row 1: Stock Status -->
+      <div class="row g-3 mb-3">
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-blue" (click)="navigateToProducts()">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Total Products</span>
+              <div class="stat-icon-wrapper blue">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ productCount }}</div>
+            <div class="stat-hint small text-muted opacity-75">across all categories</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-teal" (click)="navigateToProducts('instock')">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">In Stock</span>
+              <div class="stat-icon-wrapper teal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ inStockCount() }}</div>
+            <div class="stat-hint small text-muted opacity-75">stock > 10 units</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-orange" (click)="navigateToProducts('low')">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Low Stock</span>
+              <div class="stat-icon-wrapper orange">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ lowStockCount() }}</div>
+            <div class="stat-hint small text-muted opacity-75">1 — 10 units left</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-red" (click)="navigateToProducts('out')">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Out of Stock</span>
+              <div class="stat-icon-wrapper red">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ outOfStockCount() }}</div>
+            <div class="stat-hint small text-muted opacity-75">needs restocking</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stat Cards Row 2: Business Metrics -->
+      <div class="row g-3 mb-5">
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-purple" (click)="navigateToCategories()">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Categories</span>
+              <div class="stat-icon-wrapper purple">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ categoryCount }}</div>
+            <div class="stat-hint small text-muted opacity-75">active categories</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-indigo" routerLink="/admin/orders">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Total Orders</span>
+              <div class="stat-icon-wrapper indigo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ orderCount }}</div>
+            <div class="stat-hint small text-muted opacity-75">{{ pendingCount }} pending processing</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-cyan" routerLink="/admin/users">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Customers</span>
+              <div class="stat-icon-wrapper cyan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1">{{ customerCount }}</div>
+            <div class="stat-hint small text-muted opacity-75">registered users</div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-xl-3">
+          <div class="card stat-card h-100 border-0 p-4 accent-gold">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <span class="stat-label text-uppercase small fw-bold">Total Revenue</span>
+              <div class="stat-icon-wrapper gold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              </div>
+            </div>
+            <div class="h2 fw-bold mb-1" style="color: var(--zora-primary);">{{ totalRevenue | currency }}</div>
+            <div class="stat-hint small text-muted opacity-75">from delivered orders</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Overview Section -->
+      <div class="section-title text-muted text-uppercase small fw-bold mb-4">Inventory Overview</div>
+      <div class="row g-4 mb-5">
+        <div class="col-12 col-lg-8">
+          <div class="card chart-card border-0 p-4 shadow-sm h-100">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                <h6 class="fw-bold text-main mb-1">Products by Category</h6>
+                <p class="text-muted small mb-0">Distribution across your store</p>
+              </div>
+              <div class="btn-group btn-group-sm rounded-pill border p-1 bg-light">
+                <button class="btn btn-sm px-3 rounded-pill active border-0">Bar</button>
+                <button class="btn btn-sm px-3 rounded-pill border-0 text-muted">Stacked</button>
+              </div>
+            </div>
+            <div style="height: 320px;">
+              <canvas #barChart></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="card chart-card border-0 p-4 shadow-sm h-100 text-center">
+            <h6 class="fw-bold text-main mb-1 text-start">Stock Distribution</h6>
+            <p class="text-muted small mb-4 text-start">Overall stock health</p>
+            <div style="height: 240px;" class="mb-4">
+              <canvas #stockDoughnut></canvas>
+            </div>
+            <div class="d-flex justify-content-center gap-3 small text-muted">
+              <span class="d-flex align-items-center gap-1"><span class="dot bg-success"></span> In Stock</span>
+              <span class="d-flex align-items-center gap-1"><span class="dot bg-warning"></span> Low Stock</span>
+              <span class="d-flex align-items-center gap-1"><span class="dot bg-danger"></span> Out of Stock</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sales Analytics Section -->
+      <div class="section-title text-muted text-uppercase small fw-bold mb-4">Sales Analytics</div>
+      <div class="row g-4 mb-5">
+        <div class="col-12 col-lg-6">
+          <div class="card chart-card border-0 p-4 shadow-sm h-100">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <div class="p-2 bg-primary-subtle rounded-3 text-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+              </div>
+              <div>
+                <h6 class="fw-bold text-main mb-0">Top Selling Products</h6>
+                <p class="text-muted small mb-0">Ranked by units sold</p>
+              </div>
+            </div>
+            <div style="height: 300px;">
+              <canvas #topSellingChart></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="card chart-card border-0 p-4 shadow-sm h-100">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <div class="p-2 bg-info-subtle rounded-3 text-info">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><rect x="7" y="10" width="4" height="7"></rect><rect x="13" y="5" width="4" height="12"></rect></svg>
+              </div>
+              <div>
+                <h6 class="fw-bold text-main mb-0">Stock vs Sales</h6>
+                <p class="text-muted small mb-0">Remaining inventory vs units sold</p>
+              </div>
+            </div>
+            <div style="height: 300px;">
+              <canvas #stockVsSalesChart></canvas>
+            </div>
+            <div class="mt-4 d-flex justify-content-center gap-4 small text-muted">
+              <span class="d-flex align-items-center gap-2"><span class="dot-lg bg-info"></span> Remaining Stock</span>
+              <span class="d-flex align-items-center gap-2"><span class="dot-lg bg-orange"></span> Units Sold</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

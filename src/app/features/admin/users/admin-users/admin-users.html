@@ -1,1 +1,131 @@
 <p>admin-users works!</p>
+<div class="admin-layout">
+  <app-admin-sidebar />
+
+  <main class="admin-main">
+    <div class="container-fluid px-0 px-lg-4">
+      <header class="admin-header d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+        <div>
+          <h1 class="page-title mb-1">Users</h1>
+          <p class="page-sub mb-0">Manage customer accounts and access levels</p>
+        </div>
+        <div class="d-flex align-items-center gap-2 text-muted small bg-white border px-3 py-2 rounded-pill shadow-sm">
+          <span class="fw-bold text-main">{{ userService.customerCount() }}</span> registered customers
+        </div>
+      </header>
+
+      <!-- Filters -->
+      <div class="filters-container mb-4">
+        <div class="row g-3">
+          <div class="col-12 col-md-6 col-lg-5">
+            <div class="search-box position-relative">
+              <svg class="search-icon position-absolute" style="left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input
+                class="form-control ps-5 py-2 rounded-3 shadow-sm"
+                [ngModel]="searchQuery()"
+                (ngModelChange)="searchQuery.set($event); onFilterChange()"
+                placeholder="Search by name or email..."
+              />
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-7">
+            <div class="row g-2">
+              <div class="col-6">
+                <select class="form-select py-2 rounded-3 shadow-sm" [ngModel]="roleFilter()" (ngModelChange)="roleFilter.set($event); onFilterChange()">
+                  <option value="">All Roles</option>
+                  <option value="admin">Admin</option>
+                  <option value="customer">Customer</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <select class="form-select py-2 rounded-3 shadow-sm" [ngModel]="sortBy()" (ngModelChange)="sortBy.set($event)">
+                  <option value="name-asc">Name (A-Z)</option>
+                  <option value="name-desc">Name (Z-A)</option>
+                  <option value="email-asc">Email (A-Z)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Card -->
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0 zora-table">
+            <thead>
+              <tr>
+                <th class="ps-4 py-3">User Account</th>
+                <th class="py-3">Role</th>
+                <th class="py-3">Status</th>
+                <th class="pe-4 py-3 text-end">Management</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of paginatedUsers()" [class.opacity-50]="userService.isDisabled(user.id)">
+                <td class="ps-4">
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="avatar-md bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 40px; height: 40px;">
+                      {{ user.name.charAt(0).toUpperCase() }}
+                    </div>
+                    <div>
+                      <div class="fw-bold text-main" style="font-size: 14px;">{{ user.name }}</div>
+                      <div class="text-muted small">{{ user.email }}</div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="badge rounded-pill px-3 py-2" [ngClass]="user.role === 'admin' ? 'bg-warning-subtle text-warning-emphasis border border-warning' : 'bg-light text-muted border'">
+                    {{ user.role | titlecase }}
+                  </span>
+                </td>
+                <td>
+                  <span class="badge rounded-pill px-3 py-2" [ngClass]="userService.isDisabled(user.id) ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'">
+                    {{ userService.isDisabled(user.id) ? 'Disabled' : 'Active' }}
+                  </span>
+                </td>
+                <td class="pe-4 text-end">
+                  <button
+                    class="btn btn-sm rounded-3 px-3 shadow-sm transition-all"
+                    [ngClass]="userService.isDisabled(user.id) ? 'btn-outline-success' : 'btn-outline-danger'"
+                    (click)="userService.toggleActive(user.id)"
+                    [disabled]="user.role === 'admin'">
+                    {{ userService.isDisabled(user.id) ? 'Enable Account' : 'Disable Account' }}
+                  </button>
+                </td>
+              </tr>
+              <tr *ngIf="paginatedUsers().length === 0">
+                <td colspan="4" class="text-center py-5 text-muted small font-monospace">
+                  No users found for the current search criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Footer -->
+        <div class="pagination-container" *ngIf="filteredUsers().length > 0">
+          <div class="text-muted small fw-medium">
+            Showing page <span class="text-main fw-bold">{{ currentPage() }}</span> of <span class="text-main fw-bold">{{ totalPages() }}</span>
+          </div>
+
+          <ul class="zora-pagination">
+            <li>
+              <button class="page-link-custom border-0" [disabled]="currentPage() === 1" (click)="setPage(currentPage() - 1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+              </button>
+            </li>
+            <li *ngFor="let p of [].constructor(totalPages()); let i = index">
+              <button class="page-link-custom border-0" [class.active]="currentPage() === i + 1" (click)="setPage(i + 1)">{{ i + 1 }}</button>
+            </li>
+            <li>
+              <button class="page-link-custom border-0" [disabled]="currentPage() === totalPages()" (click)="setPage(currentPage() + 1)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
