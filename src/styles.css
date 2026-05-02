@@ -33,7 +33,7 @@ body {
   background-color: var(--zora-gold) !important;
   border-color: var(--zora-gold) !important;
   color: #fff !important;
-  
+
   &:hover {
     background-color: var(--zora-gold-hover) !important;
   }
@@ -42,7 +42,7 @@ body {
 .btn-outline-teal {
   color: var(--zora-teal) !important;
   border-color: var(--zora-teal) !important;
-  
+
   &:hover {
     background-color: var(--zora-teal) !important;
     color: white !important;
@@ -60,17 +60,17 @@ body {
 
 .btn-zora-gold {
     background-color: var(--zora-gold) !important;
-    color: white !important; 
+    color: white !important;
     border: none;
     transition: all 0.3s ease;
 }
 
-.btn-zora-gold:hover, 
-.btn-zora-gold:active, 
+.btn-zora-gold:hover,
+.btn-zora-gold:active,
 .btn-zora-gold:focus,
 .btn-zora-gold:not(:disabled):not(.disabled):active {
-    background-color: #b8860b !important; 
-    color: white !important; 
+    background-color: #b8860b !important;
+    color: white !important;
     box-shadow: 0 4px 12px var(--zora-teal-glow);
     text-decoration: none;
 }
@@ -78,4 +78,12 @@ body {
 .btn-zora-gold:disabled {
     color: rgba(255, 255, 255, 0.8) !important;
     cursor: not-allowed;
+}
+.product-card {
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }

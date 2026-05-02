@@ -1,32 +1,89 @@
-<div class="container mt-4">
-  <h2 class="mb-4">All Products</h2>
-
-  <div class="row g-4">
-    @for (p of products(); track p.id) {
-      <div class="col-md-4">
-
-        <div class="card h-100 shadow-sm border-0">
-
-          <img [src]="p.image" class="card-img-top" style="height:200px; object-fit:cover;" />
-
-          <div class="card-body text-center">
-
-            <h5>{{ p.name }}</h5>
-            <p class="text-primary fw-bold">${{ p.price }}</p>
-
-            <a [routerLink]="['/products', p.id]" class="btn btn-outline-dark btn-sm me-2">
-              View
-            </a>
-
-            <button class="btn btn-primary btn-sm" (click)="addToCart(p)">
-              Add to Cart
-            </button>
-
-          </div>
-
-        </div>
-
+<div class="container py-5">
+  <!-- FILTER BAR -->
+  <div class="card p-4 mb-4 shadow-sm">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Search</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters.search"
+          (input)="applyFilters()"
+        />
       </div>
-    }
+
+      <div class="col-md-2">
+        <label class="form-label">Category</label>
+        <select class="form-select" [(ngModel)]="filters.category" (change)="applyFilters()">
+          <option value="">All</option>
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">Min</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="filters.min"
+          (input)="applyFilters()"
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">Max</label>
+        <input
+          type="number"
+          class="form-control"
+          [(ngModel)]="filters.max"
+          (input)="applyFilters()"
+        />
+      </div>
+
+      <div class="col-md-2">
+        <label class="form-label">Sort</label>
+        <select class="form-select" [(ngModel)]="filters.sort" (change)="applyFilters()">
+          <option value="">None</option>
+          <option value="priceAsc">Price ↑</option>
+          <option value="priceDesc">Price ↓</option>
+          <option value="name">Name A-Z</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+
+      <div class=" d-flex align-items-end w-100 text-nowrap">
+        <button class="btn btn-secondary w-100" (click)="resetFilters()">Reset</button>
+      </div>
+    </div>
   </div>
+
+  <!-- PRODUCTS -->
+  <div *ngIf="filteredProducts.length > 0; else noData" class="row g-4">
+    <div class="col-md-4" *ngFor="let p of filteredProducts; trackBy: trackById">
+      <div class="card h-100 shadow-sm product-card">
+        <img [src]="p.imageUrl" class="card-img-top" style="height: 200px; object-fit: cover" />
+
+        <div class="card-body text-center">
+          <h5 class="fw-bold">{{ p.name }}</h5>
+
+          <p class="text-muted small">{{ p.description | slice: 0 : 60 }}...</p>
+
+          <h6 class="text-primary fw-bold mb-3">${{ p.price }}</h6>
+
+          <div class="d-flex gap-2">
+            <a [routerLink]="['/products', p.id]" class="btn btn-outline-dark w-50"> View </a>
+
+            <button (click)="addToCart(p)" class="btn btn-primary w-50">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY -->
+  <ng-template #noData>
+    <div class="text-center mt-5">
+      <h4>No products found 😢</h4>
+    </div>
+  </ng-template>
 </div>

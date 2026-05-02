@@ -12,12 +12,12 @@
   {
     "id": "p-2",
     "name": "Smartphone",
-    "price": 699.00,
+    "price": 699.0,
     "categoryId": "cat-1",
     "description": "Latest model smartphone with advanced camera.",
     "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9",
     "stock": 20,
-    "oldPrice": 799.00,
+    "oldPrice": 799.0,
     "isFeatured": true
   },
   {
@@ -32,7 +32,7 @@
   {
     "id": "p-4",
     "name": "Smart Watch",
-    "price": 199.50,
+    "price": 199.5,
     "categoryId": "cat-1",
     "description": "Fitness tracking smart watch.",
     "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30",
@@ -60,12 +60,12 @@
   {
     "id": "p-7",
     "name": "Winter Jacket",
-    "price": 120.00,
+    "price": 120.0,
     "categoryId": "cat-2",
     "description": "Warm winter jacket.",
     "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5",
     "stock": 30,
-    "oldPrice": 150.00,
+    "oldPrice": 150.0,
     "isFeatured": true
   },
   {
@@ -80,7 +80,7 @@
   {
     "id": "p-9",
     "name": "Blender",
-    "price": 45.00,
+    "price": 45.0,
     "categoryId": "cat-3",
     "description": "High-speed blender for smoothies.",
     "image": "https://images.unsplash.com/photo-1585237832863-71827e8a93cb",
@@ -89,7 +89,7 @@
   {
     "id": "p-10",
     "name": "Throw Pillow",
-    "price": 15.00,
+    "price": 15.0,
     "categoryId": "cat-3",
     "description": "Decorative throw pillow.",
     "image": "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2",
@@ -98,7 +98,7 @@
   {
     "id": "p-11",
     "name": "Yoga Mat",
-    "price": 25.00,
+    "price": 25.0,
     "categoryId": "cat-4",
     "description": "Non-slip yoga mat.",
     "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f",
@@ -107,7 +107,7 @@
   {
     "id": "p-12",
     "name": "Dumbbell Set",
-    "price": 60.00,
+    "price": 60.0,
     "categoryId": "cat-4",
     "description": "Adjustable dumbbell set.",
     "image": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61",
@@ -116,7 +116,7 @@
   {
     "id": "p-13",
     "name": "Tennis Racket",
-    "price": 85.00,
+    "price": 85.0,
     "categoryId": "cat-4",
     "description": "Professional tennis racket.",
     "image": "https://images.unsplash.com/photo-1617300732551-78fb8f01b157",
@@ -135,7 +135,7 @@
   {
     "id": "p-15",
     "name": "Board Game",
-    "price": 35.00,
+    "price": 35.0,
     "categoryId": "cat-5",
     "description": "Family board game.",
     "image": "https://images.unsplash.com/photo-1610890716171-6b1e0ce26228",
@@ -144,7 +144,7 @@
   {
     "id": "p-16",
     "name": "Puzzle",
-    "price": 18.50,
+    "price": 18.5,
     "categoryId": "cat-5",
     "description": "1000-piece jigsaw puzzle.",
     "image": "https://images.unsplash.com/photo-1587399434861-c8ef634020a6",
