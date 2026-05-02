@@ -50,53 +50,67 @@
       </div>
 
       <!-- Table Card -->
-      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0 zora-table">
             <thead>
               <tr>
-                <th class="ps-4 py-3">User Account</th>
-                <th class="py-3">Role</th>
-                <th class="py-3">Status</th>
-                <th class="pe-4 py-3 text-end">Management</th>
+                <th class="ps-4 py-3">User Profile</th>
+                <th class="py-3">Permissions & Role</th>
+                <th class="py-3">Account Status</th>
+                <th class="pe-4 py-3 text-end">Access Management</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let user of paginatedUsers()" [class.opacity-50]="userService.isDisabled(user.id)">
                 <td class="ps-4">
                   <div class="d-flex align-items-center gap-3">
-                    <div class="avatar-md bg-primary-subtle text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 40px; height: 40px;">
+                    <div class="avatar-md bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm" style="width: 44px; height: 44px; border: 2px solid var(--card-bg);">
                       {{ user.name.charAt(0).toUpperCase() }}
                     </div>
                     <div>
-                      <div class="fw-bold text-main" style="font-size: 14px;">{{ user.name }}</div>
-                      <div class="text-muted small">{{ user.email }}</div>
+                      <div class="fw-bold text-main" style="font-size: 15px;">{{ user.name }}</div>
+                      <div class="text-muted small d-flex align-items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        {{ user.email }}
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <span class="badge rounded-pill px-3 py-2" [ngClass]="user.role === 'admin' ? 'bg-warning-subtle text-warning-emphasis border border-warning' : 'bg-light text-muted border'">
+                  <span class="badge rounded-pill px-3 py-2" [ngClass]="user.role === 'admin' ? 'bg-warning-subtle text-warning-emphasis border border-warning-subtle' : 'bg-light text-muted border'" style="font-size: 11px;">
+                    <svg *ngIf="user.role === 'admin'" class="me-1" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
                     {{ user.role | titlecase }}
                   </span>
                 </td>
                 <td>
-                  <span class="badge rounded-pill px-3 py-2" [ngClass]="userService.isDisabled(user.id) ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'">
+                  <span class="badge rounded-pill px-3 py-2 d-inline-flex align-items-center gap-1" [ngClass]="userService.isDisabled(user.id) ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'" style="font-size: 11px;">
+                    <span class="dot" [ngClass]="userService.isDisabled(user.id) ? 'bg-danger' : 'bg-success'"></span>
                     {{ userService.isDisabled(user.id) ? 'Disabled' : 'Active' }}
                   </span>
                 </td>
                 <td class="pe-4 text-end">
-                  <button
-                    class="btn btn-sm rounded-3 px-3 shadow-sm transition-all"
-                    [ngClass]="userService.isDisabled(user.id) ? 'btn-outline-success' : 'btn-outline-danger'"
-                    (click)="userService.toggleActive(user.id)"
-                    [disabled]="user.role === 'admin'">
-                    {{ userService.isDisabled(user.id) ? 'Enable Account' : 'Disable Account' }}
-                  </button>
+                  <div class="d-flex justify-content-end align-items-center gap-2">
+                    <button
+                      class="btn btn-sm rounded-pill px-3 fw-bold transition-all"
+                      [ngClass]="userService.isDisabled(user.id) ? 'btn-success' : 'btn-outline-danger'"
+                      (click)="userService.toggleActive(user.id)"
+                      [disabled]="user.role === 'admin'"
+                      style="font-size: 11px;">
+                      {{ userService.isDisabled(user.id) ? 'Restore Access' : 'Suspend Account' }}
+                    </button>
+                    <button class="btn btn-sm btn-icon-hover p-2" title="Edit Permissions" [disabled]="user.role === 'admin'">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    </button>
+                  </div>
                 </td>
               </tr>
               <tr *ngIf="paginatedUsers().length === 0">
-                <td colspan="4" class="text-center py-5 text-muted small font-monospace">
-                  No users found for the current search criteria.
+                <td colspan="4" class="text-center py-5">
+                  <div class="py-4 opacity-50">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mb-3"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <p class="mb-0 fw-medium">No users match your search</p>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -106,26 +120,40 @@
         <!-- Pagination Footer -->
         <div class="pagination-container" *ngIf="filteredUsers().length > 0">
           <div class="text-muted small fw-medium">
-            Showing page <span class="text-main fw-bold">{{ currentPage() }}</span> of <span class="text-main fw-bold">{{ totalPages() }}</span>
+            Showing <span class="text-main fw-bold">{{ (currentPage() - 1) * pageSize() + 1 }}</span> to
+            <span class="text-main fw-bold">{{ currentPage() * pageSize() > filteredUsers().length ? filteredUsers().length : currentPage() * pageSize() }}</span> of
+            <span class="text-main fw-bold">{{ filteredUsers().length }}</span> users
           </div>
 
-          <ul class="zora-pagination">
-            <li>
-              <button class="page-link-custom border-0" [disabled]="currentPage() === 1" (click)="setPage(currentPage() - 1)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-              </button>
-            </li>
-            <li *ngFor="let p of [].constructor(totalPages()); let i = index">
-              <button class="page-link-custom border-0" [class.active]="currentPage() === i + 1" (click)="setPage(i + 1)">{{ i + 1 }}</button>
-            </li>
-            <li>
-              <button class="page-link-custom border-0" [disabled]="currentPage() === totalPages()" (click)="setPage(currentPage() + 1)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-              </button>
-            </li>
-          </ul>
+          <div class="d-flex align-items-center gap-4">
+            <div class="d-flex align-items-center gap-2">
+              <span class="text-muted small fw-bold">PER PAGE</span>
+              <select class="form-select form-select-sm border shadow-none" style="width: 70px; font-weight: 600; border-radius: 8px; font-size: 12px;" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
+                <option [ngValue]="5">5</option>
+                <option [ngValue]="10">10</option>
+                <option [ngValue]="25">25</option>
+              </select>
+            </div>
+
+            <ul class="zora-pagination">
+              <li>
+                <button class="page-link-custom border-0" [disabled]="currentPage() === 1" (click)="setPage(currentPage() - 1)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+              </li>
+              <li *ngFor="let p of [].constructor(totalPages()); let i = index">
+                <button class="page-link-custom border-0" [class.active]="currentPage() === i + 1" (click)="setPage(i + 1)">{{ i + 1 }}</button>
+              </li>
+              <li>
+                <button class="page-link-custom border-0" [disabled]="currentPage() === totalPages()" (click)="setPage(currentPage() + 1)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+
     </div>
   </main>
 </div>

@@ -74,7 +74,6 @@ export class AdminProducts implements OnInit {
         case 'price-desc': return b.price - a.price;
         case 'stock-asc': return a.stock - b.stock;
         case 'stock-desc': return b.stock - a.stock;
-        case 'sold-desc': return b.sold - a.sold;
         default: return 0;
       }
     });
@@ -100,17 +99,14 @@ export class AdminProducts implements OnInit {
   // UI state
   showFormModal = false;
   showDeleteModal = false;
-  showSoldModal = false; // New state for mini sold modal
   editingId: string | null = null;
   deletingProduct: ProductDisplay | null = null;
-  updatingSoldProduct: ProductDisplay | null = null; // New state
-  newSoldCount = 0; // New state
   formError = '';
 
   form = this.emptyForm();
 
   private emptyForm() {
-    return { name: '', price: 0, oldPrice: undefined as number | undefined, categoryId: '', description: '', image: '', stock: 0, sold: 0, isFeatured: false };
+    return { name: '', price: 0, oldPrice: undefined as number | undefined, categoryId: '', description: '', image: '', stock: 0, isFeatured: false };
   }
 
   // Reset pagination on filter change
@@ -144,7 +140,7 @@ export class AdminProducts implements OnInit {
   }
 
   openEditModal(p: ProductDisplay) {
-    this.form = { name: p.name, price: p.price, oldPrice: p.oldPrice, categoryId: p.categoryId, description: p.description, image: p.image, stock: p.stock, sold: p.sold, isFeatured: !!p.isFeatured };
+    this.form = { name: p.name, price: p.price, oldPrice: p.oldPrice, categoryId: p.categoryId, description: p.description, image: p.image, stock: p.stock, isFeatured: !!p.isFeatured };
     this.editingId = p.id;
     this.formError = '';
     this.showFormModal = true;
@@ -174,7 +170,6 @@ export class AdminProducts implements OnInit {
       description: this.form.description.trim(),
       image: this.form.image.trim() || 'https://placehold.co/400x300?text=Product',
       stock: +this.form.stock,
-      sold: +this.form.sold,
       isFeatured: this.form.isFeatured,
     };
 
@@ -184,20 +179,6 @@ export class AdminProducts implements OnInit {
       this.productService.add({ ...payload, id: `p-${Date.now()}` });
     }
     this.closeModal();
-  }
-
-  updateSold(p: ProductDisplay) {
-    this.updatingSoldProduct = p;
-    this.newSoldCount = p.sold;
-    this.showSoldModal = true;
-  }
-
-  confirmUpdateSold() {
-    if (this.updatingSoldProduct) {
-      this.productService.updateSold(this.updatingSoldProduct.id, this.newSoldCount);
-      this.showSoldModal = false;
-      this.updatingSoldProduct = null;
-    }
   }
 
   confirmDelete() {

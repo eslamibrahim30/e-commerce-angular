@@ -66,72 +66,76 @@
       </div>
 
       <!-- Table Section -->
-      <div class="card overflow-hidden border-0 shadow-sm">
+      <div class="card overflow-hidden border-0 shadow-sm mb-5">
         <div class="table-responsive">
           <table class="table table-hover align-middle mb-0 zora-table">
             <thead>
               <tr>
-                <th class="ps-4">Product</th>
+                <th class="ps-4">Product Details</th>
                 <th>Category</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Sold</th>
+                <th>Pricing</th>
+                <th>Inventory</th>
                 <th>Featured</th>
-                <th class="pe-4">Actions</th>
+                <th class="pe-4 text-end">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let p of paginatedProducts()">
                 <td class="ps-4">
                   <div class="d-flex align-items-center gap-3">
-                    <img [src]="p.image" class="rounded shadow-sm" style="width: 42px; height: 42px; object-fit: cover; background: var(--bg-color);" [alt]="p.name" />
+                    <div class="position-relative">
+                      <img [src]="p.image" class="rounded shadow-sm" style="width: 48px; height: 48px; object-fit: cover; background: var(--bg-color);" [alt]="p.name" />
+                      <div *ngIf="p.stock === 0" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded d-flex align-items-center justify-content-center">
+                        <span class="text-white fw-bold" style="font-size: 8px;">OUT</span>
+                      </div>
+                    </div>
                     <div>
-                      <div class="fw-bold product-name-cell">{{ p.name }}</div>
-                      <div class="text-muted small font-monospace opacity-75">{{ p.id }}</div>
+                      <div class="fw-bold text-main">{{ p.name }}</div>
+                      <div class="text-muted small font-monospace opacity-75" style="font-size: 11px;">#{{ p.id }}</div>
                     </div>
                   </div>
                 </td>
-                <td><span class="badge zora-badge-muted border">{{ p.category }}</span></td>
+                <td><span class="badge zora-badge-muted border rounded-pill">{{ p.category }}</span></td>
                 <td>
                   <div class="d-flex flex-column">
                     <span class="fw-bold price-text">{{ p.price | currency }}</span>
-                    <span *ngIf="p.oldPrice" class="text-muted text-decoration-line-through small">{{ p.oldPrice | currency }}</span>
+                    <span *ngIf="p.oldPrice" class="text-muted text-decoration-line-through small" style="font-size: 11px;">{{ p.oldPrice | currency }}</span>
                   </div>
                 </td>
                 <td>
-                  <span class="badge rounded-pill px-3 py-2" [ngClass]="getStockBootstrapClass(p.stock)">
-                    {{ p.stock }} units
-                  </span>
-                </td>
-                <td>
-                  <div class="d-flex align-items-center gap-2">
-                    <span class="fw-bold text-main">{{ p.sold }}</span>
-                    <button class="btn btn-sm btn-outline-secondary border-0 p-1 rounded-circle" (click)="updateSold(p)" style="line-height: 1;">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-                    </button>
-                    <div class="sold-progress d-none d-xl-block">
-                      <div class="sold-bar" [style.width.%]="(p.sold / (p.sold + p.stock + 1)) * 100"></div>
+                  <div class="d-flex flex-column gap-1">
+                    <span class="badge rounded-pill px-3 py-1 w-fit" [ngClass]="getStockBootstrapClass(p.stock)" style="width: fit-content; font-size: 11px;">
+                      {{ p.stock }} in stock
+                    </span>
+                    <div class="progress" style="height: 4px; width: 80px; background: var(--bg-color);">
+                      <div class="progress-bar" [ngClass]="p.stock > 10 ? 'bg-success' : (p.stock > 0 ? 'bg-warning' : 'bg-danger')" [style.width.%]="p.stock > 100 ? 100 : p.stock"></div>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <span [class.text-warning]="p.isFeatured" [class.text-muted]="!p.isFeatured">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" [attr.fill]="p.isFeatured ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  </span>
+                  <div class="form-check form-switch m-0">
+                    <input class="form-check-input" type="checkbox" [checked]="p.isFeatured" (change)="productService.update(p.id, { isFeatured: !p.isFeatured })" style="cursor: pointer;">
+                  </div>
                 </td>
                 <td class="pe-4 text-end">
-                  <div class="d-flex justify-content-end gap-2">
-                    <button class="btn btn-sm btn-outline-primary border-0 rounded-3 p-2" (click)="openEditModal(p)" title="Edit">
+                  <div class="d-flex justify-content-end gap-1">
+                    <button class="btn btn-sm btn-icon-hover p-2" (click)="openEditModal(p)" title="Edit">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                     </button>
-                    <button class="btn btn-sm btn-outline-danger border-0 rounded-3 p-2" (click)="openDeleteModal(p)" title="Delete">
+                    <button class="btn btn-sm btn-icon-hover text-danger p-2" (click)="openDeleteModal(p)" title="Delete">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                     </button>
                   </div>
                 </td>
               </tr>
               <tr *ngIf="paginatedProducts().length === 0">
-                <td colspan="7" class="text-center py-5 text-muted font-monospace">No products found for the current criteria.</td>
+                <td colspan="7" class="text-center py-5">
+                  <div class="py-4">
+                    <svg class="text-muted opacity-25 mb-3" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <p class="text-muted fw-medium">No products match your filters</p>
+                    <button class="btn btn-sm btn-outline-primary rounded-pill px-3" (click)="searchQuery.set(''); selectedCategory.set(''); stockFilter.set('')">Clear All Filters</button>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -139,26 +143,26 @@
 
         <!-- Pagination Footer -->
         <div class="pagination-container" *ngIf="filteredProducts().length > 0">
-          <div class="text-muted small fw-medium">
-            Showing <span class="text-main fw-bold">{{ (currentPage() - 1) * pageSize() + 1 }}</span> -
+          <div class="text-muted small fw-medium d-none d-md-block">
+            Showing <span class="text-main fw-bold">{{ (currentPage() - 1) * pageSize() + 1 }}</span> to
             <span class="text-main fw-bold">{{ currentPage() * pageSize() > filteredProducts().length ? filteredProducts().length : currentPage() * pageSize() }}</span> of
             <span class="text-main fw-bold">{{ filteredProducts().length }}</span> products
           </div>
 
-          <div class="d-flex align-items-center gap-3">
+          <div class="d-flex align-items-center gap-4">
             <div class="d-flex align-items-center gap-2">
-              <span class="text-muted small fw-bold">SHOW</span>
-              <select class="form-select form-select-sm border shadow-none" style="width: 70px; font-weight: 600; border-radius: 8px;" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
+              <span class="text-muted small fw-bold">PER PAGE</span>
+              <select class="form-select form-select-sm border shadow-none" style="width: 70px; font-weight: 600; border-radius: 8px; font-size: 12px;" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
                 <option [ngValue]="5">5</option>
                 <option [ngValue]="10">10</option>
                 <option [ngValue]="25">25</option>
               </select>
             </div>
 
-            <ul class="zora-pagination" *ngIf="pageSize() !== -1">
+            <ul class="zora-pagination">
               <li>
                 <button class="page-link-custom border-0" [disabled]="currentPage() === 1" (click)="setPage(currentPage() - 1)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
                 </button>
               </li>
               <li *ngFor="let p of [].constructor(totalPages()); let i = index">
@@ -166,30 +170,15 @@
               </li>
               <li>
                 <button class="page-link-custom border-0" [disabled]="currentPage() === totalPages()" (click)="setPage(currentPage() + 1)">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
                 </button>
               </li>
             </ul>
           </div>
         </div>
       </div>
+
     </div>
-    <!-- Update Sold Mini Modal -->
-    <div class="modal-overlay" *ngIf="showSoldModal" (click)="showSoldModal = false">
-      <div class="modal-content-custom" style="max-width: 350px;" (click)="$event.stopPropagation()">
-        <h5 class="fw-bold mb-3">Update Sales Count</h5>
-        <p class="text-muted small mb-4">Set manual sales for <b>{{ updatingSoldProduct?.name }}</b></p>
-
-        <div class="mb-4">
-          <label class="form-label text-muted small fw-bold">TOTAL SOLD</label>
-          <input type="number" [(ngModel)]="newSoldCount" class="form-control" />
-        </div>
-
-        <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-light px-3 py-2 rounded-pill small" (click)="showSoldModal = false">Cancel</button>
-          <button class="btn btn-primary px-3 py-2 rounded-pill small" (click)="confirmUpdateSold()">Update</button>
-        </div>
-      </div>
     </div>
   </main>
 </div>

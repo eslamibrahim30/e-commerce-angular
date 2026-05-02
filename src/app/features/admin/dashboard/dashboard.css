@@ -97,6 +97,54 @@
 .bg-info { background: #06b6d4 !important; }
 .bg-orange { background: #f97316 !important; }
 
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='light'] .btn-glass {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.stock-stats > div {
+  transition: transform 0.2s ease;
+}
+
+.stock-stats > div:hover {
+  transform: translateX(4px);
+}
+
+.table thead th {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.table tbody td {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(var(--zora-primary-rgb), 0.02);
+}
+
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 @media (max-width: 991.98px) {
   .admin-main {
     margin-left: 0;

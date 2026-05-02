@@ -1,12 +1,3 @@
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-dashboard',
-  imports: [],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css',
-})
-export class Dashboard {}
 import { Component, ElementRef, inject, ViewChild, AfterViewInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
@@ -34,8 +25,6 @@ export class Dashboard implements AfterViewInit {
 
   @ViewChild('barChart') barChartRef!: ElementRef;
   @ViewChild('stockDoughnut') stockDoughnutRef!: ElementRef;
-  @ViewChild('topSellingChart') topSellingChartRef!: ElementRef;
-  @ViewChild('stockVsSalesChart') stockVsSalesChartRef!: ElementRef;
 
   private charts: any[] = [];
 
@@ -133,8 +122,6 @@ export class Dashboard implements AfterViewInit {
     }
     this.buildBarChart();
     this.buildStockDoughnut();
-    this.buildTopSellingChart();
-    this.buildStockVsSalesChart();
   }
 
   private buildBarChart() {
@@ -199,112 +186,6 @@ export class Dashboard implements AfterViewInit {
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { display: false } }
-      }
-    });
-    this.charts.push(chart);
-  }
-
-  private buildTopSellingChart() {
-    const textColor = this.getChartTextColor();
-    const gridColor = this.getChartGridColor();
-
-    // Use pre-calculated sold data from ProductService
-    const topSales = [...this.productService.products()]
-      .sort((a, b) => b.sold - a.sold)
-      .slice(0, 5)
-      .map(p => ({ name: p.name, qty: p.sold }));
-
-    const chart = new Chart(this.topSellingChartRef.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: topSales.map(s => s.name),
-        datasets: [{
-          label: 'Units Sold',
-          data: topSales.map(s => s.qty),
-          backgroundColor: '#D4AF37', // Gold from theme
-          borderRadius: 4,
-          indexAxis: 'y'
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false },
-          tooltip: { backgroundColor: '#1E1E1E', titleColor: '#E0E0E0', bodyColor: '#E0E0E0' }
-        },
-        scales: {
-          x: {
-            beginAtZero: true,
-            grid: { color: gridColor },
-            ticks: { color: textColor }
-          },
-          y: {
-            grid: { display: false },
-            ticks: { color: textColor }
-          }
-        }
-      }
-    });
-    this.charts.push(chart);
-  }
-
-  private buildStockVsSalesChart() {
-    const textColor = this.getChartTextColor();
-    const gridColor = this.getChartGridColor();
-
-    const categories = this.categoryService.getAll();
-    const products = this.productService.getAllRaw();
-
-    const data = categories.map(cat => {
-      const catProducts = products.filter(p => p.categoryId === cat.id);
-      const remainingStock = catProducts.reduce((sum, p) => sum + p.stock, 0);
-      const unitsSold = catProducts.reduce((sum, p) => sum + p.sold, 0);
-
-      return { name: cat.name, remainingStock, unitsSold };
-    }).slice(0, 6);
-
-    const chart = new Chart(this.stockVsSalesChartRef.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: data.map(d => d.name),
-        datasets: [
-          {
-            label: 'Stock',
-            data: data.map(d => d.remainingStock),
-            backgroundColor: '#0B7974',
-            borderRadius: 4
-          },
-          {
-            label: 'Sold',
-            data: data.map(d => d.unitsSold),
-            backgroundColor: '#D4AF37',
-            borderRadius: 4
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'bottom',
-            labels: { color: textColor, boxWidth: 12, padding: 20, font: { size: 11 } }
-          },
-          tooltip: { backgroundColor: '#1E1E1E', titleColor: '#E0E0E0', bodyColor: '#E0E0E0' }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            grid: { color: gridColor },
-            ticks: { color: textColor }
-          },
-          x: {
-            grid: { display: false },
-            ticks: { color: textColor }
-          }
-        }
       }
     });
     this.charts.push(chart);
