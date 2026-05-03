@@ -4,6 +4,6 @@
 <div class="main-content">
   <router-outlet />
 </div>
-@if (!isAdminRoute()) {
+@if (isHomeRoute()) {
   <app-footer></app-footer>
 }
