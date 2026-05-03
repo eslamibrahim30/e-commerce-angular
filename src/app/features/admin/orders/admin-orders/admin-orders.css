@@ -1,0 +1,83 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-color);
+  transition: background 0.3s ease;
+}
+
+.admin-main {
+  margin-left: 260px;
+  flex: 1;
+  padding: 32px 0;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+[data-theme='dark'] .bg-light {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Professional Table Styling */
+.zora-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.zora-table thead th {
+  background: rgba(var(--zora-primary-rgb), 0.03);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.zora-table tbody td {
+  padding: 1.25rem 1rem;
+  font-size: 14px;
+}
+
+.zora-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.zora-table tbody tr:hover {
+  background-color: rgba(var(--zora-primary-rgb), 0.02) !important;
+}
+
+/* Pagination Links (Same as products for consistency) */
+.page-link-custom {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-muted);
+  font-weight: 600; font-size: 13px;
+  transition: all 0.2s ease;
+}
+.page-link-custom.active {
+  background: var(--zora-primary);
+  color: white; border-color: var(--zora-primary) !important;
+}
+
+@media (max-width: 991.98px) {
+  .admin-main {
+    margin-left: 0;
+    padding: 80px 16px 32px;
+  }
+}

@@ -1,0 +1,120 @@
+/* Stat Cards */
+.stat-card {
+  background: var(--card-bg) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent !important;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.5) !important; /* "border light" effect */
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1) !important;
+}
+
+[data-theme='dark'] .stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Top Accent Bars */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+}
+.accent-blue::before { background: #3b82f6; }
+.accent-teal::before { background: #10b981; }
+.accent-orange::before { background: #f59e0b; }
+.accent-red::before { background: #ef4444; }
+.accent-purple::before { background: #8b5cf6; }
+.accent-indigo::before { background: #6366f1; }
+.accent-cyan::before { background: #06b6d4; }
+.accent-gold::before { background: #d4af37; }
+
+.stat-label {
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.stat-icon-wrapper {
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+}
+.stat-icon-wrapper.blue { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.stat-icon-wrapper.teal { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.stat-icon-wrapper.orange { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.stat-icon-wrapper.red { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+.stat-icon-wrapper.purple { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+.stat-icon-wrapper.indigo { background: rgba(99, 102, 241, 0.1); color: #6366f1; }
+.stat-icon-wrapper.cyan { background: rgba(6, 182, 212, 0.1); color: #06b6d4; }
+.stat-icon-wrapper.gold { background: rgba(212, 175, 55, 0.1); color: #d4af37; }
+
+/* Chart Cards */
+.chart-card {
+  background: var(--card-bg) !important;
+  border-radius: 16px !important;
+}
+
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.dot-lg { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.bg-success { background: #10b981 !important; }
+.bg-warning { background: #f59e0b !important; }
+.bg-danger { background: #ef4444 !important; }
+.bg-info { background: #06b6d4 !important; }
+.bg-orange { background: #f97316 !important; }
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+[data-theme='light'] .btn-glass {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.stock-stats > div {
+  transition: transform 0.2s ease;
+}
+
+.stock-stats > div:hover {
+  transform: translateX(4px);
+}
+
+.table thead th {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+}
+
+.table tbody td {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(var(--zora-primary-rgb), 0.02);
+}
+
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+

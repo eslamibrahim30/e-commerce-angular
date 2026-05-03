@@ -1,0 +1,149 @@
+/* Sold Progress Bar */
+.sold-progress {
+  width: 60px;
+  height: 4px;
+  background: var(--bg-color);
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.sold-bar {
+  height: 100%;
+  background: var(--zora-primary);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sold-clickable-no {
+  cursor: pointer;
+  border-bottom: 1px dashed transparent;
+  padding-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.sold-clickable-no:hover {
+  color: var(--zora-primary) !important;
+  border-bottom-color: var(--zora-primary);
+}
+
+/* Professional Table Styling */
+.zora-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.zora-table thead th {
+  background: rgba(var(--zora-primary-rgb), 0.03);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.zora-table tbody td {
+  padding: 1.25rem 1rem;
+  font-size: 14px;
+}
+
+.zora-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.zora-table tbody tr:hover {
+  background-color: rgba(var(--zora-primary-rgb), 0.02) !important;
+  transform: scale(1.002);
+}
+
+/* Refined Badges */
+.zora-badge-muted {
+  background: rgba(0,0,0,0.03);
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 11px;
+  padding: 0.4em 0.8em;
+}
+
+[data-theme='dark'] .zora-badge-muted {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Custom Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: rgba(var(--zora-primary-rgb), 0.01);
+  border-top: 1px solid var(--border-color);
+}
+
+.zora-pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 6px;
+}
+
+.page-link-custom {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.page-link-custom:hover:not(:disabled) {
+  background: var(--bg-color);
+  color: var(--zora-primary);
+  border-color: var(--zora-primary) !important;
+}
+
+.page-link-custom.active {
+  background: var(--zora-primary);
+  color: white;
+  border-color: var(--zora-primary) !important;
+  box-shadow: 0 4px 10px rgba(var(--zora-primary-rgb), 0.3);
+}
+
+.page-link-custom:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Price styling */
+.price-text {
+  color: var(--zora-primary);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+}
+
+.btn-icon-hover {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.btn-icon-hover:hover {
+  background: rgba(var(--zora-primary-rgb), 0.08);
+  color: var(--zora-primary);
+}
+
+.btn-icon-hover.text-danger:hover {
+  background: rgba(220, 53, 69, 0.08);
+  color: #dc3545;
+}
+
