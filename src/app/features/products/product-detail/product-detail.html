@@ -1,38 +1,317 @@
-@if (product(); as product) {
-  <div class="container mt-5">
-    <div class="row">
+<!-- Not Found -->
+<div *ngIf="!product" class="container py-5 text-center">
+  <div class="zora-empty-icon mx-auto mb-4">
+    <i class="fas fa-box-open"></i>
+  </div>
+  <h4 class="fw-bold">Product not found</h4>
+  <p class="text-muted mb-4">The product you're looking for doesn't exist or has been removed.</p>
+  <a routerLink="/products" class="btn btn-zora-gold px-4 rounded-pill">
+    ← Back to Products
+  </a>
+</div>
 
-      <div class="col-md-6">
-        <img [src]="product.image" class="w-100 rounded shadow" />
+<!-- Product Detail -->
+<div *ngIf="product" class="container py-5">
+
+  <!-- Breadcrumb -->
+  <nav class="mb-4">
+    <ol class="breadcrumb zora-breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+      <li class="breadcrumb-item"><a routerLink="/products">Products</a></li>
+      <li class="breadcrumb-item active">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  <!-- Main Card -->
+  <div class="zora-card zora-pd-card mb-5">
+    <div class="row g-0">
+
+      <!-- Image Side -->
+      <div class="col-md-6 zora-pd-img-wrap">
+        <div class="position-relative h-100">
+          <img
+            [src]="product.imageUrl"
+            [alt]="product.name"
+            class="zora-pd-img"
+          />
+          <span
+            *ngIf="product.discount > 0"
+            class="zora-pd-discount-badge"
+          >
+            -{{ product.discount }}% OFF
+          </span>
+        </div>
       </div>
 
-      <div class="col-md-6">
-        <h2>{{ product.name }}</h2>
+      <!-- Info Side -->
+      <div class="col-md-6 p-4 p-md-5 d-flex flex-column justify-content-center">
 
-        <p class="text-muted">{{ product.description }}</p>
-
-        <h3 class="text-primary">${{ product.price }}</h3>
-
-        <p>
-          Stock:
-          <span class="fw-bold" [class.text-success]="product.stock > 0" [class.text-danger]="product.stock === 0">
-            {{ product.stock > 0 ? 'Available' : 'Out of Stock' }}
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="zora-category-badge">{{ product.category }}</span>
+          <span
+            class="zora-stock-badge"
+            [class.zora-stock-badge--in]="product.stock > 5"
+            [class.zora-stock-badge--low]="product.stock > 0 && product.stock <= 5"
+            [class.zora-stock-badge--out]="product.stock === 0"
+          >
+            <span *ngIf="product.stock > 5">✓ In Stock</span>
+            <span *ngIf="product.stock > 0 && product.stock <= 5">⚠ Only {{ product.stock }} left</span>
+            <span *ngIf="product.stock === 0">✕ Out of Stock</span>
           </span>
-        </p>
-
-        <div class="mb-4" style="max-width: 150px;">
-          <app-zora-input 
-            label="Quantity" 
-            type="number" 
-            [control]="qtyControl">
-          </app-zora-input>
         </div>
 
-        <button class="btn btn-zora-gold rounded-pill px-4" (click)="addToCart()" [disabled]="qtyControl.invalid">
-          Add to Cart
-        </button>
-      </div>
+        <h2 class="fw-bold mb-3" style="color: var(--text-main); letter-spacing: -0.02em;">
+          {{ product.name }}
+        </h2>
 
+        <p class="mb-4" style="color: var(--text-muted); line-height: 1.75; font-size: 0.95rem;">
+          {{ product.description }}
+        </p>
+
+        <!-- Price -->
+        <div class="zora-pd-price mb-4">
+          <span class="zora-pd-price__current">${{ product.price }}</span>
+          <span *ngIf="product.discount > 0" class="zora-pd-price__old">
+            ${{ (product.price / (1 - product.discount / 100)).toFixed(2) }}
+          </span>
+          <span *ngIf="product.discount > 0" class="zora-pd-price__save">
+            Save {{ product.discount }}%
+          </span>
+        </div>
+
+        <!-- Quantity -->
+        <div *ngIf="product.stock > 0" class="mb-4">
+          <label class="zora-filter-label mb-2">Quantity</label>
+          <div class="d-flex align-items-center gap-3">
+            <div class="zora-qty-wrap">
+              <button class="zora-qty-btn" (click)="decrease()">−</button>
+              <span class="zora-qty-num">{{ qty }}</span>
+              <button class="zora-qty-btn" (click)="increase()">+</button>
+            </div>
+            <span class="text-muted small">Max: {{ product.stock }}</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="d-flex gap-3 flex-wrap">
+          <button
+            class="btn btn-zora-gold btn-lg px-4 flex-fill zora-pd-cta"
+            (click)="addToCart()"
+            [disabled]="product.stock === 0"
+          >
+            <i class="fas fa-bag-shopping me-2"></i>
+            {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+          </button>
+          <a routerLink="/products" class="btn btn-outline-secondary btn-lg px-4">
+            ← Back
+          </a>
+        </div>
+
+      </div>
     </div>
   </div>
+
+  <!-- Related Products -->
+  <div *ngIf="relatedProducts.length > 0">
+    <div class="zora-pl-header mb-4">
+      <h4 class="page-title mb-0">Related Products</h4>
+    </div>
+
+    <div class="row g-4">
+      <div
+        class="col-6 col-md-3"
+        *ngFor="let p of relatedProducts"
+      >
+        <div class="zora-card product-card h-100">
+          <a [routerLink]="['/products', p.id]" class="text-decoration-none">
+            <img
+              [src]="p.imageUrl"
+              [alt]="p.name"
+              class="w-100 rounded mb-3"
+              style="height: 160px; object-fit: cover;"
+            />
+          </a>
+          <span class="zora-category-badge mb-2 d-inline-block">{{ p.category }}</span>
+          <h6 class="fw-semibold mb-1" style="color: var(--text-main); font-size: 0.88rem;">
+            <a [routerLink]="['/products', p.id]" class="text-decoration-none" style="color: inherit;">
+              {{ p.name }}
+            </a>
+          </h6>
+          <p class="mb-3" style="color: var(--zora-gold); font-weight: 700;">${{ p.price }}</p>
+          <a
+            [routerLink]="['/products', p.id]"
+            class="btn btn-outline-teal btn-sm w-100"
+          >
+            View Product
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+/* Breadcrumb */
+.zora-breadcrumb {
+  font-size: 0.82rem;
 }
+.zora-breadcrumb a {
+  color: var(--zora-teal);
+  text-decoration: none;
+}
+.zora-breadcrumb a:hover { text-decoration: underline; }
+.zora-breadcrumb .breadcrumb-item.active { color: var(--text-muted); }
+.zora-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+  color: var(--text-muted);
+}
+
+/* Main card */
+.zora-pd-card {
+  padding: 0;
+  overflow: hidden;
+}
+.zora-pd-img-wrap {
+  background: var(--bg-color);
+  min-height: 400px;
+}
+.zora-pd-img {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+.zora-pd-discount-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: #e53935;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+/* Badges */
+.zora-category-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--zora-teal);
+  background: rgba(11,121,116,0.08);
+  border: 1px solid rgba(11,121,116,0.18);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.zora-stock-badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.zora-stock-badge--in  { background: rgba(25,135,84,0.1);  color: #198754; border: 1px solid rgba(25,135,84,0.2);  }
+.zora-stock-badge--low { background: rgba(255,193,7,0.12);  color: #c79100; border: 1px solid rgba(255,193,7,0.25);  }
+.zora-stock-badge--out { background: rgba(220,53,69,0.1);   color: #dc3545; border: 1px solid rgba(220,53,69,0.2);  }
+
+/* Price */
+.zora-pd-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.zora-pd-price__current {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--zora-gold);
+  line-height: 1;
+}
+.zora-pd-price__old {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+.zora-pd-price__save {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #198754;
+  background: rgba(25,135,84,0.1);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+/* Quantity */
+.zora-qty-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.zora-qty-btn {
+  background: none;
+  border: none;
+  width: 40px;
+  height: 44px;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.zora-qty-btn:hover { background: rgba(11,121,116,0.08); color: var(--zora-teal); }
+.zora-qty-num {
+  min-width: 44px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-main);
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+  line-height: 44px;
+}
+
+.zora-pd-cta {
+  box-shadow: 0 8px 20px rgba(212,175,55,0.25);
+  transition: all 0.3s ease !important;
+}
+.zora-pd-cta:hover:not(:disabled) {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px rgba(212,175,55,0.4) !important;
+}
+
+/* Empty state */
+.zora-empty-icon {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  background: rgba(11,121,116,0.07);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  color: var(--zora-teal);
+}
+
+/* Filter label reuse */
+.zora-filter-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.zora-pl-header {
+  border-left: 4px solid var(--zora-gold);
+  padding-left: 1rem;
+}
+
+@media (max-width: 767px) {
+  .zora-pd-img, .zora-pd-img-wrap { min-height: 260px; }
+}
+</style>
