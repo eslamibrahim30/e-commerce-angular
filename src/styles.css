@@ -1,12 +1,13 @@
+
 :root {
-  --zora-gold: #D4AF37;
+  --zora-gold: #d4af37;
   --zora-gold-hover: #b8860b;
   --zora-teal: #0b7974;
   --zora-teal-glow: rgba(11, 121, 116, 0.4);
 
-  --bg-color: #FAFAFA;
-  --card-bg: #FFFFFF;
-  --text-main: #2D2D2D;
+  --bg-color: #fafafa;
+  --card-bg: #ffffff;
+  --text-main: #2d2d2d;
   --text-muted: #757575;
   --navbar-bg: rgba(255, 255, 255, 0.8);
   --border-color: #e0e0e0;
@@ -14,8 +15,8 @@
 
 [data-theme='dark'] {
   --bg-color: #121212;
-  --card-bg: #1E1E1E;
-  --text-main: #E0E0E0;
+  --card-bg: #1e1e1e;
+  --text-main: #e0e0e0;
   --text-muted: #b0b0b0;
   --navbar-bg: rgba(18, 18, 18, 0.9);
   --border-color: #333333;
@@ -25,7 +26,9 @@ body {
   background-color: var(--bg-color);
   color: var(--text-main);
   font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   margin: 0;
 }
 
@@ -33,7 +36,7 @@ body {
   background-color: var(--zora-gold) !important;
   border-color: var(--zora-gold) !important;
   color: #fff !important;
-  
+
   &:hover {
     background-color: var(--zora-gold-hover) !important;
   }
@@ -42,7 +45,7 @@ body {
 .btn-outline-teal {
   color: var(--zora-teal) !important;
   border-color: var(--zora-teal) !important;
-  
+
   &:hover {
     background-color: var(--zora-teal) !important;
     color: white !important;
@@ -59,20 +62,20 @@ body {
 }
 
 .btn-zora-gold {
-    background-color: var(--zora-gold) !important;
-    color: white !important; 
-    border: none;
-    transition: all 0.3s ease;
+  background-color: var(--zora-gold) !important;
+  color: white !important;
+  border: none;
+  transition: all 0.3s ease;
 }
 
-.btn-zora-gold:hover, 
-.btn-zora-gold:active, 
+.btn-zora-gold:hover,
+.btn-zora-gold:active,
 .btn-zora-gold:focus,
 .btn-zora-gold:not(:disabled):not(.disabled):active {
-    background-color: #b8860b !important; 
-    color: white !important; 
-    box-shadow: 0 4px 12px var(--zora-teal-glow);
-    text-decoration: none;
+  background-color: #b8860b !important;
+  color: white !important;
+  box-shadow: 0 4px 12px var(--zora-teal-glow);
+  text-decoration: none;
 }
 
 .btn-zora-gold:disabled {

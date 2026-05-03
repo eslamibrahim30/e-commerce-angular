@@ -3,7 +3,7 @@
   "version": 1,
   "cli": {
     "packageManager": "npm",
-    "analytics": "f9028d61-af07-4196-ba94-2895d515b85a"
+    "analytics": "3a1bd9f4-b945-41f3-a9d6-6ddc807a18de"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -26,6 +26,7 @@
               }
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
