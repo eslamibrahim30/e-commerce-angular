@@ -4,10 +4,12 @@ import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 
+import { ProductCard } from '../../../shared/components/product-card/product-card';
+
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ProductCard],
   templateUrl: './product-list.html',
 })
 export class ProductList {
@@ -15,7 +17,6 @@ export class ProductList {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
 
-  /** Directly bind the products signal — no ngOnInit needed */
   products = this.productService.products;
 
   addToCart(product: any) {

@@ -20,12 +20,15 @@
           </span>
         </p>
 
-        <div class="mb-3">
-          <label>Quantity:</label>
-          <input type="number" [(ngModel)]="qty" min="1" class="form-control w-25">
+        <div class="mb-4" style="max-width: 150px;">
+          <app-zora-input 
+            label="Quantity" 
+            type="number" 
+            [control]="qtyControl">
+          </app-zora-input>
         </div>
 
-        <button class="btn btn-success" (click)="addToCart()">
+        <button class="btn btn-zora-gold rounded-pill px-4" (click)="addToCart()" [disabled]="qtyControl.invalid">
           Add to Cart
         </button>
       </div>

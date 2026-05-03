@@ -1,11 +1,9 @@
-<!-- HERO -->
 <div class="bg-primary text-white text-center p-5 mb-5">
   <h1 class="fw-bold">Welcome to Our Store</h1>
   <p>Best deals. Best quality. Fast delivery.</p>
   <a routerLink="/products" class="btn btn-light mt-3">Shop Now</a>
 </div>
 
-<!-- CATEGORIES -->
 <div class="container mb-5">
   <h4 class="mb-3">Categories</h4>
   <div class="d-flex gap-2 flex-wrap">
@@ -17,32 +15,27 @@
   </div>
 </div>
 
-<!-- PRODUCTS -->
 <div class="container">
   <h4 class="mb-4">Featured Products</h4>
 
   <div class="row g-4">
     @for (p of featuredProducts(); track p.id) {
       <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-
-          <img [src]="p.image" class="card-img-top" style="height:200px; object-fit:cover;" />
-
-          <div class="card-body text-center">
-            <h5>{{ p.name }}</h5>
-            <p class="text-primary fw-bold">${{ p.price }}</p>
-
-            <a [routerLink]="['/products', p.id]" class="btn btn-outline-secondary btn-sm me-2">
-              View
-            </a>
-
-            <button class="btn btn-primary btn-sm" (click)="addToCart(p)">
-              Add to Cart
-            </button>
-          </div>
-
-        </div>
+        <app-product-card [product]="p" (addToCart)="addToCart(p)"></app-product-card>
       </div>
     }
   </div>
 </div>
+
+<app-zora-modal 
+  [isOpen]="showModal" 
+  title="Success" 
+  confirmText="Go to Cart" 
+  cancelText="Continue Shopping"
+  (confirmed)="showModal = false" 
+  (canceled)="showModal = false">
+  <div class="text-center py-3">
+    <i class="fas fa-check-circle text-success fa-3x mb-3"></i>
+    <p>Product has been successfully added to your cart!</p>
+  </div>
+</app-zora-modal>
