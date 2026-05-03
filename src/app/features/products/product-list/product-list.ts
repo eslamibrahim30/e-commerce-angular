@@ -33,17 +33,16 @@ export class ProductList implements OnInit {
     private cartService: CartService,
   ) {}
 
- ngOnInit(): void {
-  console.log('categories:', this.categoryService.getAll());
-  console.log('products sample:', this.productService.products().slice(0, 3));
+  ngOnInit(): void {
+    // ✅ جيب الـ categories من CategoryService مباشرة
+    this.categories = this.categoryService.getAll().map((c) => c.name);
+    this.applyFilters();
 
-  this.categories = this.categoryService.getAll().map((c) => c.name);
-  this.applyFilters();
-}
+
+  }
 
   applyFilters() {
-    // ✅ اقرأ الـ signal كل مرة هنا بدل مرة واحدة في ngOnInit
-    // عشان تضمن إن الـ computed (products مع category) خلص
+    
     let result = [...this.productService.products()];
 
     if (this.filters.search) {
