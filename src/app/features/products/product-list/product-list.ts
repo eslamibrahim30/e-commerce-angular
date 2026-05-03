@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
 
+import { ProductCard } from '../../../shared/components/product-card/product-card';
+
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ProductCard],
   templateUrl: './product-list.html',
 })
 export class ProductList implements OnInit {
@@ -27,10 +29,10 @@ export class ProductList implements OnInit {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.products = this.productService.products(); // 🔥 مهم
+    this.products = this.productService.products();
     this.categories = [
       ...new Set(this.products.map((p) => p.category).filter((c) => c && c !== 'unknown')),
     ];

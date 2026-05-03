@@ -1,12 +1,12 @@
 :root {
-  --zora-gold: #D4AF37;
+  --zora-gold: #d4af37;
   --zora-gold-hover: #b8860b;
   --zora-teal: #0b7974;
   --zora-teal-glow: rgba(11, 121, 116, 0.4);
 
-  --bg-color: #FAFAFA;
-  --card-bg: #FFFFFF;
-  --text-main: #2D2D2D;
+  --bg-color: #fafafa;
+  --card-bg: #ffffff;
+  --text-main: #2d2d2d;
   --text-muted: #757575;
   --navbar-bg: rgba(255, 255, 255, 0.8);
   --border-color: #e0e0e0;
@@ -14,8 +14,8 @@
 
 [data-theme='dark'] {
   --bg-color: #121212;
-  --card-bg: #1E1E1E;
-  --text-main: #E0E0E0;
+  --card-bg: #1e1e1e;
+  --text-main: #e0e0e0;
   --text-muted: #b0b0b0;
   --navbar-bg: rgba(18, 18, 18, 0.9);
   --border-color: #333333;
@@ -25,7 +25,9 @@ body {
   background-color: var(--bg-color);
   color: var(--text-main);
   font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
   margin: 0;
 }
 
@@ -59,31 +61,156 @@ body {
 }
 
 .btn-zora-gold {
-    background-color: var(--zora-gold) !important;
-    color: white !important;
-    border: none;
-    transition: all 0.3s ease;
+  background-color: var(--zora-gold) !important;
+  color: white !important;
+  border: none;
+  transition: all 0.3s ease;
 }
 
 .btn-zora-gold:hover,
 .btn-zora-gold:active,
 .btn-zora-gold:focus,
 .btn-zora-gold:not(:disabled):not(.disabled):active {
-    background-color: #b8860b !important;
-    color: white !important;
-    box-shadow: 0 4px 12px var(--zora-teal-glow);
-    text-decoration: none;
+  background-color: #b8860b !important;
+  color: white !important;
+  box-shadow: 0 4px 12px var(--zora-teal-glow);
+  text-decoration: none;
 }
 
 .btn-zora-gold:disabled {
-    color: rgba(255, 255, 255, 0.8) !important;
-    cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.8) !important;
+  cursor: not-allowed;
 }
+
 .product-card {
   transition: 0.3s;
 }
 
 .product-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Global Admin Layout */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-color);
+  transition: background 0.3s ease;
+}
+
+.admin-main {
+  margin-left: 280px;
+  flex: 1;
+  padding: 32px 0;
+  min-height: 100vh;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 991.98px) {
+  .admin-main {
+    margin-left: 0;
+    padding: 85px 16px 32px;
+  }
+}
+
+/* Common Admin UI Elements */
+.page-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.025em;
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+  padding: 0.6rem 1.25rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Responsive Table Wrapper */
+.zora-table-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 992px) {
+  .zora-table-container {
+    overflow: visible;
+    /* No scroll on desktop */
+  }
+}
+
+/* Standardized Pagination */
+.zora-pagination-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  background: rgba(var(--zora-primary-rgb), 0.01);
+  border-top: 1px solid var(--border-color);
+}
+
+@media (min-width: 768px) {
+  .zora-pagination-footer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.zora-pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 8px;
+}
+
+.page-link-custom {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-link-custom:hover:not(:disabled) {
+  background: var(--bg-color);
+  color: var(--zora-primary);
+  border-color: var(--zora-primary) !important;
+  transform: translateY(-2px);
+}
+
+.page-link-custom.active {
+  background: var(--zora-primary) !important;
+  color: white !important;
+  border-color: var(--zora-primary) !important;
+  box-shadow: 0 8px 16px rgba(11, 121, 116, 0.3);
+}
+
+.page-link-custom:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

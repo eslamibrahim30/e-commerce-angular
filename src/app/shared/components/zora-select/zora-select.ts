@@ -18,7 +18,7 @@ import { ReactiveFormsModule, AbstractControl } from '@angular/forms';
         }
       </select>
       @if (control?.invalid && control?.touched) {
-        <div class="invalid-feedback">برجاء اختيار عنصر من القائمة.</div>
+        <div class="invalid-feedback">Please select an item from the list.</div>
       }
     </div>
   `

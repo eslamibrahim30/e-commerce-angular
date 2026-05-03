@@ -1,1 +1,9 @@
-<router-outlet />
+@if (!isAdminRoute()) {
+  <app-navbar></app-navbar>
+}
+<div class="main-content">
+  <router-outlet />
+</div>
+@if (isHomeRoute()) {
+  <app-footer></app-footer>
+}
