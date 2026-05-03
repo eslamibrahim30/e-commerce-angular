@@ -13,12 +13,14 @@ import { filter } from 'rxjs';
 export class App {
   router = inject(Router);
   isAdminRoute = signal(false);
+  isHomeRoute = signal(false);
 
   constructor() {
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
     ).subscribe((event) => {
       this.isAdminRoute.set(event.urlAfterRedirects.startsWith('/admin'));
+      this.isHomeRoute.set(event.urlAfterRedirects === '/' || event.urlAfterRedirects === '/home');
     });
   }
 }
