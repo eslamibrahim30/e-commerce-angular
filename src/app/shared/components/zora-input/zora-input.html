@@ -10,9 +10,9 @@
 
   @if (isInvalid) {
     <div class="invalid-feedback animate__animated animate__fadeIn">
-      @if (control?.errors?.['required']) { <span>{{ label }} مطلوب.</span> }
-      @if (control?.errors?.['email']) { <span>برجاء إدخال إيميل صحيح.</span> }
-      @if (control?.errors?.['minlength']) { <span>القيمة قصيرة جداً.</span> }
+      @if (control?.errors?.['required']) { <span>{{ label }} is required.</span> }
+      @if (control?.errors?.['email']) { <span>Please enter a valid email.</span> }
+      @if (control?.errors?.['minlength']) { <span>Value is too short.</span> }
     </div>
   }
 </div>
