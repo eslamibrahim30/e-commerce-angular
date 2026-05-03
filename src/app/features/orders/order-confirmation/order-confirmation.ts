@@ -1,15 +1,17 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../../../core/services/order.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { ProductService } from '../../../core/services/product.service';
-import { Order } from '../../../shared/models/order.model';
+import { Order, OrderItem } from '../../../shared/models/order.model';
 
-interface OrderWithExpanded extends Order {
-  expanded: boolean;
-  items: any[]; // with name, image
+export interface OrderItemDisplay extends OrderItem {
+  name: string;
+  image: string;
 }
-
+interface OrderWithExpanded extends Order {
+  items: OrderItemDisplay[];
+}
 @Component({
   selector: 'app-order-confirmation',
   imports: [CommonModule],
@@ -21,35 +23,36 @@ export class OrderConfirmation {
   private authService = inject(AuthService);
   private productService = inject(ProductService);
 
-  orders = signal<OrderWithExpanded[]>([]);
+  expandedOrders = signal<Set<string>>(new Set());
 
-  constructor() {
-    effect(() => {
-      const user = this.authService.session();
-      if (user) {
-        const userOrders = this.orderService.getByUserId(user.id);
-        const ordersWithExpanded = userOrders.map((order) => ({
-          ...order,
-          expanded: false,
-          items: order.items.map((item) => {
-            const product = this.productService.getById(item.productId);
-            return {
-              ...item,
-              name: product?.name || 'Unknown Product',
-              image: product?.image || 'https://via.placeholder.com/64',
-            };
-          }),
-        }));
-        this.orders.set(ordersWithExpanded);
-      } else {
-        this.orders.set([]);
-      }
-    });
-  }
+  orders = computed<OrderWithExpanded[]>(() => {
+    const user = this.authService.session();
+    const allOrders = this.orderService.orders();
+
+    if (!user) return [];
+
+    const userOrders = allOrders
+      .filter((o) => o.userId === user.id)
+      .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+
+    return userOrders.map((order) => ({
+      ...order,
+      items: order.items.map((item) => {
+        const product = this.productService.getById(item.productId);
+        return {
+          ...item,
+          name: product?.name ?? 'Unknown Product',
+          image: product?.image ?? 'https://via.placeholder.com/64',
+        };
+      }),
+    }));
+  });
 
   toggleOrder(id: string) {
-    this.orders.update((orders) =>
-      orders.map((order) => (order.id === id ? { ...order, expanded: !order.expanded } : order)),
-    );
+    this.expandedOrders.update((set) => {
+      const newSet = new Set(set);
+      newSet.has(id) ? newSet.delete(id) : newSet.add(id);
+      return newSet;
+    });
   }
 }

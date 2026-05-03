@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core
 import { RouterLink } from '@angular/router';
 import { OrderSummary } from '../../../shared/components/order-summary/order-summary';
 import { CartService } from '../../../core/services/cart.service';
-import { Cart as ICart } from '../../../shared/models/cart.model';
 import { CartCard } from '../components/cart-card/cart-card';
 @Component({
   selector: 'app-cart',
