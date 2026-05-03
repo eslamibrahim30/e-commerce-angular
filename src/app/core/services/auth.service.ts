@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { User } from '../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ export class AuthService {
   login(email: string, password: string): boolean {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
 
-    const user = users.find((u: any) =>
+    const user = users.find((u: User) =>
       u.email === email && u.password === password
     );
 
@@ -19,7 +20,7 @@ export class AuthService {
     return false;
   }
 
-  register(user: any) {
+  register(user: User) {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     user.id = Date.now();
 

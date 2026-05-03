@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth-guard';
+import { AdminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
   {
@@ -52,7 +53,7 @@ export const routes: Routes = [
   {
     path: 'admin/dashboard',
     loadComponent: () => import('./features/admin/dashboard/dashboard').then((m) => m.Dashboard),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'admin/products',
@@ -60,19 +61,19 @@ export const routes: Routes = [
       import('./features/admin/products/admin-products/admin-products').then(
         (m) => m.AdminProducts,
       ),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'admin/orders',
     loadComponent: () =>
       import('./features/admin/orders/admin-orders/admin-orders').then((m) => m.AdminOrders),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'admin/users',
     loadComponent: () =>
       import('./features/admin/users/admin-users/admin-users').then((m) => m.AdminUsers),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   {
     path: 'admin/categories',
@@ -80,7 +81,7 @@ export const routes: Routes = [
       import('./features/admin/categories/admin-categories/admin-categories').then(
         (m) => m.AdminCategories,
       ),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard, AdminGuard]
   },
   { path: '**', redirectTo: '' },
 ];
