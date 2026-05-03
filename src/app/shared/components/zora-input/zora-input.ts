@@ -15,7 +15,6 @@ export class ZoraInputComponent {
   @Input() type: string = 'text';
   @Input() control!: AbstractControl | null;
 
-  // Method لتسهيل قراءة الأخطاء في الـ HTML
   get isInvalid() {
     return this.control?.invalid && (this.control?.dirty || this.control?.touched);
   }

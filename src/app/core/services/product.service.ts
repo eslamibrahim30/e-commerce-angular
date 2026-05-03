@@ -72,6 +72,33 @@ export class ProductService {
     this.persist();
   }
 
+  /**
+   * Returns all products with resolved category names (Display format)
+   */
+  getAllDisplay(): ProductDisplay[] {
+    return this.products();
+  }
+
+  /**
+   * Returns raw products (Signal value)
+   */
+  getAllRaw(): Product[] {
+    return this._products();
+  }
+
+  /**
+   * Calculates product count per category for dashboard charts
+   */
+  getCountByCategory() {
+    const categories = this.categoryService.categories();
+    const products = this._products();
+    
+    return categories.map(cat => ({
+      categoryName: cat.name,
+      count: products.filter(p => p.categoryId === cat.id).length
+    }));
+  }
+
   /** Reads initial data from localStorage */
   private loadFromStorage(): Product[] {
     const data = localStorage.getItem(this.STORAGE_KEY);
@@ -81,5 +108,9 @@ export class ProductService {
   /** Syncs the current signal value to localStorage */
   private persist(): void {
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this._products()));
+  }
+
+  count() {
+    return this._products().length;
   }
 }

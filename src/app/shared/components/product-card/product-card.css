@@ -5,12 +5,10 @@
 
 .zora-product-card {
   position: relative;
-  overflow: hidden; /* عشان الـ badge متخرجش بره الكارت */
+  overflow: hidden; 
   background-color: var(--card-bg);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
-/* Discount Badge Style */
 .badge-discount {
   position: absolute;
   top: 15px;
@@ -25,7 +23,6 @@
   box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
 }
 
-/* Category Style */
 .category-tag {
   color: var(--zora-teal);
   text-transform: uppercase;
@@ -34,7 +31,6 @@
   font-size: 0.7rem;
 }
 
-/* Price Styles */
 .current-price {
   color: var(--zora-gold);
   font-weight: 800;
@@ -46,7 +42,6 @@
   font-size: 0.9rem;
 }
 
-/* Image Zoom on Hover */
 .zora-product-card:hover .card-img-top {
   transform: scale(1.1);
 }

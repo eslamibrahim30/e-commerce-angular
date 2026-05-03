@@ -1,10 +1,26 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { Router, NavigationEnd, RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './layout/navbar/navbar.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, NavbarComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class App {}
+export class App {
+  router = inject(Router);
+  isAdminRoute = signal(false);
+  isHomeRoute = signal(false);
+
+  constructor() {
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      this.isAdminRoute.set(event.urlAfterRedirects.startsWith('/admin'));
+      this.isHomeRoute.set(event.urlAfterRedirects === '/' || event.urlAfterRedirects === '/home');
+    });
+  }
+}
