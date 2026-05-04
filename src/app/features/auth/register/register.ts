@@ -84,7 +84,7 @@ export class RegisterComponent {
       return;
     }
     this.loading = true;
-    const { name, email, password } = this.registerForm.value;
+    const { name, email, password } = this.registerForm.getRawValue();
     this.auth.register({ name, email, password, role:'customer'  });
     setTimeout(() => {
       this.loading = false;

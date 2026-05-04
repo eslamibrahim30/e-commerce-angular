@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { SEED_USERS } from '../../shared/data/seed.data';
+import * as CryptoJS from 'crypto-js';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +16,20 @@ export class AuthService {
 
   /**
    * Seeds the users into localStorage on first load so that
-   * login can find them immediately without delay.
+   * login can find them immediately without delay.j
    */
   private initUsers(): void {
-    if (!localStorage.getItem(this.USERS_KEY)) {
-      localStorage.setItem(this.USERS_KEY, JSON.stringify(SEED_USERS));
-    }
+         localStorage.removeItem(this.USERS_KEY);// clar users on each load for testing purposes
+           localStorage.removeItem('session');  // clear session on each load for testing purposes
+
+  if (!localStorage.getItem(this.USERS_KEY)) {
+    const hashed = SEED_USERS.map(u => ({
+      ...u,
+      password: this.hashPassword(u.password)
+    }));
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(hashed));
   }
+}
 
   login(email: string, password: string): boolean {
     const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
@@ -38,12 +47,16 @@ export class AuthService {
   }
 
   register(userData: Omit<User, 'id'>) {
-    const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
-    const user: User = { ...userData, id: Date.now().toString() };
+  const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
+  const user: User = {
+    ...userData,
+    id: Date.now().toString(),
+    password: this.hashPassword(userData.password)  //  hash
+  };
 
-    users.push(user);
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
-  }
+  users.push(user);
+  localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+}
 
   logout() {
     localStorage.removeItem('session');
@@ -61,4 +74,9 @@ export class AuthService {
     const user = this.getUser();
     return user?.role === 'admin';
   }
+
+  private hashPassword(password: string): string {
+  return CryptoJS.SHA256(password).toString();
+}
+
 }
