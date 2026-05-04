@@ -35,7 +35,9 @@ export class ProductService {
   }
 
   private initData(): void {
-    if (!localStorage.getItem(this.STORAGE_KEY)) {
+    const version = localStorage.getItem('seed_version');
+    if (version !== '1.2' || !localStorage.getItem(this.STORAGE_KEY)) {
+      localStorage.setItem('seed_version', '1.2');
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(SEED_PRODUCTS));
       this._products.set(SEED_PRODUCTS);
     }
