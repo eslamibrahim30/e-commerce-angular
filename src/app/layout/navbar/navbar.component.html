@@ -30,8 +30,8 @@
 
       <div class="nav-actions-wrapper">
         <div class="search-box">
-          <input type="text" placeholder="Search products..." class="search-input">
-          <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+          <input type="text" placeholder="Search products..." class="search-input" [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+          <button class="search-btn" (click)="onSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
         <div class="action-group">
