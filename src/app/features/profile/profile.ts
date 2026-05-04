@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.user = this.auth.getUser();
+    this.user = this.auth.getUser() ?? { id: '', name: '', email: '', password: '', role: 'customer' };
     this.memberSince = new Date().toLocaleDateString('en-US', {
       month: 'long', year: 'numeric'
     });
@@ -39,9 +39,9 @@ export class ProfileComponent implements OnInit {
     this.successMessage = '';
 
     setTimeout(() => {
-      let users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
+      let users: User[] = JSON.parse(localStorage.getItem('users_data') || '[]');
       users = users.map(u => u.id === this.user.id ? this.user : u);
-      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('users_data', JSON.stringify(users));
       localStorage.setItem('session', JSON.stringify(this.user));
 
       this.loading = false;

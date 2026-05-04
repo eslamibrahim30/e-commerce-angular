@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { Order } from '../../shared/models/order.model';
-import ordersData from '../../shared/data/orders.json';
+import { SEED_ORDERS } from '../../shared/data/seed.data';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class OrderService {
 
   private initData(): void {
     if (!localStorage.getItem(this.ORDERS_KEY)) {
-      localStorage.setItem(this.ORDERS_KEY, JSON.stringify(ordersData));
-      this._orders.set(ordersData as Order[]);
+      localStorage.setItem(this.ORDERS_KEY, JSON.stringify(SEED_ORDERS));
+      this._orders.set(SEED_ORDERS);
     }
   }
 

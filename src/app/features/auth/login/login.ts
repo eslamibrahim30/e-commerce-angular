@@ -39,7 +39,7 @@ export class LoginComponent {
         this.successMessage = 'Login successful! Redirecting...';
         const user = this.auth.getUser();
         setTimeout(() => {
-          this.router.navigate([user.role === 'admin' ? '/admin' : '/profile']);
+          this.router.navigate([user?.role === 'admin' ? '/admin' : '/profile']);
         }, 1500);
       } else {
         this.error = 'Invalid email or password. Please try again.';
