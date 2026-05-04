@@ -7,13 +7,14 @@ import { UserService } from '../../../core/services/user.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { AdminSidebar } from '../../../shared/components/admin-sidebar.component/admin-sidebar.component';
 import { ZoraTableComponent } from '../../../shared/components/zora-table/zora-table';
+import { FormsModule } from '@angular/forms';
 
 declare var Chart: any;
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, AdminSidebar, ZoraTableComponent],
+  imports: [CommonModule, RouterLink, AdminSidebar, ZoraTableComponent, FormsModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -29,7 +30,7 @@ export class Dashboard implements AfterViewInit {
 
   private charts: any[] = [];
   chartType = signal<'bar' | 'stacked'>('bar');
-  searchQuery = signal('');
+  selectedCategory = signal('');
 
   constructor() {
     // Effect to auto-update charts when data changes or toggle changes
@@ -38,6 +39,7 @@ export class Dashboard implements AfterViewInit {
       this.productService.products();
       this.orderService.orders();
       this.chartType(); // Re-render when toggle changes
+      this.selectedCategory(); // Re-render when category changes
 
       // Re-initialize charts if they already exist
       if (this.charts.length > 0) {
@@ -62,10 +64,18 @@ export class Dashboard implements AfterViewInit {
   get categoryCount() { return this.categoryService.count(); }
   get categories() { return this.categoryService.categories(); }
 
-  // Stock computed stats
-  inStockCount() { return this.productService.getAllRaw().filter(p => p.stock > 10).length; }
-  lowStockCount() { return this.productService.getAllRaw().filter(p => p.stock > 0 && p.stock <= 10).length; }
-  outOfStockCount() { return this.productService.getAllRaw().filter(p => p.stock === 0).length; }
+  getFilteredProducts() {
+    let products = this.productService.getAllRaw();
+    const cat = this.selectedCategory();
+    if (cat) {
+      products = products.filter(p => p.categoryId === cat);
+    }
+    return products;
+  }
+
+  inStockCount() { return this.getFilteredProducts().filter(p => p.stock > 10).length; }
+  lowStockCount() { return this.getFilteredProducts().filter(p => p.stock > 0 && p.stock <= 10).length; }
+  outOfStockCount() { return this.getFilteredProducts().filter(p => p.stock === 0).length; }
 
   getStatusBootstrapClass(status: string): string {
     switch (status) {
@@ -132,18 +142,27 @@ export class Dashboard implements AfterViewInit {
     const textColor = this.getChartTextColor();
     const gridColor = this.getChartGridColor();
     const type = this.chartType();
+    const catFilter = this.selectedCategory();
 
     let config: any;
 
     if (type === 'bar') {
-      const data = this.productService.getCountByCategory();
+      let categories = this.categoryService.categories();
+      if (catFilter) {
+        categories = categories.filter(c => c.id === catFilter);
+      }
+      
+      const allProducts = this.productService.getAllRaw();
+      const labels = categories.map(c => c.name);
+      const dataCounts = categories.map(c => allProducts.filter(p => p.categoryId === c.id).length);
+
       config = {
         type: 'bar',
         data: {
-          labels: data.map(d => d.categoryName),
+          labels,
           datasets: [{
             label: 'Total Products',
-            data: data.map(d => d.count),
+            data: dataCounts,
             backgroundColor: '#0B7974',
             borderRadius: 8,
             barThickness: 32
@@ -152,7 +171,10 @@ export class Dashboard implements AfterViewInit {
       };
     } else {
       // Stacked mode: Stock levels per category
-      const categories = this.categoryService.categories();
+      let categories = this.categoryService.categories();
+      if (catFilter) {
+        categories = categories.filter(c => c.id === catFilter);
+      }
       const allProducts = this.productService.getAllRaw();
       
       const labels = categories.map(c => c.name);
