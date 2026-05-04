@@ -1,10 +1,12 @@
 import { Component, ElementRef, inject, ViewChild, AfterViewInit, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { OrderService } from '../../../core/services/order.service';
 import { UserService } from '../../../core/services/user.service';
 import { CategoryService } from '../../../core/services/category.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import { AdminSidebar } from '../../../shared/components/admin-sidebar.component/admin-sidebar.component';
 
 declare var Chart: any;
@@ -12,7 +14,7 @@ declare var Chart: any;
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, AdminSidebar],
+  imports: [CommonModule, FormsModule, RouterLink, AdminSidebar],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -21,6 +23,7 @@ export class Dashboard implements AfterViewInit {
   private orderService = inject(OrderService);
   private userService = inject(UserService);
   private categoryService = inject(CategoryService);
+  public themeService = inject(ThemeService);
   private router = inject(Router);
 
   @ViewChild('barChart') barChartRef!: ElementRef;
@@ -38,6 +41,7 @@ export class Dashboard implements AfterViewInit {
       this.orderService.orders();
       this.chartType(); // Re-render when toggle changes
       this.selectedCategory(); // Re-render when category changes
+      this.themeService.isDarkMode(); // Re-render when theme changes
 
       // Re-initialize charts if they already exist
       if (this.charts.length > 0) {
