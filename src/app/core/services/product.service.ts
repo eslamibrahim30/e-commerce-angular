@@ -35,9 +35,7 @@ export class ProductService {
   }
 
   private initData(): void {
-    const version = localStorage.getItem('seed_version');
-    if (version !== '1.2' || !localStorage.getItem(this.STORAGE_KEY)) {
-      localStorage.setItem('seed_version', '1.2');
+    if (!localStorage.getItem(this.STORAGE_KEY)) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(SEED_PRODUCTS));
       this._products.set(SEED_PRODUCTS);
     }
@@ -94,7 +92,7 @@ export class ProductService {
   getCountByCategory() {
     const categories = this.categoryService.categories();
     const products = this._products();
-    
+
     return categories.map(cat => ({
       categoryName: cat.name,
       count: products.filter(p => p.categoryId === cat.id).length

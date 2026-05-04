@@ -241,7 +241,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 299.99,
     categoryId: 'home_kitchen',
     description: 'Make barista-quality coffee at home with this premium espresso machine featuring a milk frother.',
-    image: 'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_t.png',
+    image: 'https://m.media-amazon.com/images/I/71fix0M7SeL._AC_SY300_SX300_QL70_ML2_.jpg',
     stock: 8,
   },
   {
@@ -250,7 +250,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 129.50,
     categoryId: 'home_kitchen',
     description: 'A complete set of non-stick pots and pans suitable for all stove types, including induction.',
-    image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png',
+    image: 'https://m.media-amazon.com/images/I/51EP5Ow-otL._AC_SX522_.jpg',
     stock: 45,
   },
   {
@@ -259,7 +259,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 35.00,
     categoryId: 'sports',
     description: 'Eco-friendly, non-slip yoga mat with alignment lines. Perfect for all types of yoga and pilates.',
-    image: 'https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2t.png',
+    image: 'https://m.media-amazon.com/images/I/61j-imBk6lL._AC_SY300_SX300_QL70_ML2_.jpg',
     stock: 0,
   },
   {
@@ -268,7 +268,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 199.99,
     categoryId: 'sports',
     description: 'Save space with these adjustable dumbbells. Weight adjusts from 5 to 52.5 lbs in 2.5 lb increments.',
-    image: 'https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_t.png',
+    image: 'https://m.media-amazon.com/images/I/41fWdPe4pOL._AC_SX300_SY300_QL70_ML2_.jpg',
     stock: 2,
     isFeatured: true,
   },
@@ -278,7 +278,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 14.99,
     categoryId: 'books',
     description: 'A true classic of twentieth-century literature. The story of the mysteriously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.',
-    image: 'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_t.png',
+    image: 'https://m.media-amazon.com/images/I/41bcCb4-wVL._SY445_SX342_ML2_.jpg',
     stock: 0,
   },
   {
@@ -287,7 +287,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 42.50,
     categoryId: 'books',
     description: 'Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees.',
-    image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png',
+    image: 'https://m.media-amazon.com/images/I/41nUxzDHD-L._SY445_SX342_ML2_.jpg',
     stock: 4,
   },
   {
@@ -296,7 +296,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 24.00,
     categoryId: 'beauty',
     description: 'Replenish moisture and plump skin with this pure Hyaluronic Acid serum. Suitable for all skin types.',
-    image: 'https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png',
+    image: 'https://m.media-amazon.com/images/I/51PF-8NX4EL._AC_UL320_.jpg',
     stock: 0,
   },
   {
@@ -305,7 +305,7 @@ export const SEED_PRODUCTS: Product[] = [
     price: 32.99,
     categoryId: 'beauty',
     description: 'A lightweight daily moisturizer packed with Vitamin C to brighten skin tone and reduce the appearance of dark spots.',
-    image: 'https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_t.png',
+    image: 'https://m.media-amazon.com/images/I/615AUx2MbjL._AC_SX522_.jpg',
     stock: 7,
     isFeatured: true,
   }
