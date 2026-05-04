@@ -51,36 +51,34 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'admin/dashboard',
-    loadComponent: () => import('./features/admin/dashboard/dashboard').then((m) => m.Dashboard),
-    canActivate: [AuthGuard, AdminGuard]
-  },
-  {
-    path: 'admin/products',
-    loadComponent: () =>
-      import('./features/admin/products/admin-products/admin-products').then(
-        (m) => m.AdminProducts,
-      ),
-    canActivate: [AuthGuard, AdminGuard]
-  },
-  {
-    path: 'admin/orders',
-    loadComponent: () =>
-      import('./features/admin/orders/admin-orders/admin-orders').then((m) => m.AdminOrders),
-    canActivate: [AuthGuard, AdminGuard]
-  },
-  {
-    path: 'admin/users',
-    loadComponent: () =>
-      import('./features/admin/users/admin-users/admin-users').then((m) => m.AdminUsers),
-    canActivate: [AuthGuard, AdminGuard]
-  },
-  {
-    path: 'admin/categories',
-    loadComponent: () =>
-      import('./features/admin/categories/admin-categories/admin-categories').then(
-        (m) => m.AdminCategories,
-      ),
+    path: 'admin',
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./features/admin/dashboard/dashboard').then((m) => m.Dashboard),
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./features/admin/products/admin-products/admin-products').then((m) => m.AdminProducts),
+      },
+      {
+        path: 'categories',
+        loadComponent: () =>
+          import('./features/admin/categories/admin-categories/admin-categories').then((m) => m.AdminCategories),
+      },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./features/admin/orders/admin-orders/admin-orders').then((m) => m.AdminOrders),
+      },
+      {
+        path: 'users',
+        loadComponent: () =>
+          import('./features/admin/users/admin-users/admin-users').then((m) => m.AdminUsers),
+      },
+    ],
     canActivate: [AuthGuard, AdminGuard]
   },
   { path: '**', redirectTo: '' },

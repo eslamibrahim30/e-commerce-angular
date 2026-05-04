@@ -1,0 +1,65 @@
+<nav class="premium-navbar">
+  <div class="navbar-container">
+    <a routerLink="/" class="brand-logo">
+      <div class="logo-icon">
+        <i class="fa-solid fa-gem"></i>
+      </div>
+      <span class="brand-text">Zora</span>
+    </a>
+
+    <button class="mobile-toggle" (click)="toggleMenu()">
+      <i class="fa-solid" [class.fa-bars]="!isMenuOpen" [class.fa-xmark]="isMenuOpen"></i>
+    </button>
+
+    <div class="nav-menu" [class.active]="isMenuOpen">
+      <ul class="nav-links">
+        <li>
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+            <span class="link-text">Home</span>
+            <div class="link-indicator"></div>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/products" routerLinkActive="active" class="nav-link">
+            <span class="link-text">Shop</span>
+            <div class="link-indicator"></div>
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="search-wrapper">
+          <div class="search-box">
+            <input type="text" placeholder="Search premium items..." class="search-input">
+            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+          </div>
+        </div>
+
+        <a routerLink="/cart" class="action-btn cart-btn">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="badge">{{ cartService.totalQuantity() }}</span>
+        </a>
+
+        <!-- Not logged in -->
+        <ng-container *ngIf="!auth.isLoggedIn()">
+          <a routerLink="/login" class="action-btn user-btn" title="Login">
+            <i class="fa-regular fa-user"></i>
+          </a>
+          <a routerLink="/register" class="action-btn register-btn" title="Register">
+            <i class="fa-solid fa-user-plus"></i>
+          </a>
+        </ng-container>
+
+        <!-- Logged in -->
+        <ng-container *ngIf="auth.isLoggedIn()">
+          <a routerLink="/account/profile" class="action-btn user-btn" title="My Profile">
+            <i class="fa-solid fa-user"></i>
+          </a>
+          <button class="action-btn logout-btn" (click)="logout()" title="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</nav>

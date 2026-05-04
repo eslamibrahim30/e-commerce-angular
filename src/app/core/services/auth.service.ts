@@ -20,9 +20,9 @@ export class AuthService {
     return false;
   }
 
-  register(user: User) {
+  register(userData: Omit<User, 'id'>) {
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    user.id = Date.now();
+    const user: User = { ...userData, id: Date.now().toString() };
 
     users.push(user);
     localStorage.setItem('users', JSON.stringify(users));

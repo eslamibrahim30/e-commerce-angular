@@ -1,42 +1,53 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-detail.html',
 })
-export class ProductDetail {
+export class ProductDetail implements OnInit {
 
-  private route = inject(ActivatedRoute);
-  private productService = inject(ProductService);
-  private cartService = inject(CartService);
-
+  product: any;
+  relatedProducts: any[] = [];
   qty: number = 1;
 
-  /** Reactively look up the product from the signal by route param */
-  product = computed(() => {
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
+
+  ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('productId')!;
-    return this.productService.getById(id);
-  });
+    this.product = this.productService.getById(id);
+
+    const all = this.productService.products();
+
+    this.relatedProducts = all
+      .filter(p => p.category === this.product.category && p.id !== this.product.id)
+      .slice(0, 4);
+  }
+
+  increase() {
+    this.qty++;
+  }
+
+  decrease() {
+    if (this.qty > 1) this.qty--;
+  }
 
   addToCart() {
-    const p = this.product();
-    if (!p) return;
-
     this.cartService.add({
-      productId: p.id,
-      name: p.name,
-      price: p.price,
-      image: p.image,
+      productId: this.product.id,
+      name: this.product.name,
+      price: this.product.price,
+      image: this.product.imageUrl,
       quantity: this.qty
     });
-
-    alert('Added to cart ✅');
   }
 }

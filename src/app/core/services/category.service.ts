@@ -50,6 +50,14 @@ export class CategoryService {
     this.persist();
   }
 
+  getAll(): Category[] {
+    return this._categories();
+  }
+
+  count(): number {
+    return this._categories().length;
+  }
+
   /** Reads initial data from localStorage */
   private loadFromStorage(): Category[] {
     const data = localStorage.getItem(this.STORAGE_KEY);

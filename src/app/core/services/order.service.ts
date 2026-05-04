@@ -72,6 +72,22 @@ export class OrderService {
     this.persist();
   }
 
+  getAll(): Order[] {
+    return this._orders();
+  }
+
+  totalRevenue(): number {
+    return this._orders().reduce((sum, o) => sum + o.total, 0);
+  }
+
+  count(): number {
+    return this._orders().length;
+  }
+
+  pendingCount(): number {
+    return this._orders().filter(o => o.status === 'Pending').length;
+  }
+
   /** Reads initial data from localStorage */
   private loadFromStorage(): Order[] {
     const data = localStorage.getItem(this.ORDERS_KEY);

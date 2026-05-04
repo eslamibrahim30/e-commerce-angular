@@ -1,10 +1,8 @@
-/* Container */
 .zora-select-wrapper {
   margin-bottom: 1.5rem;
   position: relative;
 }
 
-/* Label Style */
 .zora-label {
   display: block;
   font-size: 0.9rem;
@@ -14,9 +12,8 @@
   transition: color 0.3s ease;
 }
 
-/* Custom Select Style */
 .custom-zora-select {
-  appearance: none; /* يخفي السهم الافتراضي للمتصفح */
+  appearance: none; 
   -webkit-appearance: none;
   -moz-appearance: none;
   
@@ -31,7 +28,6 @@
   cursor: pointer;
 }
 
-/* Hover & Focus States */
 .custom-zora-select:hover {
   border-color: var(--zora-teal);
 }
@@ -43,7 +39,6 @@
   background-color: #fff;
 }
 
-/* Error State */
 .custom-zora-select.is-invalid {
   border-color: #dc3545 !important;
 }
@@ -57,7 +52,6 @@
   align-items: center;
 }
 
-/* Custom Arrow Icon */
 .input-container {
   position: relative;
 }
@@ -67,12 +61,10 @@
   right: 15px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; /* عشان ميعطلش الكليك على الـ select */
+  pointer-events: none; 
   color: var(--text-muted);
   font-size: 0.8rem;
 }
-
-/* Dark Mode Support */
 [data-theme='dark'] .custom-zora-select {
   background-color: #1e1e1e;
   color: #e0e0e0;

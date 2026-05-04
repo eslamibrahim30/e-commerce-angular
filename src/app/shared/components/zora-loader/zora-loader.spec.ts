@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Navbar } from './navbar';
+import { ZoraLoader } from './zora-loader';
 
-describe('Navbar', () => {
-  let component: Navbar;
-  let fixture: ComponentFixture<Navbar>;
+describe('ZoraLoader', () => {
+  let component: ZoraLoader;
+  let fixture: ComponentFixture<ZoraLoader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Navbar],
+      imports: [ZoraLoader],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Navbar);
+    fixture = TestBed.createComponent(ZoraLoader);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
