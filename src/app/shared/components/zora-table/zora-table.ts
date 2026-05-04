@@ -12,6 +12,7 @@ export class ZoraTableComponent {
   @Input() headers: string[] = []; 
   @Input() data: any[] = [];      
   @Input() isLoading: boolean = false;
-  
   @Input() showActions: boolean = false;
+
+  @ContentChild('cellTemplate') cellTemplate?: TemplateRef<any>;
 }

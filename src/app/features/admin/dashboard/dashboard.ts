@@ -6,13 +6,15 @@ import { OrderService } from '../../../core/services/order.service';
 import { UserService } from '../../../core/services/user.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { AdminSidebar } from '../../../shared/components/admin-sidebar.component/admin-sidebar.component';
+import { ZoraTableComponent } from '../../../shared/components/zora-table/zora-table';
+import { FormsModule } from '@angular/forms';
 
 declare var Chart: any;
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, AdminSidebar],
+  imports: [CommonModule, RouterLink, AdminSidebar, ZoraTableComponent, FormsModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })

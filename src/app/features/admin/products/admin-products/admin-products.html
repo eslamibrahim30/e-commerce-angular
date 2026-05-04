@@ -66,80 +66,56 @@
 
       <!-- Table Section -->
       <div class="card overflow-hidden border-0 shadow-sm mb-5">
-        <div class="zora-table-container">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0 zora-table">
-              <thead>
-                <tr>
-                  <th class="ps-4">Product Details</th>
-                  <th>Category</th>
-                  <th>Pricing</th>
-                  <th>Inventory</th>
-                  <th>Featured</th>
-                  <th class="pe-4 text-end">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let p of paginatedProducts()">
-                  <td class="ps-4">
-                    <div class="d-flex align-items-center gap-3">
-                      <div class="position-relative">
-                        <img [src]="p.image" class="rounded shadow-sm" style="width: 48px; height: 48px; object-fit: cover; background: var(--bg-color);" [alt]="p.name" />
-                        <div *ngIf="p.stock === 0" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded d-flex align-items-center justify-content-center">
-                          <span class="text-white fw-bold" style="font-size: 8px;">OUT</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div class="fw-bold text-main">{{ p.name }}</div>
-                        <div class="text-muted small font-monospace opacity-75" style="font-size: 11px;">#{{ p.id }}</div>
-                      </div>
+        <div class="zora-table-wrapper">
+          <app-zora-table 
+            [headers]="['Product Details', 'Category', 'Pricing', 'Inventory', 'Featured', 'Actions']" 
+            [data]="paginatedProducts()">
+            <ng-template #cellTemplate let-p let-column="column">
+              @if (column === 'Product Details') {
+                <div class="d-flex align-items-center gap-3">
+                  <div class="position-relative">
+                    <img [src]="p.image" class="rounded shadow-sm" style="width: 48px; height: 48px; object-fit: cover; background: var(--bg-color);" [alt]="p.name" />
+                    <div *ngIf="p.stock === 0" class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 rounded d-flex align-items-center justify-content-center">
+                      <span class="text-white fw-bold" style="font-size: 8px;">OUT</span>
                     </div>
-                  </td>
-                  <td><span class="badge zora-badge-muted border rounded-pill">{{ p.category }}</span></td>
-                  <td>
-                    <div class="d-flex flex-column">
-                      <span class="fw-bold price-text">{{ p.price | currency }}</span>
-                      <span *ngIf="p.oldPrice" class="text-muted text-decoration-line-through small" style="font-size: 11px;">{{ p.oldPrice | currency }}</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="d-flex flex-column gap-1">
-                      <span class="badge rounded-pill px-3 py-1 w-fit" [ngClass]="getStockBootstrapClass(p.stock)" style="width: fit-content; font-size: 11px;">
-                        {{ p.stock }} in stock
-                      </span>
-                      <div class="progress" style="height: 4px; width: 80px; background: var(--bg-color);">
-                        <div class="progress-bar" [ngClass]="p.stock > 10 ? 'bg-success' : (p.stock > 0 ? 'bg-warning' : 'bg-danger')" [style.width.%]="p.stock > 100 ? 100 : p.stock"></div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch m-0">
-                      <input class="form-check-input" type="checkbox" [checked]="p.isFeatured" (change)="productService.update(p.id, { isFeatured: !p.isFeatured })" style="cursor: pointer;">
-                    </div>
-                  </td>
-                  <td class="pe-4 text-end">
-                    <div class="d-flex justify-content-end gap-1">
-                      <button class="btn btn-sm btn-icon-hover p-2" (click)="openEditModal(p)" title="Edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                      </button>
-                      <button class="btn btn-sm btn-icon-hover text-danger p-2" (click)="openDeleteModal(p)" title="Delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <tr *ngIf="paginatedProducts().length === 0">
-                  <td colspan="6" class="text-center py-5">
-                    <div class="py-4">
-                      <svg class="text-muted opacity-25 mb-3" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                      <p class="text-muted fw-medium">No products match your filters</p>
-                      <button class="btn btn-sm btn-outline-primary rounded-pill px-3" (click)="searchQuery.set(''); selectedCategory.set(''); stockFilter.set('')">Clear All Filters</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-main line-clamp-1" style="max-width: 150px;">{{ p.name }}</div>
+                    <div class="text-muted small font-monospace opacity-75 d-none d-sm-block" style="font-size: 11px;">#{{ p.id }}</div>
+                  </div>
+                </div>
+              } @else if (column === 'Category') {
+                <span class="badge zora-badge-muted border rounded-pill">{{ p.category }}</span>
+              } @else if (column === 'Pricing') {
+                <div class="d-flex flex-column">
+                  <span class="fw-bold price-text">{{ p.price | currency }}</span>
+                  <span *ngIf="p.oldPrice" class="text-muted text-decoration-line-through small d-none d-sm-block" style="font-size: 11px;">{{ p.oldPrice | currency }}</span>
+                </div>
+              } @else if (column === 'Inventory') {
+                <div class="d-flex flex-column gap-1">
+                  <span class="badge rounded-pill px-2 py-1" [ngClass]="getStockBootstrapClass(p.stock)" style="width: fit-content; font-size: 10px;">
+                    {{ p.stock }}
+                  </span>
+                  <div class="progress d-none d-md-flex" style="height: 4px; width: 60px; background: var(--bg-color);">
+                    <div class="progress-bar" [ngClass]="p.stock > 10 ? 'bg-success' : (p.stock > 0 ? 'bg-warning' : 'bg-danger')" [style.width.%]="p.stock > 100 ? 100 : p.stock"></div>
+                  </div>
+                </div>
+              } @else if (column === 'Featured') {
+                <div class="form-check form-switch m-0">
+                  <input class="form-check-input" type="checkbox" [checked]="p.isFeatured" (change)="productService.update(p.id, { isFeatured: !p.isFeatured })" style="cursor: pointer;">
+                </div>
+              } @else if (column === 'Actions') {
+                <div class="d-flex justify-content-end gap-1">
+                  <button class="btn btn-sm btn-icon-hover p-2" (click)="openEditModal(p)" title="Edit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  </button>
+                  <button class="btn btn-sm btn-icon-hover text-danger p-2" (click)="openDeleteModal(p)" title="Delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                  </button>
+                </div>
+              }
+            </ng-template>
+          </app-zora-table>
         </div>
 
         <!-- Pagination Footer -->
