@@ -1,6 +1,5 @@
 import { Component, ElementRef, inject, ViewChild, AfterViewInit, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { OrderService } from '../../../core/services/order.service';
@@ -8,13 +7,15 @@ import { UserService } from '../../../core/services/user.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { AdminSidebar } from '../../../shared/components/admin-sidebar.component/admin-sidebar.component';
+import { ZoraTableComponent } from '../../../shared/components/zora-table/zora-table';
+import { FormsModule } from '@angular/forms';
 
 declare var Chart: any;
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, AdminSidebar],
+  imports: [CommonModule, RouterLink, AdminSidebar, ZoraTableComponent, FormsModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
@@ -166,7 +167,7 @@ export class Dashboard implements AfterViewInit {
       if (catFilter.length > 0) {
         categories = categories.filter(c => catFilter.includes(c.id));
       }
-      
+
       const allProducts = this.productService.getAllRaw();
       const labels = categories.map(c => c.name);
       const dataCounts = categories.map(c => allProducts.filter(p => p.categoryId === c.id).length);
@@ -191,7 +192,7 @@ export class Dashboard implements AfterViewInit {
         categories = categories.filter(c => catFilter.includes(c.id));
       }
       const allProducts = this.productService.getAllRaw();
-      
+
       const labels = categories.map(c => c.name);
       const inStockData = categories.map(c => allProducts.filter(p => p.categoryId === c.id && p.stock > 10).length);
       const lowStockData = categories.map(c => allProducts.filter(p => p.categoryId === c.id && p.stock > 0 && p.stock <= 10).length);
@@ -223,7 +224,7 @@ export class Dashboard implements AfterViewInit {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { 
+          legend: {
             display: type === 'stacked',
             labels: { color: textColor, font: { size: 11, weight: '600' } }
           },

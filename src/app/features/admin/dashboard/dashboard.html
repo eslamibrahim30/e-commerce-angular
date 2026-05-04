@@ -164,37 +164,26 @@
               </div>
               <button class="btn btn-sm btn-link text-decoration-none small fw-bold" routerLink="/admin/orders">View All</button>
             </div>
-            <div class="zora-table-container">
-              <div class="table-responsive">
-              <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light bg-opacity-50">
-                  <tr>
-                    <th class="ps-4 border-0 small text-uppercase text-muted fw-bold">Order ID</th>
-                    <th class="border-0 small text-uppercase text-muted fw-bold">Customer</th>
-                    <th class="border-0 small text-uppercase text-muted fw-bold">Status</th>
-                    <th class="border-0 small text-uppercase text-muted fw-bold">Total</th>
-                    <th class="pe-4 border-0 small text-uppercase text-muted fw-bold text-end">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let order of recentOrders">
-                    <td class="ps-4">
-                      <span class="font-monospace small fw-bold text-primary">{{ order.id }}</span>
-                    </td>
-                    <td>
-                      <div class="small fw-bold">{{ order.userId }}</div>
-                    </td>
-                    <td>
-                      <span class="badge rounded-pill px-2 py-1 small" [ngClass]="getStatusBootstrapClass(order.status)">
-                        {{ order.status }}
-                      </span>
-                    </td>
-                    <td><span class="fw-bold text-main">{{ order.total | currency }}</span></td>
-                    <td class="pe-4 text-end small text-muted">{{ order.date | date:'shortDate' }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="zora-table-wrapper">
+              <app-zora-table 
+                [headers]="['Order ID', 'Customer', 'Status', 'Total', 'Date']" 
+                [data]="recentOrders">
+                <ng-template #cellTemplate let-order let-column="column">
+                  @if (column === 'Order ID') {
+                    <span class="font-monospace small fw-bold text-primary">{{ order.id }}</span>
+                  } @else if (column === 'Customer') {
+                    <div class="small fw-bold">{{ order.userId }}</div>
+                  } @else if (column === 'Status') {
+                    <span class="badge rounded-pill px-2 py-1 small" [ngClass]="getStatusBootstrapClass(order.status)">
+                      {{ order.status }}
+                    </span>
+                  } @else if (column === 'Total') {
+                    <span class="fw-bold text-main">{{ order.total | currency }}</span>
+                  } @else if (column === 'Date') {
+                    <span class="text-end small text-muted d-block">{{ order.date | date:'shortDate' }}</span>
+                  }
+                </ng-template>
+              </app-zora-table>
             </div>
           </div>
         </div>

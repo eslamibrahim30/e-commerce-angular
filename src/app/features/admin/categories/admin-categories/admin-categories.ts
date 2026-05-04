@@ -2,6 +2,7 @@ import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminSidebar } from '../../../../shared/components/admin-sidebar.component/admin-sidebar.component';
+import { ZoraTableComponent } from '../../../../shared/components/zora-table/zora-table';
 import { CategoryService } from '../../../../core/services/category.service';
 import { ProductService } from '../../../../core/services/product.service';
 import { Category } from '../../../../shared/models/category.model';
@@ -9,7 +10,7 @@ import { Category } from '../../../../shared/models/category.model';
 @Component({
   selector: 'app-admin-categories',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminSidebar],
+  imports: [CommonModule, FormsModule, AdminSidebar, ZoraTableComponent],
   templateUrl: './admin-categories.html',
   styleUrl: './admin-categories.css'
 })

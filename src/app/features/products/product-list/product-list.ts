@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CategoryService } from '../../../core/services/category.service';
 import { CartService } from '../../../core/services/cart.service';
@@ -31,18 +31,22 @@ export class ProductList implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private cartService: CartService,
-  ) {}
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
-    // ✅ جيب الـ categories من CategoryService مباشرة
     this.categories = this.categoryService.getAll().map((c) => c.name);
-    this.applyFilters();
 
-
+    this.route.queryParams.subscribe(params => {
+      if (params['search']) {
+        this.filters.search = params['search'];
+      }
+      this.applyFilters();
+    });
   }
 
   applyFilters() {
-    
+
     let result = [...this.productService.products()];
 
     if (this.filters.search) {
@@ -78,7 +82,6 @@ export class ProductList implements OnInit {
         result = [...result].reverse();
         break;
     }
-
     this.filteredProducts = result;
   }
 
@@ -99,8 +102,5 @@ export class ProductList implements OnInit {
       image: product.image,
       quantity: 1,
     });
-
   }
-
-
 }

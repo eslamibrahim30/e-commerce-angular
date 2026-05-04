@@ -13,7 +13,13 @@
       @for (row of data; track row.id) {
         <tr class="animate__animated animate__fadeIn">
           @for (header of headers; track header) {
-            <td>{{ row[header.toLowerCase()] || '---' }}</td>
+            <td>
+              @if (cellTemplate) {
+                <ng-container *ngTemplateOutlet="cellTemplate; context: { $implicit: row, column: header }"></ng-container>
+              } @else {
+                {{ row[header.toLowerCase()] || '---' }}
+              }
+            </td>
           }
           @if (showActions) {
             <td>
