@@ -31,7 +31,6 @@ export class Dashboard implements AfterViewInit {
 
   private charts: any[] = [];
   chartType = signal<'bar' | 'stacked'>('bar');
-  chartType = signal<'bar' | 'stacked'>('bar');
   selectedCategories = signal<string[]>([]);
 
   toggleCategory(id: string) {
@@ -53,7 +52,6 @@ export class Dashboard implements AfterViewInit {
       // Access signals to trigger dependency tracking
       this.productService.products();
       this.orderService.orders();
-      this.chartType(); // Re-render when toggle changes
       this.chartType(); // Re-render when toggle changes
       this.selectedCategories(); // Re-render when categories change
       this.themeService.isDarkMode(); // Re-render when theme changes
