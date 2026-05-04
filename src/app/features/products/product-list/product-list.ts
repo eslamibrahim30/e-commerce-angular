@@ -38,20 +38,23 @@ export class ProductList implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private cartService: CartService,
-    private route: ActivatedRoute,
-  ) {}
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     this.categories = this.categoryService.getAll().map((c) => c.name);
 
+    // Resolved Conflict: Handling both 'category' and 'search' from query params
     this.route.queryParams.subscribe((params) => {
       this.filters.category = params['category'] ?? '';
+      this.filters.search = params['search'] ?? '';
       this.currentPage = 1;
       this.applyFilters();
     });
   }
 
   applyFilters(): void {
+    // Resolved Conflict: Kept type safety (ProductDisplay[])
     let result: ProductDisplay[] = [...this.productService.products()];
 
     if (this.filters.search) {
@@ -89,7 +92,6 @@ export class ProductList implements OnInit {
         result = [...result].reverse();
         break;
     }
-
     this.filteredProducts = result;
     this.currentPage = 1;
     this.updatePagination();
@@ -130,6 +132,7 @@ export class ProductList implements OnInit {
       image: product.image,
       quantity: 1,
     };
+    // Resolved Conflict: Used the service method call from HEAD (dev had a syntax error)
     this.cartService.add(item);
   }
 }

@@ -19,7 +19,9 @@ export class CategoryService {
   }
 
   private initData(): void {
-    if (!localStorage.getItem(this.STORAGE_KEY)) {
+    const version = localStorage.getItem('seed_version_cats');
+    if (version !== '1.2' || !localStorage.getItem(this.STORAGE_KEY)) {
+      localStorage.setItem('seed_version_cats', '1.2');
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(SEED_CATEGORIES));
       this._categories.set(SEED_CATEGORIES);
     }

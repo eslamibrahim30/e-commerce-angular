@@ -12,11 +12,7 @@
           </div>
           <p class="page-sub mb-0">Welcome back, {{ today }} — here's your store at a glance.</p>
         </div>
-        <div class="d-flex gap-2">
-          <button class="btn btn-glass d-flex align-items-center gap-2 px-3 py-2 rounded-3 text-muted small" (click)="searchQuery.set('')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
-            <span>Reset Filters</span>
-          </button>
+        <div class="d-flex align-items-center gap-2">
           <button class="btn btn-primary shadow-sm d-flex align-items-center gap-2 px-3 py-2 rounded-3 small">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             <span>Export Report</span>
@@ -24,9 +20,28 @@
         </div>
       </header>
 
+      <!-- Category Filters Row -->
+      <div class="card border-0 shadow-sm mb-4 p-3 animate-fade-up">
+        <div class="d-flex flex-wrap gap-3 align-items-center">
+          <span class="small text-muted fw-bold text-uppercase tracking-widest">Filter:</span>
+          <div class="form-check form-check-inline m-0" *ngFor="let cat of categories">
+            <input class="form-check-input" type="checkbox" [id]="'cat-' + cat.id" 
+                   [checked]="isCategorySelected(cat.id)" 
+                   (change)="toggleCategory(cat.id)"
+                   style="cursor: pointer;">
+            <label class="form-check-label small fw-bold" [for]="'cat-' + cat.id" style="cursor: pointer; user-select: none;">
+              {{ cat.name }}
+            </label>
+          </div>
+          <button *ngIf="selectedCategories().length > 0" class="btn btn-link btn-sm text-decoration-none text-danger p-0 ms-auto fw-bold" (click)="selectedCategories.set([])">
+            Clear Filters
+          </button>
+        </div>
+      </div>
+
       <!-- Stat Cards Row 1: Key Metrics -->
       <div class="row g-3 mb-4">
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-3 animate-fade-up delay-1">
           <div class="card stat-card h-100 border-0 p-4 accent-blue" (click)="navigateToProducts()">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <span class="stat-label text-uppercase small fw-bold">Total Products</span>
@@ -41,7 +56,7 @@
             <div class="stat-hint small text-muted opacity-75">across {{ categoryCount }} categories</div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-3 animate-fade-up delay-2">
           <div class="card stat-card h-100 border-0 p-4 accent-gold">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <span class="stat-label text-uppercase small fw-bold">Total Revenue</span>
@@ -56,7 +71,7 @@
             <div class="stat-hint small text-muted opacity-75">from {{ orderCount }} completed orders</div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-3 animate-fade-up delay-3">
           <div class="card stat-card h-100 border-0 p-4 accent-indigo" routerLink="/admin/orders">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <span class="stat-label text-uppercase small fw-bold">Orders</span>
@@ -71,7 +86,7 @@
             <div class="stat-hint small text-muted opacity-75">this month to date</div>
           </div>
         </div>
-        <div class="col-12 col-md-6 col-xl-3">
+        <div class="col-12 col-md-6 col-xl-3 animate-fade-up delay-4">
           <div class="card stat-card h-100 border-0 p-4 accent-cyan" routerLink="/admin/users">
             <div class="d-flex justify-content-between align-items-start mb-3">
               <span class="stat-label text-uppercase small fw-bold">Customers</span>
@@ -90,7 +105,7 @@
 
       <!-- Inventory & Sales Row -->
       <div class="row g-4 mb-4">
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-8 animate-fade-up delay-5">
           <div class="card chart-card border-0 p-4 shadow-sm h-100">
             <div class="d-flex justify-content-between align-items-center mb-4">
               <div>
@@ -113,7 +128,7 @@
             </div>
           </div>
         </div>
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-4 animate-fade-up delay-6">
           <div class="card chart-card border-0 p-4 shadow-sm h-100">
             <h6 class="fw-bold text-main mb-1">Stock Health</h6>
             <p class="text-muted small mb-4">Current inventory status</p>
@@ -121,17 +136,17 @@
               <canvas #stockDoughnut></canvas>
             </div>
             <div class="stock-stats d-flex flex-column gap-2">
-              <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-success-subtle bg-opacity-10">
+              <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-success-subtle bg-opacity-10" style="cursor: pointer;" (click)="navigateToProducts('instock')">
                 <span class="small d-flex align-items-center gap-2"><span class="dot bg-success"></span> In Stock</span>
-                <span class="fw-bold text-success">{{ inStockCount() }}</span>
+                <span class="fw-bold text-success animate-pulse-glow" style="transform-origin: right center;">{{ inStockCount() }}</span>
               </div>
-              <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-warning-subtle bg-opacity-10">
-                <span class="small d-flex align-items-center gap-2"><span class="dot bg-warning"></span> Low Stock</span>
-                <span class="fw-bold text-warning">{{ lowStockCount() }}</span>
+              <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-warning-subtle bg-opacity-10" style="cursor: pointer;" (click)="navigateToProducts('low')">
+                <span class="small d-flex align-items-center gap-2"><span class="dot bg-warning animate-pulse-glow"></span> Low Stock</span>
+                <span class="fw-bold text-warning animate-pulse-glow" style="transform-origin: right center; animation-delay: 0.3s;">{{ lowStockCount() }}</span>
               </div>
-              <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-danger-subtle bg-opacity-10">
-                <span class="small d-flex align-items-center gap-2"><span class="dot bg-danger"></span> Out of Stock</span>
-                <span class="fw-bold text-danger">{{ outOfStockCount() }}</span>
+              <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-danger-subtle bg-opacity-10" style="cursor: pointer;" (click)="navigateToProducts('out')">
+                <span class="small d-flex align-items-center gap-2"><span class="dot bg-danger animate-pulse-glow" style="animation-delay: 0.6s;"></span> Out of Stock</span>
+                <span class="fw-bold text-danger animate-pulse-glow" style="transform-origin: right center; animation-delay: 0.6s;">{{ outOfStockCount() }}</span>
               </div>
             </div>
           </div>
@@ -139,7 +154,7 @@
       </div>
 
       <!-- Recent Orders Section -->
-      <div class="row g-4 mb-5">
+      <div class="row g-4 mb-5 animate-fade-up delay-6">
         <div class="col-12">
           <div class="card chart-card border-0 shadow-sm h-100 overflow-hidden">
             <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
@@ -149,37 +164,26 @@
               </div>
               <button class="btn btn-sm btn-link text-decoration-none small fw-bold" routerLink="/admin/orders">View All</button>
             </div>
-            <div class="zora-table-container">
-              <div class="table-responsive">
-              <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light bg-opacity-50">
-                  <tr>
-                    <th class="ps-4 border-0 small text-uppercase text-muted fw-bold">Order ID</th>
-                    <th class="border-0 small text-uppercase text-muted fw-bold">Customer</th>
-                    <th class="border-0 small text-uppercase text-muted fw-bold">Status</th>
-                    <th class="border-0 small text-uppercase text-muted fw-bold">Total</th>
-                    <th class="pe-4 border-0 small text-uppercase text-muted fw-bold text-end">Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let order of recentOrders">
-                    <td class="ps-4">
-                      <span class="font-monospace small fw-bold text-primary">{{ order.id }}</span>
-                    </td>
-                    <td>
-                      <div class="small fw-bold">{{ order.userId }}</div>
-                    </td>
-                    <td>
-                      <span class="badge rounded-pill px-2 py-1 small" [ngClass]="getStatusBootstrapClass(order.status)">
-                        {{ order.status }}
-                      </span>
-                    </td>
-                    <td><span class="fw-bold text-main">{{ order.total | currency }}</span></td>
-                    <td class="pe-4 text-end small text-muted">{{ order.date | date:'shortDate' }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="zora-table-wrapper">
+              <app-zora-table 
+                [headers]="['Order ID', 'Customer', 'Status', 'Total', 'Date']" 
+                [data]="recentOrders">
+                <ng-template #cellTemplate let-order let-column="column">
+                  @if (column === 'Order ID') {
+                    <span class="font-monospace small fw-bold text-primary">{{ order.id }}</span>
+                  } @else if (column === 'Customer') {
+                    <div class="small fw-bold">{{ order.userId }}</div>
+                  } @else if (column === 'Status') {
+                    <span class="badge rounded-pill px-2 py-1 small" [ngClass]="getStatusBootstrapClass(order.status)">
+                      {{ order.status }}
+                    </span>
+                  } @else if (column === 'Total') {
+                    <span class="fw-bold text-main">{{ order.total | currency }}</span>
+                  } @else if (column === 'Date') {
+                    <span class="text-end small text-muted d-block">{{ order.date | date:'shortDate' }}</span>
+                  }
+                </ng-template>
+              </app-zora-table>
             </div>
           </div>
         </div>

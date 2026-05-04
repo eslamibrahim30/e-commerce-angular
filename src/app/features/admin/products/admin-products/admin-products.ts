@@ -6,11 +6,12 @@ import { ProductService } from '../../../../core/services/product.service';
 import { CategoryService } from '../../../../core/services/category.service';
 import { ProductDisplay } from '../../../../shared/models/product.model';
 import { ActivatedRoute } from '@angular/router';
+import { ZoraTableComponent } from '../../../../shared/components/zora-table/zora-table';
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminSidebar],
+  imports: [CommonModule, FormsModule, AdminSidebar, ZoraTableComponent],
   templateUrl: './admin-products.html',
   styleUrl: './admin-products.css'
 })
