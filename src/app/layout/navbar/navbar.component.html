@@ -1,64 +1,65 @@
-<nav class="premium-navbar">
-  <div class="navbar-container">
-    <a routerLink="/" class="brand-logo">
-      <div class="logo-icon">
-        <i class="fa-solid fa-gem"></i>
+<nav class="navbar navbar-expand-lg premium-navbar sticky-top">
+  <div class="container navbar-container">
+    <a routerLink="/" class="navbar-brand brand-logo" (click)="closeMenu()">
+      <div class="logo-wrapper">
+        <img src="zora-logo.png" alt="Zora Logo" class="main-logo">
       </div>
-      <span class="brand-text">Zora</span>
     </a>
 
-    <button class="mobile-toggle" (click)="toggleMenu()">
+    <button class="navbar-toggler mobile-toggle" type="button" (click)="toggleMenu()" aria-controls="zoraNavbar"
+      [aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
       <i class="fa-solid" [class.fa-bars]="!isMenuOpen" [class.fa-xmark]="isMenuOpen"></i>
     </button>
 
-    <div class="nav-menu" [class.active]="isMenuOpen">
-      <ul class="nav-links">
-        <li>
-          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+    <div class="collapse navbar-collapse" id="zoraNavbar" [class.show]="isMenuOpen">
+      <ul class="navbar-nav mx-auto nav-links">
+        <li class="nav-item">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link"
+            (click)="closeMenu()">
             <span class="link-text">Home</span>
             <div class="link-indicator"></div>
           </a>
         </li>
-        <li>
-          <a routerLink="/products" routerLinkActive="active" class="nav-link">
+        <li class="nav-item">
+          <a routerLink="/products" routerLinkActive="active" class="nav-link" (click)="closeMenu()">
             <span class="link-text">Shop</span>
             <div class="link-indicator"></div>
           </a>
         </li>
       </ul>
 
-      <div class="nav-actions">
-        <div class="search-wrapper">
-          <div class="search-box">
-            <input type="text" placeholder="Search premium items..." class="search-input">
-            <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
-          </div>
+      <div class="nav-actions-wrapper">
+        <div class="search-box">
+          <input type="text" placeholder="Search products..." class="search-input">
+          <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
-        <a routerLink="/cart" class="action-btn cart-btn">
-          <i class="fa-solid fa-bag-shopping"></i>
-          <span class="badge">{{ cartService.totalQuantity() }}</span>
-        </a>
+        <div class="action-group">
+          <!-- Shopping Cart -->
+          <a routerLink="/cart" class="action-btn cart-btn" (click)="closeMenu()">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span class="badge">{{ cartService.totalQuantity() }}</span>
+          </a>
 
-        <!-- Not logged in -->
-        <ng-container *ngIf="!auth.isLoggedIn()">
-          <a routerLink="/login" class="action-btn user-btn" title="Login">
-            <i class="fa-regular fa-user"></i>
-          </a>
-          <a routerLink="/register" class="action-btn register-btn" title="Register">
-            <i class="fa-solid fa-user-plus"></i>
-          </a>
-        </ng-container>
+          <!-- Authentication Logic -->
+          <ng-container *ngIf="!auth.isLoggedIn()">
+            <a routerLink="/login" class="action-btn user-btn" (click)="closeMenu()" title="Login">
+              <i class="fa-regular fa-user"></i>
+            </a>
+            <a routerLink="/register" class="action-btn register-btn" (click)="closeMenu()" title="Register">
+              <i class="fa-solid fa-user-plus"></i>
+            </a>
+          </ng-container>
 
-        <!-- Logged in -->
-        <ng-container *ngIf="auth.isLoggedIn()">
-          <a routerLink="/account/profile" class="action-btn user-btn" title="My Profile">
-            <i class="fa-solid fa-user"></i>
-          </a>
-          <button class="action-btn logout-btn" (click)="logout()" title="Logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-          </button>
-        </ng-container>
+          <ng-container *ngIf="auth.isLoggedIn()">
+            <a routerLink="/account/profile" class="action-btn user-btn" (click)="closeMenu()" title="My Profile">
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <button class="action-btn logout-btn" (click)="logout(); closeMenu()" title="Logout">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>

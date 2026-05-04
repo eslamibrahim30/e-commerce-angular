@@ -12,17 +12,24 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
+
   cartService = inject(CartService);
   auth = inject(AuthService);
   private router = inject(Router);
+
   isMenuOpen = false;
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  closeMenu() {
+    this.isMenuOpen = false;
+  }
+
   logout() {
     this.auth.logout();
+    this.closeMenu(); // Ensure menu closes after logging out
     this.router.navigate(['/login']);
   }
 }
