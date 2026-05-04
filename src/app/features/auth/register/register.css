@@ -1,0 +1,16 @@
+.brand-icon {
+  width: 46px;
+  height: 46px;
+  background: #3C3489;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.strength-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: #dee2e6;
+  transition: background 0.25s;
+}
