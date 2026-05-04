@@ -5,6 +5,7 @@ export interface Product {
   oldPrice?: number;    // Optional: Only exists if the item is on sale
   categoryId: string;
   description: string;
+  discount?: number;
   image: string;
   stock: number;
   isFeatured?: boolean; // Optional: Defaults to undefined (falsy) if not set

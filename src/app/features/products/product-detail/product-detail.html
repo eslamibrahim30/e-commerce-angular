@@ -30,13 +30,12 @@
       <div class="col-md-6 zora-pd-img-wrap">
         <div class="position-relative h-100">
           <img
-            [src]="product.imageUrl"
+            [src]="product.image"
             [alt]="product.name"
             class="zora-pd-img"
           />
           <span
-            *ngIf="product.discount > 0"
-            class="zora-pd-discount-badge"
+*ngIf="product.discount && product.discount > 0"            class="zora-pd-discount-badge"
           >
             -{{ product.discount }}% OFF
           </span>
@@ -71,10 +70,10 @@
         <!-- Price -->
         <div class="zora-pd-price mb-4">
           <span class="zora-pd-price__current">${{ product.price }}</span>
-          <span *ngIf="product.discount > 0" class="zora-pd-price__old">
+          <span *ngIf="product.discount && product.discount > 0" class="zora-pd-price__old">
             ${{ (product.price / (1 - product.discount / 100)).toFixed(2) }}
           </span>
-          <span *ngIf="product.discount > 0" class="zora-pd-price__save">
+          <span *ngIf="product.discount && product.discount > 0" class="zora-pd-price__save">
             Save {{ product.discount }}%
           </span>
         </div>
@@ -125,7 +124,7 @@
         <div class="zora-card product-card h-100">
           <a [routerLink]="['/products', p.id]" class="text-decoration-none">
             <img
-              [src]="p.imageUrl"
+              [src]="p.image"
               [alt]="p.name"
               class="w-100 rounded mb-3"
               style="height: 160px; object-fit: cover;"

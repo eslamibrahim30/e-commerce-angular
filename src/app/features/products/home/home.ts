@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
+import { Router } from '@angular/router';
+
 
 import { ProductCard } from '../../../shared/components/product-card/product-card';
 
@@ -19,6 +21,8 @@ export class Home {
 
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private router = inject(Router);
+
 
   featuredProducts = computed(() => this.productService.products().slice(0, 6));
 
@@ -31,9 +35,13 @@ export class Home {
       productId: product.id,
       name: product.name,
       price: product.price,
-      image: product.imageUrl,
+      image: product.image,
       quantity: 1
     });
     this.showModal = true;
   }
+  goToCart() {
+  this.showModal = false;
+  this.router.navigate(['/cart']);
+}
 }
