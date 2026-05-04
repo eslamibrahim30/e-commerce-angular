@@ -1,4 +1,3 @@
-<p>dashboard works!</p>
 <div class="admin-layout">
   <app-admin-sidebar></app-admin-sidebar>
 
@@ -50,7 +49,7 @@
               </div>
             </div>
             <div class="d-flex align-items-baseline gap-2">
-              <div class="h2 fw-bold mb-1" style="color: var(--zora-primary);">{{ totalRevenue | currency }}</div>
+              <div class="h2 fw-bold mb-1 text-primary">{{ totalRevenue | currency }}</div>
               <span class="text-success small fw-bold">+8.4%</span>
             </div>
             <div class="stat-hint small text-muted opacity-75">from {{ orderCount }} completed orders</div>
@@ -108,7 +107,7 @@
                         (click)="chartType.set('stacked')">Stacked</button>
               </div>
             </div>
-            <div style="height: 320px;">
+            <div class="h-320">
               <canvas #barChart></canvas>
             </div>
           </div>
@@ -117,7 +116,7 @@
           <div class="card chart-card border-0 p-4 shadow-sm h-100">
             <h6 class="fw-bold text-main mb-1">Stock Health</h6>
             <p class="text-muted small mb-4">Current inventory status</p>
-            <div style="height: 240px;" class="mb-4">
+            <div class="h-240 mb-4">
               <canvas #stockDoughnut></canvas>
             </div>
             <div class="stock-stats d-flex flex-column gap-2">

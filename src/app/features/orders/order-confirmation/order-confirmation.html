@@ -1,4 +1,4 @@
-<div class="container py-3" style="max-width: 900px;">
+<div class="container py-3 max-w-900">
 
   @for (order of orders(); track order.id) {
 
@@ -39,8 +39,7 @@
 
               <img
                 [src]="item.image"
-                class="rounded"
-                style="width: 64px; height: 64px; object-fit: cover;"
+                class="rounded shadow-sm size-64 object-fit-cover"
               />
 
               <div class="flex-grow-1">

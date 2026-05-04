@@ -60,11 +60,11 @@
           </span>
         </div>
 
-        <h2 class="fw-bold mb-3" style="color: var(--text-main); letter-spacing: -0.02em;">
+        <h2 class="fw-bold mb-3 text-main zora-hero-title">
           {{ product.name }}
         </h2>
 
-        <p class="mb-4" style="color: var(--text-muted); line-height: 1.75; font-size: 0.95rem;">
+        <p class="mb-4 text-muted-custom" style="line-height: 1.75; font-size: 0.95rem;">
           {{ product.description }}
         </p>
 
@@ -127,17 +127,16 @@
             <img
               [src]="p.imageUrl"
               [alt]="p.name"
-              class="w-100 rounded mb-3"
-              style="height: 160px; object-fit: cover;"
+              class="card-img-top w-100 object-fit-cover h-160"
             />
           </a>
           <span class="zora-category-badge mb-2 d-inline-block">{{ p.category }}</span>
-          <h6 class="fw-semibold mb-1" style="color: var(--text-main); font-size: 0.88rem;">
-            <a [routerLink]="['/products', p.id]" class="text-decoration-none" style="color: inherit;">
+          <h6 class="fw-semibold mb-1 text-main text-md">
+            <a [routerLink]="['/products', p.id]" class="text-decoration-none text-main">
               {{ p.name }}
             </a>
           </h6>
-          <p class="mb-3" style="color: var(--zora-gold); font-weight: 700;">${{ p.price }}</p>
+          <p class="mb-3 text-zora-gold fw-bold">${{ p.price }}</p>
           <a
             [routerLink]="['/products', p.id]"
             class="btn btn-outline-teal btn-sm w-100"

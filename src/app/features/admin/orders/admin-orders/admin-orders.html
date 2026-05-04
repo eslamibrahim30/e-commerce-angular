@@ -15,7 +15,7 @@
         <div class="row g-3">
           <div class="col-12 col-md-4">
             <div class="search-box position-relative">
-              <svg class="search-icon position-absolute" style="left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <svg class="zora-search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input class="form-control ps-5 py-2" [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event); onFilterChange()" placeholder="Order ID or Customer ID..." />
             </div>
           </div>
@@ -93,7 +93,7 @@
           <div class="d-flex align-items-center gap-4">
             <div class="d-flex align-items-center gap-2">
               <span class="text-muted small fw-bold">PER PAGE</span>
-              <select class="form-select form-select-sm border shadow-none" style="width: 70px; font-weight: 600; border-radius: 8px; font-size: 12px;" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
+              <select class="form-select form-select-sm border shadow-none w-70 fw-semibold rounded-3 text-xs" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
                 <option [ngValue]="5">5</option>
                 <option [ngValue]="10">10</option>
                 <option [ngValue]="25">25</option>

@@ -1,31 +1,36 @@
-<div class="form-group zora-select-wrapper">
-  @if (label) {
-    <label class="zora-label">{{ label }}</label>
+<div [class]="containerClass">
+  @if (label && !hideLabel) {
+    <label class="form-label font-weight-bold text-secondary">{{ label }}</label>
   }
 
-  <div class="input-container">
-    <select 
-      [formControl]="$any(control)"
-      [class.is-invalid]="control?.invalid && control?.touched"
-      class="form-control custom-zora-select">
-      
-      <option value="" disabled selected>{{ placeholder }}</option>
-      
-      @for (option of options; track option.value) {
-        <option [value]="option.value">
-          {{ option.label }}
-        </option>
-      }
-    </select>
-    
-    <i class="fas fa-chevron-down select-icon"></i>
+  <div class="zora-select-wrapper position-relative">
+    @if (control) {
+      <select 
+        [formControl]="$any(control)"
+        [class.is-invalid]="control.invalid && control.touched"
+        class="form-control zora-form-control">
+        <option value="" disabled selected>{{ placeholder }}</option>
+        @for (option of options; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    } @else {
+      <select 
+        [value]="value"
+        (change)="onSelect($event)"
+        (blur)="onTouch()"
+        class="form-control zora-form-control">
+        <option value="" disabled selected>{{ placeholder }}</option>
+        @for (option of options; track option.value) {
+          <option [value]="option.value">{{ option.label }}</option>
+        }
+      </select>
+    }
   </div>
 
-  @if (control?.invalid && control?.touched) {
-    <div class="zora-error-msg animate__animated animate__headShake">
-      <small>
-        @if (control?.errors?.['required']) { <span>Please select a value for this field.</span> }
-      </small>
+  @if (control && control.invalid && control.touched) {
+    <div class="invalid-feedback d-block">
+      @if (control.errors?.['required']) { <span>Please select a value.</span> }
     </div>
   }
 </div>

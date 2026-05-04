@@ -6,17 +6,20 @@ import { ZoraTableComponent } from '../../../../shared/components/zora-table/zor
 import { CategoryService } from '../../../../core/services/category.service';
 import { ProductService } from '../../../../core/services/product.service';
 import { Category } from '../../../../shared/models/category.model';
+import { ZoraInputComponent } from '../../../../shared/components/zora-input/zora-input';
+import { ZoraModalComponent } from '../../../../shared/components/zora-modal/zora-modal';
 
 @Component({
   selector: 'app-admin-categories',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminSidebar, ZoraTableComponent],
+  imports: [CommonModule, FormsModule, AdminSidebar, ZoraTableComponent, ZoraInputComponent, ZoraModalComponent],
   templateUrl: './admin-categories.html',
   styleUrl: './admin-categories.css'
 })
 export class AdminCategories {
   protected categoryService = inject(CategoryService);
   protected productService = inject(ProductService);
+  searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
 
   // Filter & Search state
   searchQuery = signal('');

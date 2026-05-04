@@ -11,15 +11,7 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 })
 export class AdminSidebar {
   private router = inject(Router);
-  isOpen = signal(false);
 
-  toggleSidebar() {
-    this.isOpen.update(v => !v);
-  }
-
-  closeSidebar() {
-    this.isOpen.set(false);
-  }
 
   menuItems = [
     { 

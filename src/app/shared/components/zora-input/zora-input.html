@@ -1,18 +1,69 @@
-<div class="form-group mb-3">
-  <label class="form-label font-weight-bold text-secondary">{{ label }}</label>
+<div [class]="containerClass">
+  @if (label && !hideLabel) {
+    <label class="form-label font-weight-bold text-secondary">{{ label }}</label>
+  }
   
-  <input 
-    [type]="type" 
-    [formControl]="$any(control)"
-    [class.is-invalid]="isInvalid"
-    class="form-control zora-form-control" 
-    [placeholder]="placeholder">
+  <div class="zora-input-wrapper" [class.has-icon]="iconSvg">
+    @if (iconSvg) {
+      <span class="zora-input-icon" [innerHTML]="iconSvg"></span>
+    }
 
-  @if (isInvalid) {
-    <div class="invalid-feedback animate__animated animate__fadeIn">
-      @if (control?.errors?.['required']) { <span>{{ label }} is required.</span> }
-      @if (control?.errors?.['email']) { <span>Please enter a valid email.</span> }
-      @if (control?.errors?.['minlength']) { <span>Value is too short.</span> }
+    @if (type === 'checkbox') {
+      <input 
+        type="checkbox"
+        [checked]="value"
+        (change)="onCheckboxChange($event)"
+        [disabled]="disabled"
+        [class.is-invalid]="isInvalid"
+        class="form-check-input {{ inputClass }}">
+    } @else if (isTextArea) {
+      @if (control) {
+        <textarea
+          [formControl]="$any(control)"
+          [rows]="rows"
+          [class.is-invalid]="isInvalid"
+          class="form-control zora-form-control {{ inputClass }}" 
+          [placeholder]="placeholder"
+          [disabled]="disabled"></textarea>
+      } @else {
+        <textarea 
+          [value]="value"
+          [rows]="rows"
+          (input)="onInput($event)"
+          (blur)="onTouch()"
+          [class.is-invalid]="isInvalid"
+          class="form-control zora-form-control {{ inputClass }}" 
+          [placeholder]="placeholder"
+          [disabled]="disabled"></textarea>
+      }
+    } @else {
+      @if (control) {
+        <input 
+          [type]="type" 
+          [formControl]="$any(control)"
+          [class.is-invalid]="isInvalid"
+          class="form-control zora-form-control {{ inputClass }}" 
+          [placeholder]="placeholder"
+          [disabled]="disabled">
+      } @else {
+        <input 
+          [type]="type" 
+          [value]="value"
+          (input)="onInput($event)"
+          (blur)="onTouch()"
+          [class.is-invalid]="isInvalid"
+          class="form-control zora-form-control {{ inputClass }}" 
+          [placeholder]="placeholder"
+          [disabled]="disabled">
+      }
+    }
+  </div>
+
+  @if (control && isInvalid) {
+    <div class="invalid-feedback animate__animated animate__fadeIn d-block">
+      @if (control.errors?.['required']) { <span>{{ label || 'This field' }} is required.</span> }
+      @if (control.errors?.['email']) { <span>Please enter a valid email.</span> }
+      @if (control.errors?.['minlength']) { <span>Value is too short.</span> }
     </div>
   }
 </div>

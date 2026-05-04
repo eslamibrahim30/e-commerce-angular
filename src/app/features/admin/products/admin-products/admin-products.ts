@@ -7,11 +7,14 @@ import { CategoryService } from '../../../../core/services/category.service';
 import { ProductDisplay } from '../../../../shared/models/product.model';
 import { ActivatedRoute } from '@angular/router';
 import { ZoraTableComponent } from '../../../../shared/components/zora-table/zora-table';
+import { ZoraInputComponent } from '../../../../shared/components/zora-input/zora-input';
+import { ZoraModalComponent } from '../../../../shared/components/zora-modal/zora-modal';
+import { ZoraSelectComponent } from '../../../../shared/components/zora-select/zora-select';
 
 @Component({
   selector: 'app-admin-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, AdminSidebar, ZoraTableComponent],
+  imports: [CommonModule, FormsModule, AdminSidebar, ZoraTableComponent, ZoraInputComponent, ZoraModalComponent, ZoraSelectComponent],
   templateUrl: './admin-products.html',
   styleUrl: './admin-products.css'
 })
@@ -19,6 +22,7 @@ export class AdminProducts implements OnInit {
   protected productService = inject(ProductService);
   protected categoryService = inject(CategoryService);
   private route = inject(ActivatedRoute);
+  searchIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>`;
 
   // Search & Filter state
   searchQuery = signal('');
@@ -39,6 +43,7 @@ export class AdminProducts implements OnInit {
   pageSize = signal(10);
 
   categories = this.categoryService.categories;
+  categoryOptions = computed(() => this.categories().map(c => ({ label: c.name, value: c.id })));
 
   // Filtered and Sorted list
   filteredProducts = computed(() => {

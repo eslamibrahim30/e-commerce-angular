@@ -156,6 +156,41 @@ body {
   }
 }
 
+/* Professional Table Styling */
+.zora-table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.zora-table thead th {
+  background: rgba(var(--zora-primary-rgb), 0.03);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  border-top: none;
+}
+
+.zora-table tbody td {
+  padding: 1.25rem 1rem;
+  font-size: 14px;
+  vertical-align: middle;
+  border-top: 1px solid var(--border-color);
+}
+
+.zora-table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.zora-table tbody tr:hover {
+  background-color: rgba(var(--zora-primary-rgb), 0.02) !important;
+  transform: scale(1.002);
+}
+
 /* Standardized Pagination */
 .zora-pagination-footer {
   display: flex;
@@ -222,4 +257,75 @@ body {
 
 .product-card:hover img {
   transform: scale(1.05);
+}
+
+/* Global Utility Classes */
+.cursor-pointer { cursor: pointer !important; }
+.object-fit-cover { object-fit: cover !important; }
+.object-fit-contain { object-fit: contain !important; }
+.w-100 { width: 100% !important; }
+.h-100 { height: 100% !important; }
+
+/* Custom Text Colors */
+.text-main { color: var(--text-main) !important; }
+.text-muted-custom { color: var(--text-muted) !important; }
+.text-zora-teal { color: var(--zora-teal) !important; }
+.text-zora-gold { color: var(--zora-gold) !important; }
+.text-brand-primary { color: #7F77DD !important; } /* Used in Auth */
+
+/* Typography */
+.text-xxs { font-size: 0.7rem !important; }
+.text-xs { font-size: 0.75rem !important; }
+.text-sm-custom { font-size: 0.8rem !important; }
+.text-md { font-size: 0.88rem !important; }
+.text-lg { font-size: 1.3rem !important; }
+.text-xl { font-size: 1.5rem !important; }
+
+/* Sizes & Dimensions */
+.max-w-440 { max-width: 440px !important; }
+.max-w-900 { max-width: 900px !important; }
+.min-h-520 { min-height: 520px !important; }
+.size-32 { width: 32px !important; height: 32px !important; }
+.size-40 { width: 40px !important; height: 40px !important; }
+.size-40 { width: 40px !important; height: 40px !important; }
+.size-42 { width: 42px !important; height: 42px !important; }
+.size-48 { width: 48px !important; height: 48px !important; }
+.size-64 { width: 64px !important; height: 64px !important; }
+.size-110 { width: 110px !important; height: 110px !important; }
+.h-160 { height: 160px !important; }
+.h-240 { height: 240px !important; }
+.h-320 { height: 320px !important; }
+.h-4 { height: 4px !important; }
+.w-60 { width: 60px !important; }
+.w-70 { width: 70px !important; }
+.w-fit { width: fit-content !important; }
+.max-w-150 { max-width: 150px !important; }
+.max-w-350 { max-width: 350px !important; }
+.max-w-400 { max-width: 400px !important; }
+
+.modal-backdrop-blur {
+  background: rgba(0,0,0,0.5) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Misc */
+.z-2 { z-index: 2 !important; }
+.line-clamp-1 {
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+/* Shared Search Input */
+.zora-search-wrap { position: relative; }
+.zora-search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  z-index: 2;
+  pointer-events: none;
 }

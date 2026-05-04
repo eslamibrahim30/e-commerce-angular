@@ -96,23 +96,6 @@
   transform: translateX(4px);
 }
 
-.table thead th {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-
-.table tbody td {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(var(--zora-primary-rgb), 0.02);
-}
-
 .badge {
   font-weight: 600;
   letter-spacing: 0.02em;

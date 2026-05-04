@@ -1,4 +1,3 @@
-<p>admin-categories works!</p>
 <div class="admin-layout">
   <app-admin-sidebar></app-admin-sidebar>
 
@@ -19,15 +18,14 @@
       <div class="filters-container mb-4">
         <div class="row g-3">
           <div class="col-12 col-md-6 col-lg-7">
-            <div class="search-box position-relative">
-              <svg class="search-icon position-absolute" style="left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); pointer-events: none;" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input
-                class="form-control ps-5 py-2"
-                [ngModel]="searchQuery()"
-                (ngModelChange)="searchQuery.set($event); onFilterChange()"
-                placeholder="Search by name, ID or description..."
-              />
-            </div>
+            <app-zora-input 
+              [hideLabel]="true"
+              placeholder="Search by name, ID or description..."
+              [iconSvg]="searchIcon"
+              containerClass="mb-0"
+              [ngModel]="searchQuery()"
+              (ngModelChange)="searchQuery.set($event); onFilterChange()">
+            </app-zora-input>
           </div>
 
           <div class="col-12 col-md-6 col-lg-5">
@@ -52,11 +50,11 @@
             <ng-template #cellTemplate let-cat let-column="column">
               @if (column === 'Category Details') {
                 <div class="d-flex align-items-center gap-3">
-                  <div class="category-icon bg-light rounded-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px;">
+                  <div class="category-icon bg-light rounded-3 d-flex align-items-center justify-content-center shadow-sm size-40">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--zora-primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                   </div>
                   <div>
-                    <div class="fw-bold text-main" style="font-size: 15px;">{{ cat.name }}</div>
+                    <div class="fw-bold text-main fs-6">{{ cat.name }}</div>
                     <div class="text-muted small font-monospace opacity-75">ID: {{ cat.id }}</div>
                   </div>
                 </div>
@@ -67,7 +65,7 @@
                   </span>
                 </div>
               } @else if (column === 'Description') {
-                <div class="text-muted small text-truncate" style="max-width: 350px;" [title]="cat.description">
+                <div class="text-muted small text-truncate max-w-350" [title]="cat.description">
                   {{ cat.description }}
                 </div>
               } @else if (column === 'Actions') {
@@ -95,7 +93,7 @@
           <div class="d-flex align-items-center gap-4">
             <div class="d-flex align-items-center gap-2">
               <span class="text-muted small fw-bold">PER PAGE</span>
-              <select class="form-select form-select-sm border shadow-none" style="width: 70px; font-weight: 600; border-radius: 8px; font-size: 12px;" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
+              <select class="form-select form-select-sm border shadow-none w-70 fw-semibold rounded-3 text-xs" [ngModel]="pageSize()" (ngModelChange)="pageSize.set($event); onFilterChange()">
                 <option [ngValue]="5">5</option>
                 <option [ngValue]="10">10</option>
                 <option [ngValue]="25">25</option>
@@ -126,63 +124,64 @@
 </div>
 
 <!-- Category Form Modal -->
-<div class="modal d-block" *ngIf="showFormModal" tabindex="-1" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden">
-      <div class="modal-header px-4 py-3 border-bottom">
-        <h5 class="modal-title fw-bold">{{ editingId ? 'Edit Category' : 'Create New Category' }}</h5>
-        <button type="button" class="btn-close" (click)="closeModal()"></button>
-      </div>
-      <div class="modal-body p-4">
-        <div class="mb-4">
-          <label class="form-label small fw-bold text-muted text-uppercase mb-2">Category Name</label>
-          <input class="form-control" [(ngModel)]="form.name" name="name" placeholder="e.g. Smart Home Gadgets" />
-        </div>
-        <div class="mb-4">
-          <label class="form-label small fw-bold text-muted text-uppercase mb-2">Description</label>
-          <textarea class="form-control" [(ngModel)]="form.description" name="description" rows="4" placeholder="Briefly describe what this category includes..."></textarea>
-        </div>
-
-        <div class="alert alert-danger border-0 small d-flex align-items-center gap-2" *ngIf="formError">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-          <span>{{ formError }}</span>
-        </div>
-      </div>
-      <div class="modal-footer px-4 py-3 bg-light">
-        <button type="button" class="btn btn-light rounded-pill px-4" (click)="closeModal()">Cancel</button>
-        <button type="button" class="btn btn-primary rounded-pill px-4" (click)="saveCategory()">
-          {{ editingId ? 'Save Changes' : 'Create Category' }}
-        </button>
-      </div>
+<app-zora-modal
+  [isOpen]="showFormModal"
+  [title]="editingId ? 'Edit Category' : 'Create New Category'"
+  [confirmText]="editingId ? 'Save Changes' : 'Create Category'"
+  (confirmed)="saveCategory()"
+  (canceled)="closeModal()"
+>
+  <div class="row g-3">
+    <div class="col-12">
+      <app-zora-input
+        label="Category Name"
+        placeholder="e.g. Smart Home Gadgets"
+        [(ngModel)]="form.name"
+      ></app-zora-input>
+    </div>
+    <div class="col-12">
+      <app-zora-input
+        label="Description"
+        [isTextArea]="true"
+        [rows]="4"
+        [(ngModel)]="form.description"
+        placeholder="Briefly describe what this category includes..."
+      ></app-zora-input>
     </div>
   </div>
-</div>
+
+  @if (formError) {
+    <div class="alert alert-danger border-0 small d-flex align-items-center gap-2 mt-3">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      <span>{{ formError }}</span>
+    </div>
+  }
+</app-zora-modal>
 
 <!-- Delete Modal -->
-<div class="modal d-block" *ngIf="showDeleteModal" tabindex="-1" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);">
-  <div class="modal-dialog modal-dialog-centered" style="max-width: 400px;">
-    <div class="modal-content shadow-lg border-0 rounded-4 p-4 text-center">
-      <div class="mb-4 text-danger opacity-75">
-        <svg *ngIf="!deleteBlocked" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-        <svg *ngIf="deleteBlocked" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-      </div>
+<app-zora-modal
+  [isOpen]="showDeleteModal"
+  [title]="deleteBlocked ? 'Cannot Delete' : 'Delete Category?'"
+  [confirmText]="deleteBlocked ? '' : 'Delete Forever'"
+  [cancelText]="deleteBlocked ? 'Close' : 'Cancel'"
+  (confirmed)="confirmDeleteCategory()"
+  (canceled)="showDeleteModal = false"
+  size="sm"
+>
+  <div class="text-center p-2">
+    <div class="mb-4 text-danger opacity-75">
+      <svg *ngIf="!deleteBlocked" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+      <svg *ngIf="deleteBlocked" xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </div>
 
-      <h3 class="fw-bold mb-3">{{ deleteBlocked ? 'Cannot Delete' : 'Delete Category?' }}</h3>
-
-      <p class="text-muted small mb-4" *ngIf="!deleteBlocked">
-        Are you sure you want to delete <strong>{{ deletingCategory?.name }}</strong>? This action is permanent.
-      </p>
-
-      <div class="alert alert-warning border-0 small text-start mb-4" *ngIf="deleteBlocked">
+    @if (deleteBlocked) {
+      <div class="alert alert-warning border-0 small text-start mb-0">
         This category contains <strong>{{ getProductCount(deletingCategory?.id || '') }}</strong> products. You must reassign or delete them first.
       </div>
-
-      <div class="d-grid gap-2">
-        <button *ngIf="!deleteBlocked" type="button" class="btn btn-danger py-2 rounded-pill shadow-sm" (click)="confirmDeleteCategory()">Delete Forever</button>
-        <button type="button" class="btn btn-light py-2 rounded-pill text-muted" (click)="showDeleteModal = false">
-          {{ deleteBlocked ? 'Close' : 'Cancel' }}
-        </button>
-      </div>
-    </div>
+    } @else {
+      <p class="text-muted small mb-0">
+        Are you sure you want to delete <strong>{{ deletingCategory?.name }}</strong>? This action is permanent.
+      </p>
+    }
   </div>
-</div>
+</app-zora-modal>
