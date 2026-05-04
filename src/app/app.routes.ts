@@ -1,46 +1,54 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth-guard';
+import { AdminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./features/products/home/home').then((m) => m.Home),
+    loadComponent: () => import('./features/products/home/home').then((m) => m.Home)
   },
   {
     path: 'products',
     loadComponent: () =>
       import('./features/products/product-list/product-list').then((m) => m.ProductList),
+    canActivate: [AuthGuard]
   },
   {
     path: 'products/:productId',
     loadComponent: () =>
       import('./features/products/product-detail/product-detail').then((m) => m.ProductDetail),
+    canActivate: [AuthGuard]
   },
   {
     path: 'cart',
     loadComponent: () => import('./features/cart/cart/cart').then((m) => m.Cart),
+    canActivate: [AuthGuard]
   },
-  // {
-  //   path: 'checkout',
-  //   loadComponent: () => import('./features/checkout/checkout/checkout').then((m) => m.Checkout),
-  // },
+  {
+    path: 'checkout',
+    loadComponent: () => import('./features/checkout/checkout/checkout').then((m) => m.Checkout),
+    canActivate: [AuthGuard]
+  },
   {
     path: 'order-confirmation',
     loadComponent: () =>
       import('./features/orders/order-confirmation/order-confirmation').then(
         (m) => m.OrderConfirmation,
       ),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
-    loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
+    loadComponent: () => import('./features/auth/login/login').then((m) => m.LoginComponent),
   },
   {
     path: 'register',
-    loadComponent: () => import('./features/auth/register/register').then((m) => m.Register),
+    loadComponent: () => import('./features/auth/register/register').then((m) => m.RegisterComponent)
   },
   {
     path: 'account/profile',
-    loadComponent: () => import('./features/profile/profile/profile').then((m) => m.Profile),
+    loadComponent: () => import('./features/profile/profile').then((m) => m.ProfileComponent),
+    canActivate: [AuthGuard]
   },
   {
     path: 'admin',
@@ -70,7 +78,8 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/admin/users/admin-users/admin-users').then((m) => m.AdminUsers),
       },
-    ]
+    ],
+    canActivate: [AuthGuard, AdminGuard]
   },
   { path: '**', redirectTo: '' },
 ];

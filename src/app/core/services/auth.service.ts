@@ -1,33 +1,64 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { User } from '../../shared/models/user.model';
+import { SEED_USERS } from '../../shared/data/seed.data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly SESSION_KEY = 'auth_session';
+  private readonly USERS_KEY = 'users_data';
 
-  /** Internal writable signal — single source of truth */
-  private _session = signal<any | null>(this.loadFromStorage());
-
-  /** Public readonly signal of the current session */
-  readonly session = this._session.asReadonly();
-
-  /** Convenient boolean signal for auth guards, navbar, etc. */
-  readonly isLoggedIn = computed(() => this._session() !== null);
-
-  login(userData: any): void {
-    this._session.set(userData);
-    localStorage.setItem(this.SESSION_KEY, JSON.stringify(userData));
+  constructor() {
+    this.initUsers();
   }
 
-  logout(): void {
-    this._session.set(null);
-    localStorage.removeItem(this.SESSION_KEY);
+  /**
+   * Seeds the users into localStorage on first load so that
+   * login can find them immediately without delay.
+   */
+  private initUsers(): void {
+    if (!localStorage.getItem(this.USERS_KEY)) {
+      localStorage.setItem(this.USERS_KEY, JSON.stringify(SEED_USERS));
+    }
   }
 
-  /** Reads initial session from localStorage */
-  private loadFromStorage(): any | null {
-    const session = localStorage.getItem(this.SESSION_KEY);
-    return session ? JSON.parse(session) : null;
+  login(email: string, password: string): boolean {
+    const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
+
+    const user = users.find(u =>
+      u.email === email && u.password === password
+    );
+
+    if (user) {
+      localStorage.setItem('session', JSON.stringify(user));
+      return true;
+    }
+
+    return false;
+  }
+
+  register(userData: Omit<User, 'id'>) {
+    const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
+    const user: User = { ...userData, id: Date.now().toString() };
+
+    users.push(user);
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+  }
+
+  logout() {
+    localStorage.removeItem('session');
+  }
+
+  getUser(): User | null {
+    return JSON.parse(localStorage.getItem('session') || 'null');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('session');
+  }
+
+  isAdmin(): boolean {
+    const user = this.getUser();
+    return user?.role === 'admin';
   }
 }

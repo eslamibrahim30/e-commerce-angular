@@ -1,6 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { Category } from '../../shared/models/category.model';
-import categoriesData from '../../shared/data/categories.json';
+import { SEED_CATEGORIES } from '../../shared/data/seed.data';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,8 @@ export class CategoryService {
 
   private initData(): void {
     if (!localStorage.getItem(this.STORAGE_KEY)) {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(categoriesData));
-      this._categories.set(categoriesData as Category[]);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(SEED_CATEGORIES));
+      this._categories.set(SEED_CATEGORIES);
     }
   }
 

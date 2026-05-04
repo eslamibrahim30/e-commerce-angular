@@ -35,13 +35,30 @@
         </div>
 
         <div class="action-group">
+          <!-- Shopping Cart -->
           <a routerLink="/cart" class="action-btn cart-btn" (click)="closeMenu()">
             <i class="fa-solid fa-bag-shopping"></i>
             <span class="badge">{{ cartService.totalQuantity() }}</span>
           </a>
-          <a routerLink="/login" class="action-btn user-btn" (click)="closeMenu()">
-            <i class="fa-regular fa-user"></i>
-          </a>
+
+          <!-- Authentication Logic -->
+          <ng-container *ngIf="!auth.isLoggedIn()">
+            <a routerLink="/login" class="action-btn user-btn" (click)="closeMenu()" title="Login">
+              <i class="fa-regular fa-user"></i>
+            </a>
+            <a routerLink="/register" class="action-btn register-btn" (click)="closeMenu()" title="Register">
+              <i class="fa-solid fa-user-plus"></i>
+            </a>
+          </ng-container>
+
+          <ng-container *ngIf="auth.isLoggedIn()">
+            <a routerLink="/account/profile" class="action-btn user-btn" (click)="closeMenu()" title="My Profile">
+              <i class="fa-solid fa-user"></i>
+            </a>
+            <button class="action-btn logout-btn" (click)="logout(); closeMenu()" title="Logout">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </ng-container>
         </div>
       </div>
     </div>

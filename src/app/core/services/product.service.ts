@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Product, ProductDisplay } from '../../shared/models/product.model';
 import { CategoryService } from './category.service';
-import productsData from '../../shared/data/products.json';
+import { SEED_PRODUCTS } from '../../shared/data/seed.data';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +36,8 @@ export class ProductService {
 
   private initData(): void {
     if (!localStorage.getItem(this.STORAGE_KEY)) {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(productsData));
-      this._products.set(productsData as Product[]);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(SEED_PRODUCTS));
+      this._products.set(SEED_PRODUCTS);
     }
   }
 
