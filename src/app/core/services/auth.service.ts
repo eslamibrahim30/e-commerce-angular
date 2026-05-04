@@ -1,33 +1,47 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { User } from '../../shared/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly SESSION_KEY = 'auth_session';
+  login(email: string, password: string): boolean {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
 
-  /** Internal writable signal — single source of truth */
-  private _session = signal<any | null>(this.loadFromStorage());
+    const user = users.find((u: User) =>
+      u.email === email && u.password === password
+    );
 
-  /** Public readonly signal of the current session */
-  readonly session = this._session.asReadonly();
+    if (user) {
+      localStorage.setItem('session', JSON.stringify(user));
+      return true;
+    }
 
-  /** Convenient boolean signal for auth guards, navbar, etc. */
-  readonly isLoggedIn = computed(() => this._session() !== null);
-
-  login(userData: any): void {
-    this._session.set(userData);
-    localStorage.setItem(this.SESSION_KEY, JSON.stringify(userData));
+    return false;
   }
 
-  logout(): void {
-    this._session.set(null);
-    localStorage.removeItem(this.SESSION_KEY);
+  register(userData: Omit<User, 'id'>) {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user: User = { ...userData, id: Date.now().toString() };
+
+    users.push(user);
+    localStorage.setItem('users', JSON.stringify(users));
   }
 
-  /** Reads initial session from localStorage */
-  private loadFromStorage(): any | null {
-    const session = localStorage.getItem(this.SESSION_KEY);
-    return session ? JSON.parse(session) : null;
+  logout() {
+    localStorage.removeItem('session');
+  }
+
+  getUser() {
+    return JSON.parse(localStorage.getItem('session') || 'null');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('session');
+  }
+
+  isAdmin(): boolean {
+    const user = this.getUser();
+    return user?.role === 'admin';
   }
 }
