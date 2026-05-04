@@ -1,45 +1,58 @@
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { OrderService } from '../../../core/services/order.service';
+import { AuthService } from '../../../core/services/auth.service';
+import { ProductService } from '../../../core/services/product.service';
+import { Order, OrderItem } from '../../../shared/models/order.model';
 
+export interface OrderItemDisplay extends OrderItem {
+  name: string;
+  image: string;
+}
+interface OrderWithExpanded extends Order {
+  items: OrderItemDisplay[];
+}
 @Component({
   selector: 'app-order-confirmation',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './order-confirmation.html',
   styleUrl: './order-confirmation.css',
 })
 export class OrderConfirmation {
-    expanded: boolean=false
-  orders = signal([
-  {
-    id: 101,
-    date: '2026-04-30',
-    total: 120,
-    expanded: false,
-    items: [
-      { id: 1, name: 'Laptop', price: 100, quantity: 1, image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500' },
-      { id: 2, name: 'Mouse', price: 20, quantity: 1, image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500' }
-    ]
-  },
-  {
-    id: 102,
-    date: '2026-04-25',
-    total: 80,
-    expanded: false,
-    items: [
-      { id: 3, name: 'Headphones', price: 80, quantity: 1, image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=500' }
-    ]
+  private orderService = inject(OrderService);
+  private authService = inject(AuthService);
+  private productService = inject(ProductService);
+
+  expandedOrders = signal<Set<string>>(new Set());
+
+  orders = computed<OrderWithExpanded[]>(() => {
+    const user = this.authService.getUser();
+    const allOrders = this.orderService.orders();
+
+    if (!user) return [];
+
+    const userOrders = allOrders
+      .filter((o) => o.userId === user.id)
+      .sort((a, b) => +new Date(b.date) - +new Date(a.date));
+
+    return userOrders.map((order) => ({
+      ...order,
+      items: order.items.map((item) => {
+        const product = this.productService.getById(item.productId);
+        return {
+          ...item,
+          name: product?.name ?? 'Unknown Product',
+          image: product?.image ?? 'https://via.placeholder.com/64',
+        };
+      }),
+    }));
+  });
+
+  toggleOrder(id: string) {
+    this.expandedOrders.update((set) => {
+      const newSet = new Set(set);
+      newSet.has(id) ? newSet.delete(id) : newSet.add(id);
+      return newSet;
+    });
   }
-])
-toggleOrder(id: number) {
-  this.orders.update(orders =>
-    orders.map(order =>
-      order.id === id
-        ? { ...order, expanded: !order.expanded }
-        : order
-    )
-  )
 }
-}
-
-
-
-

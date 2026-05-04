@@ -381,55 +381,15 @@ export const SEED_ORDERS: Order[] = [
     date: '2024-01-15T10:30:00Z',
     status: 'Delivered',
     total: 478.99,
+    shipping: {
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '123456789',
+      address: 'New York'
+    },
     items: [
       { productId: 'p-1', quantity: 1, price: 349.99 },
       { productId: 'p-8', quantity: 1, price: 129.00 },
     ],
-  },
-  {
-    id: 'ord-002',
-    userId: 'u-3',
-    date: '2024-02-10T14:45:00Z',
-    status: 'Shipped',
-    total: 799.00,
-    items: [{ productId: 'p-2', quantity: 1, price: 799.00 }],
-  },
-  {
-    id: 'ord-003',
-    userId: 'u-4',
-    date: '2024-03-05T09:15:00Z',
-    status: 'Processing',
-    total: 209.99,
-    items: [
-      { productId: 'p-3', quantity: 1, price: 160.00 },
-      { productId: 'p-5', quantity: 1, price: 49.99 },
-    ],
-  },
-  {
-    id: 'ord-004',
-    userId: 'u-2',
-    date: '2024-03-20T16:20:00Z',
-    status: 'Pending',
-    total: 89.50,
-    items: [{ productId: 'p-4', quantity: 1, price: 89.50 }],
-  },
-  {
-    id: 'ord-005',
-    userId: 'u-5',
-    date: '2024-04-01T11:00:00Z',
-    status: 'Delivered',
-    total: 848.00,
-    items: [
-      { productId: 'p-7', quantity: 1, price: 299.00 },
-      { productId: 'p-6', quantity: 1, price: 549.00 },
-    ],
-  },
-  {
-    id: 'ord-006',
-    userId: 'u-3',
-    date: '2024-04-18T13:40:00Z',
-    status: 'Pending',
-    total: 49.99,
-    items: [{ productId: 'p-5', quantity: 1, price: 49.99 }],
   },
 ];

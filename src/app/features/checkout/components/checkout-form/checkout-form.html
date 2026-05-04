@@ -1,61 +1,49 @@
-<div class="w-full">
-
-  <!-- Shipping Info -->
+<div class="w-full" [formGroup]="shippingForm">
   <div class="bg-white p-4 rounded shadow mb-4">
     <h2 class="h4 fw-bold mb-4">Shipping Information</h2>
 
     <div class="row g-3">
-
       <div class="col-md-6">
-        <input class="form-control p-3" placeholder="First Name" />
+        <input class="form-control p-3" placeholder="First Name" formControlName="firstName" />
       </div>
 
       <div class="col-md-6">
-        <input class="form-control p-3" placeholder="Last Name" />
+        <input class="form-control p-3" placeholder="Last Name" formControlName="lastName" />
       </div>
 
       <div class="col-12">
-        <input class="form-control p-3" placeholder="Email Address" />
+        <input class="form-control p-3" placeholder="Email Address" formControlName="email" />
       </div>
 
       <div class="col-12">
-        <input class="form-control p-3" placeholder="Phone Number" />
+        <input class="form-control p-3" placeholder="Phone Number" formControlName="phone" />
       </div>
 
       <div class="col-12">
-        <input class="form-control p-3" placeholder="Street Address" />
+        <input class="form-control p-3" placeholder="Street Address" formControlName="address" />
       </div>
 
       <div class="col-md-6">
-        <input class="form-control p-3" placeholder="City" />
+        <input class="form-control p-3" placeholder="City" formControlName="city" />
       </div>
 
       <div class="col-md-6">
-        <input class="form-control p-3" placeholder="Postal Code" />
+        <input class="form-control p-3" placeholder="Postal Code" formControlName="postalCode" />
       </div>
-
     </div>
   </div>
 
   <!-- Payment -->
   <div class="bg-white p-4 rounded shadow">
-
     <h2 class="h4 fw-bold mb-4">Payment Method</h2>
 
-    <div class="d-grid gap-3">
+    <label class="d-flex align-items-center gap-3 border rounded p-3">
+      <input type="radio" value="cod" formControlName="paymentMethod" />
 
-      <!-- Cash on Delivery -->
-      <label class="d-flex align-items-center gap-3 border rounded p-3 cursor-pointer payment-option">
-        <input type="radio" name="payment" value="cod" checked />
-
-        <div>
-          <p class="mb-1 fw-semibold">Cash on Delivery</p>
-          <p class="mb-0 text-muted small">Pay when your order arrives</p>
-        </div>
-      </label>
-
-    </div>
-
+      <div>
+        <p class="mb-1 fw-semibold">Cash on Delivery</p>
+        <p class="mb-0 text-muted small">Pay when your order arrives</p>
+      </div>
+    </label>
   </div>
-
 </div>
