@@ -24,6 +24,26 @@ export const SEED_CATEGORIES: Category[] = [
     name: "Women's Clothing",
     description: 'Contemporary fashion and outerwear for women'
   },
+  {
+    id: "home_kitchen",
+    name: "Home & Kitchen",
+    description: 'Everything you need for a beautiful home'
+  },
+  {
+    id: "sports",
+    name: "Sports & Outdoors",
+    description: 'Gear up for your next adventure'
+  },
+  {
+    id: "books",
+    name: "Books",
+    description: 'Bestsellers, classics, and more'
+  },
+  {
+    id: "beauty",
+    name: "Beauty & Personal Care",
+    description: 'Skincare, makeup, and grooming essentials'
+  }
 ];
 
 export const SEED_PRODUCTS: Product[] = [
@@ -140,7 +160,7 @@ export const SEED_PRODUCTS: Product[] = [
     categoryId: 'electronics',
     description: 'Expand your PS4 gaming experience, Play anywhere Fast and easy setup Sleek design with high capacity.',
     image: 'https://fakestoreapi.com/img/61mtL65D4cL._AC_SX679_t.png',
-    stock: 400,
+    stock: 5,
   },
   {
     id: 'p-13',
@@ -149,7 +169,7 @@ export const SEED_PRODUCTS: Product[] = [
     categoryId: 'electronics',
     description: '21.5 inches Full HD (1920 x 1080) widescreen IPS display and Radeon free Sync technology.',
     image: 'https://fakestoreapi.com/img/81QpkIctqPL._AC_SX679_t.png',
-    stock: 250,
+    stock: 4,
   },
   {
     id: 'p-14',
@@ -204,7 +224,7 @@ export const SEED_PRODUCTS: Product[] = [
     categoryId: "women's clothing",
     description: '100% cationic polyester interlock, Machine Wash & Pre Shrunk for a Great Fit, Lightweight and highly breathable.',
     image: 'https://fakestoreapi.com/img/51eg55uWmdL._AC_UX679_t.png',
-    stock: 146,
+    stock: 0,
   },
   {
     id: 'p-20',
@@ -213,8 +233,82 @@ export const SEED_PRODUCTS: Product[] = [
     categoryId: "women's clothing",
     description: '95% Cotton, 5% Spandex. Features: Casual, Short Sleeve, Letter Print, V-Neck, Fashion Tees. The fabric is soft.',
     image: 'https://fakestoreapi.com/img/61pHAEJ4NML._AC_UX679_t.png',
-    stock: 145,
+    stock: 0,
   },
+  {
+    id: 'p-21',
+    name: 'Premium Espresso Machine',
+    price: 299.99,
+    categoryId: 'home_kitchen',
+    description: 'Make barista-quality coffee at home with this premium espresso machine featuring a milk frother.',
+    image: 'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_t.png',
+    stock: 8,
+  },
+  {
+    id: 'p-22',
+    name: 'Non-Stick Cookware Set (12-Piece)',
+    price: 129.50,
+    categoryId: 'home_kitchen',
+    description: 'A complete set of non-stick pots and pans suitable for all stove types, including induction.',
+    image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png',
+    stock: 45,
+  },
+  {
+    id: 'p-23',
+    name: 'Professional Yoga Mat',
+    price: 35.00,
+    categoryId: 'sports',
+    description: 'Eco-friendly, non-slip yoga mat with alignment lines. Perfect for all types of yoga and pilates.',
+    image: 'https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2t.png',
+    stock: 0,
+  },
+  {
+    id: 'p-24',
+    name: 'Adjustable Dumbbells Set',
+    price: 199.99,
+    categoryId: 'sports',
+    description: 'Save space with these adjustable dumbbells. Weight adjusts from 5 to 52.5 lbs in 2.5 lb increments.',
+    image: 'https://fakestoreapi.com/img/51Y5NI-I5jL._AC_UX679_t.png',
+    stock: 2,
+    isFeatured: true,
+  },
+  {
+    id: 'p-25',
+    name: 'The Great Gatsby - F. Scott Fitzgerald',
+    price: 14.99,
+    categoryId: 'books',
+    description: 'A true classic of twentieth-century literature. The story of the mysteriously wealthy Jay Gatsby and his love for the beautiful Daisy Buchanan.',
+    image: 'https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_t.png',
+    stock: 0,
+  },
+  {
+    id: 'p-26',
+    name: 'Clean Code: A Handbook of Agile Software Craftsmanship',
+    price: 42.50,
+    categoryId: 'books',
+    description: 'Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees.',
+    image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_t.png',
+    stock: 4,
+  },
+  {
+    id: 'p-27',
+    name: 'Hyaluronic Acid Hydrating Serum',
+    price: 24.00,
+    categoryId: 'beauty',
+    description: 'Replenish moisture and plump skin with this pure Hyaluronic Acid serum. Suitable for all skin types.',
+    image: 'https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png',
+    stock: 0,
+  },
+  {
+    id: 'p-28',
+    name: 'Vitamin C Brightening Moisturizer',
+    price: 32.99,
+    categoryId: 'beauty',
+    description: 'A lightweight daily moisturizer packed with Vitamin C to brighten skin tone and reduce the appearance of dark spots.',
+    image: 'https://fakestoreapi.com/img/71YAIFU48IL._AC_UL640_QL65_ML3_t.png',
+    stock: 7,
+    isFeatured: true,
+  }
 ];
 
 export const SEED_USERS: User[] = [

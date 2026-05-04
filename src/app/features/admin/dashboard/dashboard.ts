@@ -31,7 +31,21 @@ export class Dashboard implements AfterViewInit {
 
   private charts: any[] = [];
   chartType = signal<'bar' | 'stacked'>('bar');
-  selectedCategory = signal('');
+  chartType = signal<'bar' | 'stacked'>('bar');
+  selectedCategories = signal<string[]>([]);
+
+  toggleCategory(id: string) {
+    const current = this.selectedCategories();
+    if (current.includes(id)) {
+      this.selectedCategories.set(current.filter(c => c !== id));
+    } else {
+      this.selectedCategories.set([...current, id]);
+    }
+  }
+
+  isCategorySelected(id: string): boolean {
+    return this.selectedCategories().includes(id);
+  }
 
   constructor() {
     // Effect to auto-update charts when data changes or toggle changes
@@ -40,7 +54,8 @@ export class Dashboard implements AfterViewInit {
       this.productService.products();
       this.orderService.orders();
       this.chartType(); // Re-render when toggle changes
-      this.selectedCategory(); // Re-render when category changes
+      this.chartType(); // Re-render when toggle changes
+      this.selectedCategories(); // Re-render when categories change
       this.themeService.isDarkMode(); // Re-render when theme changes
 
       // Re-initialize charts if they already exist
@@ -68,9 +83,9 @@ export class Dashboard implements AfterViewInit {
 
   getFilteredProducts() {
     let products = this.productService.getAllRaw();
-    const cat = this.selectedCategory();
-    if (cat) {
-      products = products.filter(p => p.categoryId === cat);
+    const cats = this.selectedCategories();
+    if (cats.length > 0) {
+      products = products.filter(p => cats.includes(p.categoryId));
     }
     return products;
   }
@@ -144,14 +159,14 @@ export class Dashboard implements AfterViewInit {
     const textColor = this.getChartTextColor();
     const gridColor = this.getChartGridColor();
     const type = this.chartType();
-    const catFilter = this.selectedCategory();
+    const catFilter = this.selectedCategories();
 
     let config: any;
 
     if (type === 'bar') {
       let categories = this.categoryService.categories();
-      if (catFilter) {
-        categories = categories.filter(c => c.id === catFilter);
+      if (catFilter.length > 0) {
+        categories = categories.filter(c => catFilter.includes(c.id));
       }
       
       const allProducts = this.productService.getAllRaw();
@@ -174,8 +189,8 @@ export class Dashboard implements AfterViewInit {
     } else {
       // Stacked mode: Stock levels per category
       let categories = this.categoryService.categories();
-      if (catFilter) {
-        categories = categories.filter(c => c.id === catFilter);
+      if (catFilter.length > 0) {
+        categories = categories.filter(c => catFilter.includes(c.id));
       }
       const allProducts = this.productService.getAllRaw();
       
