@@ -4,12 +4,26 @@ import { Order } from '../models/order.model';
 import { User } from '../models/user.model';
 
 export const SEED_CATEGORIES: Category[] = [
-  { id: 'cat-1', name: 'Electronics', description: 'Cutting-edge gadgets and professional electronic devices' },
-  { id: 'cat-2', name: 'Fashion', description: 'Contemporary clothing and designer apparel for all seasons' },
-  { id: 'cat-3', name: 'Home & Living', description: 'Premium furniture, decor, and smart home solutions' },
-  { id: 'cat-4', name: 'Sports & Outdoors', description: 'High-performance gear for athletes and outdoor enthusiasts' },
-  { id: 'cat-5', name: 'Books', description: 'A curated collection of literature, technical guides, and bestsellers' },
-  { id: 'cat-6', name: 'Beauty & Health', description: 'Luxury skincare, wellness products, and personal care' },
+  {
+    id: "men's clothing",
+    name: "Men's Clothing",
+    description: 'Premium casual and professional attire for men'
+  },
+  {
+    id: 'jewelery',
+    name: 'Jewelry',
+    description: 'Exquisite necklaces, bracelets, and accessories'
+  },
+  {
+    id: 'electronics',
+    name: 'Electronics',
+    description: 'High-performance storage, monitors, and gadgets'
+  },
+  {
+    id: "women's clothing",
+    name: "Women's Clothing",
+    description: 'Contemporary fashion and outerwear for women'
+  },
 ];
 
 export const SEED_PRODUCTS: Product[] = [
