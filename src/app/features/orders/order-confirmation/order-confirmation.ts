@@ -26,7 +26,7 @@ export class OrderConfirmation {
   expandedOrders = signal<Set<string>>(new Set());
 
   orders = computed<OrderWithExpanded[]>(() => {
-    const user = this.authService.session();
+    const user = this.authService.getUser();
     const allOrders = this.orderService.orders();
 
     if (!user) return [];
