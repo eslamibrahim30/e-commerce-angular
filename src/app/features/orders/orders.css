@@ -1,7 +1,119 @@
-.cursor-pointer {
-  cursor: pointer;
+/* Color Variables based on your brand */
+:host {
+  --zora-teal: #0b7974;
+  --bg-light: #f8fafb;
+  --text-main: #2d3748;
 }
 
-.card-header:hover {
-  background-color: #f8f9fa !important;
+.zora-text-primary { color: var(--zora-teal); }
+
+/* Order Card Styling */
+.order-card {
+  background: white;
+  border-radius: 20px;
+  border: 1px solid rgba(11, 121, 116, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease;
+  overflow: hidden;
+}
+
+.order-header {
+  padding: 20px 28px;
+  cursor: pointer;
+  background: white;
+  transition: background 0.3s ease;
+}
+
+.order-header:hover { background: var(--bg-light); }
+.order-header.expanded { border-bottom: 1px solid #f1f5f9; }
+
+.order-icon-box {
+  width: 45px;
+  height: 45px;
+  background: rgba(11, 121, 116, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Status Badges - Minimalist Style */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.delivered { background: #e6fffa; color: #234e52; }
+.status-badge.pending { background: #fffaf0; color: #7b341e; }
+.status-badge.cancelled { background: #fff5f5; color: #822727; }
+
+.order-total {
+  font-weight: 700;
+  color: var(--zora-teal);
+  font-size: 1.1rem;
+}
+
+/* Items List Styling */
+.order-body { padding: 24px 28px; background: #fafbfc; }
+
+.item-row {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.item-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.product-img-wrapper img {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid #eee;
+}
+
+.item-name { color: var(--text-main); font-size: 0.95rem; }
+.item-price { font-weight: 600; color: #4a5568; }
+
+/* Empty State Styling */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon-circle {
+  width: 100px;
+  height: 100px;
+  background: var(--bg-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 2.5rem;
+  color: #cbd5e0;
+}
+
+.btn-zora-primary {
+  background: var(--zora-teal);
+  color: white;
+  border-radius: 12px;
+  padding: 12px 30px;
+  font-weight: 600;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-zora-primary:hover {
+  background: #085e5a;
+  box-shadow: 0 10px 20px rgba(11, 121, 116, 0.15);
+  transform: translateY(-2px);
 }

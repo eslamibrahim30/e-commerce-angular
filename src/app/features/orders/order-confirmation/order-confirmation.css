@@ -1,7 +1,96 @@
-.cursor-pointer {
-  cursor: pointer;
+:root {
+  --zora-teal: #0b7974;
+  --zora-soft-bg: #f8fbfa;
+  --zora-border: #e9f2f1;
 }
 
-.card-header:hover {
-  background-color: #f8f9fa !important;
+.zora-container {
+  max-width: 850px;
+}
+
+.zora-brand-text {
+  color: var(--zora-teal);
+}
+
+.success-icon-wrapper {
+  font-size: 4rem;
+  color: var(--zora-teal);
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid var(--zora-border);
+}
+
+.shadow-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(11, 121, 116, 0.08);
+}
+
+.order-header-modern {
+  background: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.order-header-modern.is-expanded {
+  background: var(--zora-soft-bg);
+}
+
+/* Status Pills */
+.zora-status-pill {
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-pending { background: #fff8e6; color: #b7791f; }
+.status-delivered { background: #e6fffa; color: #0b7974; }
+.status-cancelled { background: #fff5f5; color: #c53030; }
+
+.order-total-price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--zora-teal);
+}
+
+.img-container img {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  object-fit: cover;
+  background: #f1f1f1;
+  border: 1.5px solid var(--zora-border);
+}
+
+.product-item-row {
+  padding: 12px;
+  border-radius: 18px;
+  transition: background 0.2s;
+}
+
+.product-item-row:hover {
+  background: #fcfdfd;
+}
+
+.btn-zora {
+  background: var(--zora-teal);
+  color: #fff;
+  padding: 12px 35px;
+  border-radius: 14px;
+  font-weight: 600;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-zora:hover {
+  background: #085e5a;
+  transform: scale(1.02);
+  color: #fff;
 }
