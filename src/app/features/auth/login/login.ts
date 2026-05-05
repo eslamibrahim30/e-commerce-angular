@@ -26,24 +26,29 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  login() {
-    this.error = '';
-    this.loading = true;
+ login() {
+  this.error = '';
+  this.successMessage = '';
 
-    const success = this.auth.login(this.email, this.password);
+  const success = this.auth.login(this.email, this.password);
 
-    setTimeout(() => {
-      this.loading = false;
-
-      if (success) {
-        this.successMessage = 'Login successful! Redirecting...';
-        const user = this.auth.getUser();
-        setTimeout(() => {
-          this.router.navigate([user?.role === 'admin' ? '/admin' : '/profile']);
-        }, 1500);
-      } else {
-        this.error = 'Invalid email or password. Please try again.';
-      }
-    }, 1000);
+  
+  if (!success) {
+    this.error = 'Invalid email or password. Please try again.';
+    this.loading = false;
+    return;
   }
+
+
+  this.loading = true;
+  this.successMessage = 'Login successful! Redirecting...';
+
+  const user = this.auth.getUser();
+
+  setTimeout(() => {
+    this.loading = false;
+    this.router.navigate([user?.role === 'admin' ? '/admin' : '/profile']);
+  }, 1000);
+}
+
 }
