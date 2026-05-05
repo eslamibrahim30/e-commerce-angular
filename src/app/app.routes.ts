@@ -31,10 +31,10 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'order-confirmation',
+    path: 'orders',
     loadComponent: () =>
-      import('./features/orders/order-confirmation/order-confirmation').then(
-        (m) => m.OrderConfirmation,
+      import('./features/orders/orders').then(
+        (m) => m.OrdersComponent,
       ),
     canActivate: [AuthGuard]
   },
