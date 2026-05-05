@@ -1,75 +1,70 @@
-<div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center bg-light py-4">
-  <div class="profile-card" *ngIf="user">
+<div class="auth-container d-flex align-items-center justify-content-center py-5">
+  <div class="zora-auth-card profile-card-layout overflow-hidden" *ngIf="user">
 
-    <!-- Header Band -->
-    <div class="card-header-band">
-      <div class="avatar mx-auto">{{ getInitials(user.name) }}</div>
-      <p class="user-name">{{ user.name }}</p>
-      <div class="text-center">
-        <span class="role-badge">{{ user.role }}</span>
+    <!-- Header Band (Zora Style) -->
+    <div class="profile-header-band text-center">
+      <div class="avatar-wrapper mx-auto">
+        <div class="avatar-circle">{{ getInitials(user.name) }}</div>
       </div>
+      <h2 class="auth-title mt-3 mb-1">{{ user.name }}</h2>
+      <span class="zora-role-badge">{{ user.role }}</span>
     </div>
 
-    <!-- Body -->
-    <div class="card-body-pad">
-
-      <div class="alert-success-custom mb-3" *ngIf="successMessage">
-        {{ successMessage }}
+    <!-- Body Content -->
+    <div class="p-4 p-md-5 pt-0">
+      
+      <div class="zora-alert success mb-4 animate__animated animate__fadeIn" *ngIf="successMessage">
+        <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
       </div>
 
-      <!-- Full Name -->
-      <div class="mb-3">
-        <label class="form-label small fw-medium text-secondary">Full name</label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
-          </span>
+      <!-- Full Name Input -->
+      <div class="mb-4">
+        <label class="form-label small fw-bold text-dark">Full name</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
           <input
             type="text"
             class="form-control"
             [(ngModel)]="user.name"
-            placeholder="Enter your name"
+            placeholder="Edit your name"
           />
         </div>
       </div>
 
-      <!-- Email (read-only) -->
+      <!-- Email (Read-only Style) -->
       <div class="mb-4">
-        <label class="form-label small fw-medium text-secondary">
-          Email address
-          <span class="badge ms-1 read-only-badge">Read only</span>
-        </label>
-        <div class="input-group">
-          <span class="input-group-text">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/>
-            </svg>
-          </span>
+        <div class="d-flex justify-content-between">
+            <label class="form-label small fw-bold text-dark">Email address</label>
+            <span class="badge zora-read-only-tag">Read only</span>
+        </div>
+        <div class="input-group zora-input-group disabled-group">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
           <input type="email" class="form-control" [value]="user.email" disabled />
         </div>
       </div>
 
-      <hr class="my-3">
+      <div class="zora-divider my-4"></div>
 
-      <!-- Meta Info -->
-      <div class="d-flex justify-content-between align-items-center small mb-1">
-        <span class="text-muted">Account role</span>
-        <span class="fw-medium text-capitalize">{{ user.role }}</span>
-      </div>
-      <div class="d-flex justify-content-between align-items-center small mb-4">
-        <span class="text-muted">Member since</span>
-        <span class="fw-medium">{{ memberSince }}</span>
+      <!-- Meta Info Grid -->
+      <div class="user-meta-info mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-muted small fw-medium">Account Role</span>
+          <span class="text-capitalize badge-soft-teal">{{ user.role }}</span>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="text-muted small fw-medium">Member Since</span>
+          <span class="fw-bold text-dark small">{{ memberSince }}</span>
+        </div>
       </div>
 
       <!-- Save Button -->
       <button
-        class="btn btn-primary w-100 py-2 fw-medium"
+        class="zora-btn-primary w-100 py-3"
         (click)="update()"
         [disabled]="loading"
       >
-        {{ loading ? 'Saving...' : 'Save changes' }}
+        <span *ngIf="!loading">Save Changes</span>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
       </button>
 
     </div>
