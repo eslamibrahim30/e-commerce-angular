@@ -110,207 +110,51 @@
     </div>
   </div>
 
-  <!-- Related Products -->
-  <div *ngIf="relatedProducts.length > 0">
-    <div class="zora-pl-header mb-4">
-      <h4 class="page-title mb-0">Related Products</h4>
+ <!-- Related Products Section -->
+@if (relatedProducts.length > 0) {
+  <div class="related-products-section mt-5">
+    <div class="zora-pl-header d-flex justify-content-between align-items-center mb-4">
+      <h4 class="page-title fw-bold mb-0">Related Products</h4>
+      <div class="title-accent"></div>
     </div>
 
     <div class="row g-4">
-      <div
-        class="col-6 col-md-3"
-        *ngFor="let p of relatedProducts"
-      >
-        <div class="zora-card product-card h-100">
-          <a [routerLink]="['/products', p.id]" class="text-decoration-none">
-            <img
-              [src]="p.image"
-              [alt]="p.name"
-              class="w-100 rounded mb-3"
-              style="height: 160px; object-fit: cover;"
-            />
-          </a>
-          <span class="zora-category-badge mb-2 d-inline-block">{{ p.category }}</span>
-          <h6 class="fw-semibold mb-1" style="color: var(--text-main); font-size: 0.88rem;">
-            <a [routerLink]="['/products', p.id]" class="text-decoration-none" style="color: inherit;">
-              {{ p.name }}
-            </a>
-          </h6>
-          <p class="mb-3" style="color: var(--zora-gold); font-weight: 700;">${{ p.price }}</p>
-          <a
-            [routerLink]="['/products', p.id]"
-            class="btn btn-outline-teal btn-sm w-100"
-          >
-            View Product
-          </a>
+      @for (p of relatedProducts; track p.id) {
+        <div class="col-6 col-md-3">
+          <div class="zora-card product-card-modern h-100">
+            <div class="img-wrapper mb-3">
+              <a [routerLink]="['/products', p.id]">
+                <img
+                  [src]="p.image"
+                  [alt]="p.name"
+                  class="product-img"
+                />
+              </a>
+              <!-- Badge بستايل مينيمال -->
+              <span class="zora-mini-badge">{{ p.category }}</span>
+            </div>
+
+            <div class="card-info px-2 pb-3">
+              <h6 class="product-name mb-1">
+                <a [routerLink]="['/products', p.id]" class="text-decoration-none">
+                  {{ p.name }}
+                </a>
+              </h6>
+              <p class="product-price mb-3">${{ p.price }}</p>
+              
+              <button
+                [routerLink]="['/products', p.id]"
+                class="btn btn-zora-outline-sm w-100"
+              >
+                View Details
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      }
     </div>
   </div>
+}
 
 </div>
 
-<style>
-/* Breadcrumb */
-.zora-breadcrumb {
-  font-size: 0.82rem;
-}
-.zora-breadcrumb a {
-  color: var(--zora-teal);
-  text-decoration: none;
-}
-.zora-breadcrumb a:hover { text-decoration: underline; }
-.zora-breadcrumb .breadcrumb-item.active { color: var(--text-muted); }
-.zora-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-  color: var(--text-muted);
-}
-
-/* Main card */
-.zora-pd-card {
-  padding: 0;
-  overflow: hidden;
-}
-.zora-pd-img-wrap {
-  background: var(--bg-color);
-  min-height: 400px;
-}
-.zora-pd-img {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  object-fit: cover;
-  display: block;
-}
-
-.zora-pd-discount-badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: #e53935;
-  color: white;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 999px;
-  letter-spacing: 0.03em;
-}
-
-/* Badges */
-.zora-category-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--zora-teal);
-  background: rgba(11,121,116,0.08);
-  border: 1px solid rgba(11,121,116,0.18);
-  padding: 3px 10px;
-  border-radius: 999px;
-}
-
-.zora-stock-badge {
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 999px;
-}
-.zora-stock-badge--in  { background: rgba(25,135,84,0.1);  color: #198754; border: 1px solid rgba(25,135,84,0.2);  }
-.zora-stock-badge--low { background: rgba(255,193,7,0.12);  color: #c79100; border: 1px solid rgba(255,193,7,0.25);  }
-.zora-stock-badge--out { background: rgba(220,53,69,0.1);   color: #dc3545; border: 1px solid rgba(220,53,69,0.2);  }
-
-/* Price */
-.zora-pd-price {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.zora-pd-price__current {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--zora-gold);
-  line-height: 1;
-}
-.zora-pd-price__old {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  text-decoration: line-through;
-}
-.zora-pd-price__save {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #198754;
-  background: rgba(25,135,84,0.1);
-  padding: 3px 8px;
-  border-radius: 999px;
-}
-
-/* Quantity */
-.zora-qty-wrap {
-  display: flex;
-  align-items: center;
-  background: var(--bg-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.zora-qty-btn {
-  background: none;
-  border: none;
-  width: 40px;
-  height: 44px;
-  font-size: 1.2rem;
-  color: var(--text-main);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.zora-qty-btn:hover { background: rgba(11,121,116,0.08); color: var(--zora-teal); }
-.zora-qty-num {
-  min-width: 44px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--text-main);
-  border-left: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
-  line-height: 44px;
-}
-
-.zora-pd-cta {
-  box-shadow: 0 8px 20px rgba(212,175,55,0.25);
-  transition: all 0.3s ease !important;
-}
-.zora-pd-cta:hover:not(:disabled) {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 28px rgba(212,175,55,0.4) !important;
-}
-
-/* Empty state */
-.zora-empty-icon {
-  width: 90px; height: 90px;
-  border-radius: 50%;
-  background: rgba(11,121,116,0.07);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem;
-  color: var(--zora-teal);
-}
-
-/* Filter label reuse */
-.zora-filter-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.zora-pl-header {
-  border-left: 4px solid var(--zora-gold);
-  padding-left: 1rem;
-}
-
-@media (max-width: 767px) {
-  .zora-pd-img, .zora-pd-img-wrap { min-height: 260px; }
-}
-</style>

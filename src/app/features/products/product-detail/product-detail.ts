@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './product-detail.html',
+  styleUrl: './product-detail.css',
 })
 export class ProductDetail implements OnInit, OnDestroy {
   product: ProductDisplay | undefined;
