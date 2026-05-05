@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../../core/services/cart.service';
 import { AuthService } from '../../core/services/auth.service';
+import { ThemeService } from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,8 @@ import { AuthService } from '../../core/services/auth.service';
 })
 export class NavbarComponent {
 
+  themeService = inject(ThemeService);
+  
   cartService = inject(CartService);
   auth = inject(AuthService);
   private router = inject(Router);

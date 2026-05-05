@@ -233,3 +233,21 @@
     width: 100%;
   }
 }
+
+.theme-btn {
+  background: transparent;
+  color: var(--zora-teal); /* اللون اللي عرفناه في الـ Variables */
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+
+/* في حالة الدارك مود ممكن نغير لون الأيقونة */
+[data-theme='dark'] .theme-btn:hover {
+  color: #fbbf24;
+}
