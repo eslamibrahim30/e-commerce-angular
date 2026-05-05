@@ -34,8 +34,9 @@ export class AuthService {
   login(email: string, password: string): boolean {
     const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
 
+    const hashedPassword = this.hashPassword(password);
     const user = users.find(u =>
-      u.email === email && u.password === password
+      u.email === email && u.password === hashedPassword
     );
 
     if (user) {
