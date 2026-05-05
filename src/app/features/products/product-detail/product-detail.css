@@ -1,208 +1,141 @@
-/* Breadcrumb */
-.zora-breadcrumb {
-  font-size: 0.82rem;
-}
-.zora-breadcrumb a {
-  color: var(--zora-teal);
-  text-decoration: none;
-}
-.zora-breadcrumb a:hover { text-decoration: underline; }
-.zora-breadcrumb .breadcrumb-item.active { color: var(--text-muted); }
-.zora-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
-  color: var(--text-muted);
+/* --- Zora Product Details Styles --- */
+
+/* 1. Main Card & Layout */
+.zora-pd-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
 }
 
-/* Main card */
-.zora-pd-card {
-  padding: 0;
-  overflow: hidden;
-}
 .zora-pd-img-wrap {
-  background: var(--bg-color);
+  background: #f8f9fa; /* خلفية فاتحة جداً للصور لتبدو نظيفة */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 400px;
 }
+
+[data-theme='dark'] .zora-pd-img-wrap {
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .zora-pd-img {
   width: 100%;
   height: 100%;
-  min-height: 400px;
-  object-fit: cover;
-  display: block;
-}
-
-.zora-pd-discount-badge {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: #e53935;
-  color: white;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: 999px;
-  letter-spacing: 0.03em;
-}
-
-/* Badges */
-.zora-category-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--zora-teal);
-  background: rgba(11,121,116,0.08);
-  border: 1px solid rgba(11,121,116,0.18);
-  padding: 3px 10px;
-  border-radius: 999px;
-}
-
-.zora-stock-badge {
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 999px;
-}
-.zora-stock-badge--in  { background: rgba(25,135,84,0.1);  color: #198754; border: 1px solid rgba(25,135,84,0.2);  }
-.zora-stock-badge--low { background: rgba(255,193,7,0.12);  color: #c79100; border: 1px solid rgba(255,193,7,0.25);  }
-.zora-stock-badge--out { background: rgba(220,53,69,0.1);   color: #dc3545; border: 1px solid rgba(220,53,69,0.2);  }
-
-/* Price */
-.zora-pd-price {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.zora-pd-price__current {
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--zora-gold);
-  line-height: 1;
-}
-.zora-pd-price__old {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  text-decoration: line-through;
-}
-.zora-pd-price__save {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #198754;
-  background: rgba(25,135,84,0.1);
-  padding: 3px 8px;
-  border-radius: 999px;
-}
-
-/* Quantity */
-.zora-qty-wrap {
-  display: flex;
-  align-items: center;
-  background: var(--bg-color);
-  border: 1.5px solid var(--border-color);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.zora-qty-btn {
-  background: none;
-  border: none;
-  width: 40px;
-  height: 44px;
-  font-size: 1.2rem;
-  color: var(--text-main);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.zora-qty-btn:hover { background: rgba(11,121,116,0.08); color: var(--zora-teal); }
-.zora-qty-num {
-  min-width: 44px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--text-main);
-  border-left: 1px solid var(--border-color);
-  border-right: 1px solid var(--border-color);
-  line-height: 44px;
-}
-
-.zora-pd-cta {
-  box-shadow: 0 8px 20px rgba(212,175,55,0.25);
-  transition: all 0.3s ease !important;
-}
-.zora-pd-cta:hover:not(:disabled) {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 12px 28px rgba(212,175,55,0.4) !important;
-}
-
-/* Empty state */
-.zora-empty-icon {
-  width: 90px; height: 90px;
-  border-radius: 50%;
-  background: rgba(11,121,116,0.07);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem;
-  color: var(--zora-teal);
-}
-
-/* Filter label reuse */
-.zora-filter-label {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.zora-pl-header {
-  border-left: 4px solid var(--zora-gold);
-  padding-left: 1rem;
-}
-
-@media (max-width: 767px) {
-  .zora-pd-img, .zora-pd-img-wrap { min-height: 260px; }
-}
-
-/* الألوان والخطوط من هويتك البصرية */
-:host {
-  --zora-teal: #0b7974; /* لونك المفضل */
-  --text-dark: #1a202c;
-  --bg-soft: #f9fbfb;
-}
-
-.page-title {
-  color: var(--text-dark);
-  font-size: 1.25rem;
-  letter-spacing: -0.5px;
-}
-
-.product-card-modern {
-  background: #ffffff;
-  border-radius: 16px;
-  border: 1px solid rgba(11, 121, 116, 0.05);
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.product-card-modern:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(11, 121, 116, 0.08);
-}
-
-.img-wrapper {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  margin: 8px;
-}
-
-.product-img {
-  width: 100%;
-  height: 180px;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
+/* 2. Badges System */
+.zora-category-badge {
+  background: rgba(11, 121, 116, 0.1);
+  color: var(--zora-teal);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.zora-stock-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.zora-stock-badge--in { color: #2e7d32; background: #e8f5e9; }
+.zora-stock-badge--low { color: #ef6c00; background: #fff3e0; }
+.zora-stock-badge--out { color: #c62828; background: #ffebee; }
+
+/* 3. Price Styling */
+.zora-pd-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.zora-pd-price__current {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.zora-pd-price__old {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.zora-pd-price__save {
+  color: #c62828;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: rgba(198, 40, 40, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* 4. Quantity Controller */
+.zora-qty-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.zora-qty-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.zora-qty-btn:hover {
+  background: rgba(11, 121, 116, 0.1);
+  border-radius: 8px;
+  color: var(--zora-teal);
+}
+
+.zora-qty-num {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* 5. Related Products & Mini Cards */
+.product-card-modern {
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.product-card-modern .img-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.product-card-modern .product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
 .product-card-modern:hover .product-img {
-  transform: scale(1.08);
+  transform: scale(1.05);
 }
 
 .zora-mini-badge {
@@ -210,44 +143,35 @@
   top: 10px;
   left: 10px;
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(4px);
-  color: var(--zora-teal);
-  font-size: 0.7rem;
+  padding: 2px 8px;
+  font-size: 0.65rem;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 8px;
-  text-transform: uppercase;
-}
-
-.product-name a {
-  color: var(--text-dark);
-  font-size: 0.9rem;
-  font-weight: 600;
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.product-price {
+  border-radius: 4px;
   color: var(--zora-teal);
-  font-weight: 800;
-  font-size: 1rem;
 }
 
-/* زرار بستايل Zora المميز */
 .btn-zora-outline-sm {
-  background: transparent;
+  border: 1px solid var(--zora-teal);
   color: var(--zora-teal);
-  border: 1.5px solid var(--zora-teal);
-  border-radius: 10px;
   font-size: 0.8rem;
   font-weight: 600;
   padding: 8px;
-  transition: all 0.2s;
+  border-radius: 8px;
+  transition: all 0.3s;
 }
 
 .btn-zora-outline-sm:hover {
   background: var(--zora-teal);
-  color: #fff;
+  color: white;
+}
+
+/* 6. Breadcrumb Customization */
+.zora-breadcrumb .breadcrumb-item a {
+  color: var(--zora-teal);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.zora-breadcrumb .breadcrumb-item.active {
+  color: var(--text-muted);
 }

@@ -1,101 +1,111 @@
-/* Card & Container Styling */
-.zora-auth-card {
-  background: #ffffff;
-  border-radius: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+/* --- Checkout Component Styles --- */
+
+.checkout-container {
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
 }
 
-.auth-title {
-  color: #1a202c;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-/* Step Indicator */
+/* Step Badge Style */
 .step-badge {
   width: 32px;
   height: 32px;
-  background-color: #0b7974; /* Your Brand Teal */
+  background-color: var(--zora-teal);
   color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 10px var(--zora-teal-glow);
+}
+
+/* Form Labels & Inputs */
+.form-label {
+  color: var(--text-main) !important;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.75rem !important;
+}
+
+.zora-input-group {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.zora-input-group:focus-within {
+  border-color: var(--zora-teal);
+  box-shadow: 0 0 0 4px var(--zora-teal-glow);
+}
+
+.zora-input-group .form-control {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-main) !important;
+  padding: 12px 16px;
+}
+
+.zora-input-group .form-control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Payment Option Card */
+.zora-payment-option {
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: var(--card-bg);
+}
+
+.zora-payment-option:hover {
+  border-color: var(--zora-teal);
+  background-color: rgba(11, 121, 116, 0.02);
+}
+
+.zora-payment-option.active {
+  border-color: var(--zora-teal);
+  background-color: rgba(11, 121, 116, 0.05);
+  box-shadow: 0 4px 15px rgba(11, 121, 116, 0.1);
+}
+
+.payment-icon {
+  width: 45px;
+  height: 45px;
+  background: var(--bg-color);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  font-size: 0.9rem;
+  color: var(--zora-teal);
+  font-size: 1.2rem;
 }
 
-/* Custom Inputs */
-.zora-input-group .form-control {
-  border: 1.5px solid #edf2f7;
-  border-radius: 12px;
-  padding: 12px 15px;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-.zora-input-group .form-control:focus {
-  border-color: #0b7974;
-  box-shadow: 0 0 0 3px rgba(11, 121, 116, 0.1);
-  background-color: #fff;
-}
-
-/* Payment Option Styling */
-.zora-payment-option {
-  border: 1.5px solid #edf2f7;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.zora-payment-option:hover {
-  border-color: #0b7974;
-  background-color: #f0f7f7;
-}
-
-.zora-payment-option.active {
-  border-color: #0b7974;
-  background-color: #f0f7f7;
-}
-
+/* Radio Button Customization */
 .zora-radio {
-  accent-color: #0b7974;
+  accent-color: var(--zora-teal);
   width: 18px;
   height: 18px;
 }
 
-.payment-icon {
-  font-size: 1.5rem;
-  color: #0b7974;
-}
-
+/* Small Text Helpers */
 .extra-small {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
-/* Modal Styling Improvements */
-.zora-modal-content {
-  border-radius: 24px;
-  border: none;
-  box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+/* Dark Mode Adjustments */
+[data-theme='dark'] .zora-payment-option.active {
+  background-color: rgba(11, 121, 116, 0.15);
 }
 
-.zora-modal-header {
-  border-bottom: 1px solid #edf2f7;
-  padding: 20px 25px;
+[data-theme='dark'] .payment-icon {
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.btn-zora-gold {
-  background-color: #0b7974; /* Replaced Gold with your Brand Teal */
-  color: white;
-  border-radius: 12px;
-  padding: 10px 25px;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.btn-zora-gold:hover {
-  background-color: #085e5a;
-  transform: translateY(-1px);
+[data-theme='dark'] .text-dark {
+  color: var(--text-main) !important;
 }
