@@ -74,7 +74,7 @@ export class OrderSummary {
 
       await new Promise((r) => setTimeout(r, 500));
 
-      this.router.navigate(['/order-confirmation']);
+      this.router.navigate(['/orders']);
     } finally {
       this.loading = false;
     }
