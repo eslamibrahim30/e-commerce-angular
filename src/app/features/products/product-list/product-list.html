@@ -88,7 +88,6 @@
       style="border-top: 1px solid var(--border-color);"
     >
       <span class="text-muted small me-1">Active filters:</span>
-
       <span *ngIf="filters.search" class="zora-filter-chip">
         "{{ filters.search }}"
         <button (click)="filters.search=''; applyFilters()">×</button>
@@ -105,7 +104,6 @@
         Max ${{ filters.max }}
         <button (click)="filters.max=null; applyFilters()">×</button>
       </span>
-
       <button
         class="btn btn-sm btn-outline-secondary ms-auto rounded-pill px-3"
         (click)="resetFilters()"
@@ -116,10 +114,10 @@
   </div>
 
   <!-- Products Grid -->
-  <div class="row g-4" *ngIf="filteredProducts.length > 0">
+  <div class="row g-4" *ngIf="pagedProducts.length > 0">
     <div
-      class="col-6 col-md-4 col-lg-3"
-      *ngFor="let p of filteredProducts; trackBy: trackById"
+      class="col-12 col-sm-6 col-md-4 col-lg-3"
+      *ngFor="let p of pagedProducts; trackBy: trackById"
     >
       <app-product-card [product]="p" (addToCart)="addToCart(p)"></app-product-card>
     </div>
@@ -137,17 +135,77 @@
     </button>
   </div>
 
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="zora-pagination-wrap mt-5">
+
+    <!-- Info -->
+    <p class="zora-pagination-info">
+      Showing
+      <strong>{{ (currentPage - 1) * pageSize + 1 }}</strong>
+      –
+      <strong>{{ currentPage * pageSize > filteredProducts.length ? filteredProducts.length : currentPage * pageSize }}</strong>
+      of <strong>{{ filteredProducts.length }}</strong> products
+    </p>
+
+    <!-- Controls -->
+    <div class="zora-pagination">
+
+      <!-- Prev -->
+      <button
+        class="zora-page-btn zora-page-btn--nav"
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <!-- Pages -->
+      <ng-container *ngFor="let page of pages">
+        <!-- Show first, last, current, and neighbors — hide others with ellipsis -->
+        <ng-container *ngIf="page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)">
+          <button
+            class="zora-page-btn"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+        </ng-container>
+        <!-- Ellipsis before current group -->
+        <span
+          *ngIf="page === currentPage - 2 && currentPage - 2 > 1"
+          class="zora-page-ellipsis"
+        >…</span>
+        <!-- Ellipsis after current group -->
+        <span
+          *ngIf="page === currentPage + 2 && currentPage + 2 < totalPages"
+          class="zora-page-ellipsis"
+        >…</span>
+      </ng-container>
+
+      <!-- Next -->
+      <button
+        class="zora-page-btn zora-page-btn--nav"
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+    </div>
+  </div>
+
 </div>
 
 <style>
+/* ── Header ── */
 .zora-pl-header {
   border-left: 4px solid var(--zora-gold);
   padding-left: 1rem;
 }
 
-.zora-filters {
-  padding: 1.5rem 2rem;
-}
+/* ── Filters ── */
+.zora-filters { padding: 1.5rem 2rem; }
 
 .zora-filter-label {
   display: block;
@@ -214,20 +272,92 @@
 }
 .zora-filter-chip button:hover { opacity: 1; }
 
-.zora-empty-state {
-  text-align: center;
-  padding: 5rem 1rem;
-}
+/* ── Empty State ── */
+.zora-empty-state { text-align: center; padding: 5rem 1rem; }
 .zora-empty-icon {
-  width: 90px;
-  height: 90px;
+  width: 90px; height: 90px;
   border-radius: 50%;
   background: rgba(11,121,116,0.07);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   margin: 0 auto;
   font-size: 2rem;
   color: var(--zora-teal);
+}
+
+/* ── Pagination ── */
+.zora-pagination-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+@media (min-width: 576px) {
+  .zora-pagination-wrap {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.zora-pagination-info {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+.zora-pagination-info strong {
+  color: var(--text-main);
+}
+
+.zora-pagination {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zora-page-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.zora-page-btn:hover:not(:disabled) {
+  border-color: var(--zora-teal);
+  color: var(--zora-teal);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(11,121,116,0.15);
+}
+.zora-page-btn.active {
+  background: var(--zora-teal);
+  border-color: var(--zora-teal);
+  color: white;
+  box-shadow: 0 4px 12px rgba(11,121,116,0.3);
+}
+.zora-page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.zora-page-btn--nav {
+  font-size: 0.75rem;
+}
+
+.zora-page-ellipsis {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 0 4px;
+  line-height: 40px;
+}
+
+/* ── Responsive Grid ── */
+@media (max-width: 575px) {
+  .zora-filters { padding: 1rem; }
+  .zora-page-btn { width: 36px; height: 36px; font-size: 0.8rem; }
 }
 </style>

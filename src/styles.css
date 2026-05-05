@@ -12,9 +12,9 @@
   --text-muted: #64748b;
   --navbar-bg: rgba(255, 255, 255, 0.85);
   --border-color: #e2e8f0;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 [data-theme='dark'] {
@@ -24,6 +24,58 @@
   --text-muted: #94a3b8;
   --navbar-bg: rgba(15, 23, 42, 0.9);
   --border-color: #334155;
+}
+
+[data-theme='dark'] .bg-light {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme='dark'] .modal-content {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme='dark'] .card {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme='dark'] .table {
+  --bs-table-bg: transparent !important;
+  --bs-table-color: var(--text-main) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme='dark'] .table tbody td,
+[data-theme='dark'] .table thead th {
+  border-bottom-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme='dark'] .form-control,
+[data-theme='dark'] .form-select {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme='dark'] .form-control:focus,
+[data-theme='dark'] .form-select:focus {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--zora-primary) !important;
+  color: var(--text-main) !important;
+  box-shadow: 0 0 0 0.25rem rgba(var(--zora-primary-rgb), 0.25);
+}
+
+[data-theme='dark'] .form-check-input {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme='dark'] .form-check-input:checked {
+  background-color: var(--zora-primary);
+  border-color: var(--zora-primary);
 }
 
 body {

@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -9,9 +10,18 @@ import { RouterLink, RouterLinkActive, Router } from '@angular/router';
   templateUrl: './admin-sidebar.component.html',
   styleUrl: './admin-sidebar.component.css'
 })
-export class AdminSidebar {
+export class AdminSidebar implements OnInit {
   private router = inject(Router);
+  public themeService = inject(ThemeService);
   isOpen = signal(false);
+
+  ngOnInit() {
+    // Theme initialization is now handled by ThemeService
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
+  }
 
   toggleSidebar() {
     this.isOpen.update(v => !v);

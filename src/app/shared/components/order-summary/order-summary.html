@@ -1,3 +1,19 @@
+@if (showToast) {
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <div class="toast show align-items-center text-bg-danger border-0">
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ toastMessage }}
+        </div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          (click)="showToast = false"
+        ></button>
+      </div>
+    </div>
+  </div>
+}
 <div class="bg-white p-4 rounded-4 shadow position-sticky" style="top: 100px">
   <h2 class="h5 fw-bold mb-3">Order Summary</h2>
 
@@ -28,10 +44,14 @@
   <button
     class="btn btn-zora-gold w-100 mt-4 fw-semibold d-flex justify-content-center align-items-center gap-2"
     (click)="handleOrder()"
-    [disabled]="loading"
+    [disabled]="loading || isCartEmpty()"
   >
     @if (!loading) {
-      <span><i class="fa-solid fa-cart-shopping"></i> Place Order</span>
+      @if (isCheckoutPage()) {
+        <span><i class="fa-solid fa-cart-shopping"></i> Place Order</span>
+      } @else {
+        <span><i class="fa-solid fa-credit-card"></i> Checkout</span>
+      }
     }
 
     @if (loading) {
