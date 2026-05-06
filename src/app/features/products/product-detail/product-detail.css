@@ -1,0 +1,177 @@
+/* --- Zora Product Details Styles --- */
+
+/* 1. Main Card & Layout */
+.zora-pd-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.zora-pd-img-wrap {
+  background: #f8f9fa; /* خلفية فاتحة جداً للصور لتبدو نظيفة */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+[data-theme='dark'] .zora-pd-img-wrap {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.zora-pd-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+/* 2. Badges System */
+.zora-category-badge {
+  background: rgba(11, 121, 116, 0.1);
+  color: var(--zora-teal);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.zora-stock-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.zora-stock-badge--in { color: #2e7d32; background: #e8f5e9; }
+.zora-stock-badge--low { color: #ef6c00; background: #fff3e0; }
+.zora-stock-badge--out { color: #c62828; background: #ffebee; }
+
+/* 3. Price Styling */
+.zora-pd-price {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.zora-pd-price__current {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.zora-pd-price__old {
+  text-decoration: line-through;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.zora-pd-price__save {
+  color: #c62828;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: rgba(198, 40, 40, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* 4. Quantity Controller */
+.zora-qty-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 4px;
+}
+
+.zora-qty-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.zora-qty-btn:hover {
+  background: rgba(11, 121, 116, 0.1);
+  border-radius: 8px;
+  color: var(--zora-teal);
+}
+
+.zora-qty-num {
+  min-width: 40px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* 5. Related Products & Mini Cards */
+.product-card-modern {
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.product-card-modern .img-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+
+.product-card-modern .product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.product-card-modern:hover .product-img {
+  transform: scale(1.05);
+}
+
+.zora-mini-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 8px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 4px;
+  color: var(--zora-teal);
+}
+
+.btn-zora-outline-sm {
+  border: 1px solid var(--zora-teal);
+  color: var(--zora-teal);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 8px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.btn-zora-outline-sm:hover {
+  background: var(--zora-teal);
+  color: white;
+}
+
+/* 6. Breadcrumb Customization */
+.zora-breadcrumb .breadcrumb-item a {
+  color: var(--zora-teal);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.zora-breadcrumb .breadcrumb-item.active {
+  color: var(--text-muted);
+}

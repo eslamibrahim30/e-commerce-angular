@@ -1,39 +1,122 @@
-
-[data-theme='dark'] .bg-light {
-  background-color: rgba(255, 255, 255, 0.03) !important;
+/* --- Categories Page Layout --- */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--zora-bg);
 }
 
-/* Professional Table Styling */
-.zora-table {
-  border-collapse: separate;
-  border-spacing: 0;
+.admin-main {
+  flex-grow: 1;
+  padding: 2rem 0;
+  margin-left: 280px; /* نفس عرض السايدبار اللي عملناه */
+  transition: all 0.3s ease;
 }
 
-.zora-table thead th {
-  background: rgba(var(--zora-primary-rgb), 0.03);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
+@media (max-width: 991px) {
+  .admin-main {
+    margin-left: 0;
+    padding-top: 5rem; /* مسافة للـ Fixed Mobile Navbar */
+  }
+}
+
+/* --- Typography & Header --- */
+.page-title {
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.page-sub {
   color: var(--text-muted);
-  padding: 1.25rem 1rem;
-  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
 }
 
-.zora-table tbody td {
-  padding: 1.25rem 1rem;
-  font-size: 14px;
+/* --- Filters Section --- */
+.filters-container {
+  background: var(--card-bg);
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
-.zora-table tbody tr {
-  transition: all 0.2s ease;
+.search-box .form-control {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-main);
 }
 
-.zora-table tbody tr:hover {
-  background-color: rgba(var(--zora-primary-rgb), 0.02) !important;
+.search-box .form-control:focus {
+  border-color: var(--zora-primary);
+  box-shadow: 0 0 0 4px var(--zora-primary-light);
+  background-color: var(--card-bg);
 }
 
-/* Pagination Links (Same as products for consistency) */
+.form-select {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* --- Category Table Customization --- */
+.zora-table-wrapper {
+  background: var(--card-bg);
+  border-radius: 20px 20px 0 0;
+}
+
+.category-icon {
+  background: var(--zora-bg);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s;
+}
+
+.zora-table tr:hover .category-icon {
+  transform: scale(1.1);
+  background: var(--zora-primary-light);
+}
+
+.btn-icon-hover {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.btn-icon-hover:hover {
+  background: var(--zora-bg);
+  color: var(--zora-primary);
+}
+
+.btn-icon-hover.text-danger:hover {
+  background: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+/* --- Pagination Footer --- */
+.zora-pagination-footer {
+  background: var(--card-bg);
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 20px 20px;
+}
+
+.zora-pagination {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
 .page-link-custom {
   width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
@@ -49,9 +132,73 @@
   color: white; border-color: var(--zora-primary) !important;
 }
 
-@media (max-width: 991.98px) {
-  .admin-main {
-    margin-left: 0;
-    padding: 80px 16px 32px;
-  }
+
+/* --- Modals & Forms --- */
+.modal-content {
+  background-color: var(--card-bg);
+  color: var(--text-main);
 }
+
+.modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+  border-top-color: var(--border-color);
+}
+
+[data-theme='dark'] .modal-header .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.form-label {
+  letter-spacing: 0.05em;
+  color: var(--text-muted) !important;
+}
+
+textarea.form-control, 
+input.form-control {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 12px;
+}
+
+textarea.form-control:focus, 
+input.form-control:focus {
+  background-color: var(--card-bg);
+  border-color: var(--zora-primary);
+  box-shadow: 0 0 0 4px var(--zora-primary-light);
+}
+
+/* --- Buttons --- */
+.btn-primary {
+  background-color: var(--zora-primary);
+  border: none;
+  border-radius: 12px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--zora-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(var(--zora-primary-rgb), 0.2);
+}
+
+.btn-light {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
+}
+
+/* --- Special State: Delete Blocked --- */
+.alert-warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #856404;
+  border: 1px solid rgba(255, 193, 7, 0.2);
+  border-radius: 12px;
+}
+
+

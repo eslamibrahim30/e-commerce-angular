@@ -1,12 +1,93 @@
+/* --- Zora Cart Card Style --- */
+
+.cart-card {
+  background-color: var(--card-bg) !important; /* تتغير تلقائياً مع الثيم */
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
 .cart-card:hover {
+  border-color: var(--zora-teal);
+  box-shadow: var(--shadow-md) !important;
   transform: translateY(-2px);
-  transition: 0.6s ease-out;
-  -webkit-transform: translateY(-2px);
-  -moz-transform: translateY(-2px);
-  -ms-transform: translateY(-2px);
-  -o-transform: translateY(-2px);
-  -webkit-transition: 0.6s ease-out;
-  -moz-transition: 0.6s ease-out;
-  -ms-transition: 0.6s ease-out;
-  -o-transition: 0.6s ease-out;
+}
+
+/* Product Image */
+.cart-card img {
+  border-radius: 12px !important;
+  border: 1px solid var(--border-color);
+}
+
+/* Typography */
+h5 {
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Quantity Controls */
+.btn-light {
+  background-color: var(--bg-color) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px !important;
+  transition: all 0.2s ease;
+}
+
+.btn-light:hover {
+  border-color: var(--zora-teal) !important;
+  color: var(--zora-teal) !important;
+}
+
+span.fw-medium {
+  color: var(--text-main);
+  min-width: 20px;
+  text-align: center;
+}
+
+/* Price & Subtotal */
+.price-tag {
+  color: var(--zora-teal);
+  font-weight: 700;
+}
+
+.subtotal-text {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+/* Remove Button */
+.btn-sm.text-danger {
+  background: rgba(220, 53, 69, 0.05);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.btn-sm.text-danger:hover {
+  background: #dc3545;
+  color: white !important;
+}
+
+.btn-sm.text-danger:hover i {
+  color: white !important;
+}
+
+/* Dark Mode Adjustments */
+[data-theme='dark'] .cart-card {
+  background-color: var(--card-bg) !important;
+}
+
+[data-theme='dark'] .btn-light {
+  background-color: rgba(255, 255, 255, 0.05) !important;
 }

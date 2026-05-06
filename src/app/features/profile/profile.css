@@ -1,69 +1,137 @@
-.profile-card {
+/* --- Profile Card Layout --- */
+.auth-container {
+  background-color: var(--bg-color); /* */
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.zora-auth-card {
+  background-color: var(--card-bg); /* */
+  border: 1px solid var(--border-color); /* */
+  border-radius: 24px;
   width: 100%;
-  max-width: 480px;
-  background: white;
-  border: 0.5px solid #e5e7eb;
-  border-radius: 16px;
-  overflow: hidden;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg); /* */
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
-.card-header-band {
-  background: #3C3489;
-  padding: 2rem 2rem 3rem;
+/* --- Header Band --- */
+.profile-header-band {
+  background: linear-gradient(180deg, rgba(11, 121, 116, 0.08) 0%, transparent 100%);
+  padding: 40px 20px 20px;
 }
 
-.avatar {
-  width: 72px;
-  height: 72px;
+.avatar-circle {
+  width: 80px;
+  height: 80px;
+  background-color: var(--zora-teal); /* */
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 700;
   border-radius: 50%;
-  background: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  box-shadow: 0 8px 15px var(--zora-teal-glow); /* */
+}
+
+.auth-title {
+  color: var(--text-main); /* */
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+}
+
+.zora-role-badge {
+  background-color: rgba(11, 121, 116, 0.1);
+  color: var(--zora-teal); /* */
+  padding: 4px 12px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* --- Form Elements --- */
+.form-label {
+  color: var(--text-main) !important; /* */
+}
+
+.zora-input-group {
+  background-color: var(--bg-color); /* */
+  border: 1px solid var(--border-color); /* */
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color 0.3s ease;
+}
+
+.zora-input-group:focus-within {
+  border-color: var(--zora-teal) !important; /* */
+}
+
+.zora-input-group .input-group-text {
+  background: transparent;
+  border: none;
+  color: var(--zora-teal); /* */
+}
+
+.zora-input-group .form-control {
+  background: transparent;
+  border: none;
+  color: var(--text-main); /* */
   font-weight: 500;
-  color: #3C3489;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  margin: 0 auto;
 }
 
-.user-name {
-  color: white;
-  font-size: 17px;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 4px;
+.zora-input-group .form-control:disabled {
+  background-color: rgba(0, 0, 0, 0.02);
+  color: var(--text-muted); /* */
 }
 
-.role-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  text-transform: capitalize;
-}
-
-.card-body-pad {
-  padding: 1.75rem 2rem 2rem;
-}
-
-.read-only-badge {
-  background: #EEEDFE;
-  color: #534AB7;
-  font-size: 10px;
-  font-weight: 500;
+.zora-read-only-tag {
+  background-color: var(--border-color); /* */
+  color: var(--text-muted); /* */
+  font-size: 0.65rem;
+  padding: 4px 8px;
   border-radius: 6px;
-  padding: 2px 7px;
 }
 
-.alert-success-custom {
-  background: #d1fae5;
-  border: 1px solid #6ee7b7;
-  color: #065f46;
-  border-radius: 8px;
-  font-size: 13px;
-  padding: 0.6rem 1rem;
+/* --- Meta Info --- */
+.zora-divider {
+  height: 1px;
+  background: var(--border-color); /* */
+}
+
+.badge-soft-teal {
+  color: var(--zora-teal); /* */
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* --- Buttons --- */
+.zora-btn-primary {
+  background-color: var(--zora-teal); /* */
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.zora-btn-primary:hover:not(:disabled) {
+  background-color: var(--zora-teal-hover); /* */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px var(--zora-teal-glow); /* */
+}
+
+.zora-btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Dark Mode Specific Adjustments --- */
+[data-theme='dark'] .zora-input-group {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme='dark'] .zora-read-only-tag {
+  background-color: rgba(255, 255, 255, 0.1);
 }

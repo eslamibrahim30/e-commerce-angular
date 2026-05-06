@@ -1,16 +1,159 @@
-.brand-icon {
-  width: 46px;
-  height: 46px;
-  background: #3C3489;
-  border-radius: 10px;
+/* --- Zora Register Global Variables --- */
+
+
+/* --- Base Container --- */
+.auth-container {
+  background-color: var(--zora-bg);
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem 1rem;
 }
 
-.strength-bar {
-  height: 3px;
-  border-radius: 2px;
-  background: #dee2e6;
-  transition: background 0.25s;
+/* --- Card Style --- */
+.zora-auth-card {
+  background: var(--zora-card);
+  border-radius: 24px;
+  border: 1px solid var(--zora-border);
+  box-shadow: 0 20px 40px var(--zora-shadow);
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
+
+/* --- Logo Wrapper --- */
+.brand-logo-wrapper {
+  display: inline-block;
+  padding: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.brand-logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* --- Alerts --- */
+.zora-alert {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.zora-alert.success {
+  background-color: rgba(104, 211, 145, 0.1);
+  color: #68d391;
+  border-left: 4px solid #68d391;
+}
+
+/* --- Form Controls & Inputs --- */
+.zora-input-group .input-group-text,
+.pass-toggle-btn {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--zora-border);
+  color: var(--zora-muted);
+}
+
+.zora-input-group .input-group-text {
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+}
+
+.zora-input-group .form-control {
+  background-color: var(--zora-card);
+  border: 1.5px solid var(--zora-border);
+  color: var(--zora-text);
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.zora-input-group .form-control:focus {
+  border-color: var(--zora-teal);
+  box-shadow: 0 0 0 3px rgba(11, 121, 116, 0.1);
+  outline: none;
+}
+
+.pass-toggle-btn {
+  border-left: none;
+  border-radius: 0 12px 12px 0;
+}
+
+/* --- Password Strength Section --- */
+.strength-bar {
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--zora-border);
+  transition: background-color 0.3s ease, width 0.3s ease;
+}
+
+/* States for JS to toggle */
+.strength-bar.weak { background-color: #fc8181; }
+.strength-bar.medium { background-color: #f6ad55; }
+.strength-bar.strong { background-color: var(--zora-teal); }
+
+.strength-text { 
+  font-size: 0.75rem; 
+  font-weight: 600;
+  color: var(--zora-muted);
+}
+
+/* --- Buttons --- */
+.zora-btn-primary {
+  background-color: var(--zora-teal);
+  border: none;
+  border-radius: 14px;
+  color: white;
+  font-weight: 600;
+  height: 52px;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.zora-btn-primary:hover:not(:disabled) {
+  background-color: var(--zora-teal-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(11, 121, 116, 0.2);
+}
+
+/* --- Divider & Links --- */
+.zora-divider { 
+  display: flex; 
+  align-items: center; 
+  color: var(--zora-muted); 
+  margin: 1.5rem 0;
+}
+
+.zora-divider::before, .zora-divider::after { 
+  content: ''; 
+  flex: 1; 
+  border-bottom: 1px solid var(--zora-border); 
+}
+
+.zora-divider span { 
+  padding: 0 15px; 
+  font-size: 0.75rem; 
+  font-weight: 700; 
+}
+
+.zora-link { 
+  color: var(--zora-teal); 
+  text-decoration: none; 
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.zora-link:hover { 
+  color: var(--zora-wine); 
+}
+

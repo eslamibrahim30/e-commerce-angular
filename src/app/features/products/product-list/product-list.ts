@@ -14,6 +14,7 @@ import { ProductCard } from '../../../shared/components/product-card/product-car
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, ProductCard],
   templateUrl: './product-list.html',
+  styleUrl: './product-list.css',
 })
 export class ProductList implements OnInit {
   filteredProducts: ProductDisplay[] = [];

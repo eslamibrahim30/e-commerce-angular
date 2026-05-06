@@ -1,21 +1,23 @@
 <nav class="navbar navbar-expand-lg premium-navbar sticky-top">
   <div class="container navbar-container">
+    <!-- Brand Logo -->
     <a routerLink="/" class="navbar-brand brand-logo" (click)="closeMenu()">
       <div class="logo-wrapper">
         <img src="zora-logo.png" alt="Zora Logo" class="main-logo">
       </div>
     </a>
 
+    <!-- Mobile Toggle -->
     <button class="navbar-toggler mobile-toggle" type="button" (click)="toggleMenu()" aria-controls="zoraNavbar"
       [aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
       <i class="fa-solid" [class.fa-bars]="!isMenuOpen" [class.fa-xmark]="isMenuOpen"></i>
     </button>
 
     <div class="collapse navbar-collapse" id="zoraNavbar" [class.show]="isMenuOpen">
+      <!-- Nav Links -->
       <ul class="navbar-nav mx-auto nav-links">
         <li class="nav-item">
-          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link"
-            (click)="closeMenu()">
+          <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link" (click)="closeMenu()">
             <span class="link-text">Home</span>
             <div class="link-indicator"></div>
           </a>
@@ -35,12 +37,18 @@
       </ul>
 
       <div class="nav-actions-wrapper">
+        <!-- Search Box -->
         <div class="search-box">
           <input type="text" placeholder="Search products..." class="search-input" [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
           <button class="search-btn" (click)="onSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
 
         <div class="action-group">
+          <!-- Theme Toggle Button (الجديد) -->
+          <button class="action-btn theme-btn" (click)="themeService.toggleTheme()" [title]="themeService.isDarkMode() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+            <i class="fa-solid" [class.fa-sun]="themeService.isDarkMode()" [class.fa-moon]="!themeService.isDarkMode()"></i>
+          </button>
+
           <!-- Shopping Cart -->
           <a routerLink="/cart" class="action-btn cart-btn" (click)="closeMenu()">
             <i class="fa-solid fa-bag-shopping"></i>

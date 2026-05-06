@@ -1,18 +1,22 @@
 <div class="form-group mb-3">
-  <label class="form-label font-weight-bold text-secondary">{{ label }}</label>
-  
-  <input 
-    [type]="type" 
-    [formControl]="$any(control)"
-    [class.is-invalid]="isInvalid"
-    class="form-control zora-form-control" 
-    [placeholder]="placeholder">
-
-  @if (isInvalid) {
-    <div class="invalid-feedback animate__animated animate__fadeIn">
-      @if (control?.errors?.['required']) { <span>{{ label }} is required.</span> }
-      @if (control?.errors?.['email']) { <span>Please enter a valid email.</span> }
-      @if (control?.errors?.['minlength']) { <span>Value is too short.</span> }
-    </div>
+  @if (label) {
+    <label class="form-label small fw-medium text-secondary">{{ label }}</label>
   }
+  
+  <div class="input-group">
+    <input 
+      [type]="type" 
+      [value]="value"
+      (input)="handleInput($event)"
+      (blur)="onTouched()"
+      [class.is-invalid]="checkInvalid"
+      class="form-control zora-form-control" 
+      [placeholder]="placeholder">
+
+    @if (checkInvalid) {
+      <div class="invalid-feedback animate__animated animate__fadeIn">
+        Invalid {{ label }}.
+      </div>
+    }
+  </div>
 </div>

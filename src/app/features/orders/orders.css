@@ -1,7 +1,129 @@
-.cursor-pointer {
-  cursor: pointer;
+/* --- Zora My Orders Styles --- */
+
+.zora-text-primary {
+  color: var(--zora-teal) !important;
 }
 
-.card-header:hover {
-  background-color: #f8f9fa !important;
+/* Order Card & Header */
+.order-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.order-header {
+  padding: 20px;
+  cursor: pointer;
+  background: var(--card-bg);
+  transition: background 0.3s ease;
+}
+
+.order-header:hover {
+  background: rgba(11, 121, 116, 0.03);
+}
+
+.order-header.expanded {
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(11, 121, 116, 0.05);
+}
+
+/* Icon Box */
+.order-icon-box {
+  width: 45px;
+  height: 45px;
+  background: rgba(11, 121, 116, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-badge.delivered { background: #e7f5ed; color: #0b7974; }
+.status-badge.pending { background: #fff4e5; color: #ff9800; }
+.status-badge.cancelled { background: #ffebee; color: #d32f2f; }
+
+/* Items List */
+.order-body {
+  padding: 20px;
+  background: var(--card-bg);
+}
+
+.item-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.item-row:last-child {
+  border-bottom: none;
+}
+
+.product-img-wrapper img {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+}
+
+/* Typography & Helpers */
+.extra-small {
+  font-size: 0.75rem;
+}
+
+.order-total {
+  font-weight: 800;
+  color: var(--text-main);
+  min-width: 80px;
+  text-align: right;
+}
+
+.chevron-icon {
+  color: var(--text-muted);
+  transition: transform 0.3s ease;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon-circle {
+  width: 100px;
+  height: 100px;
+  background: var(--border-color);
+  color: var(--text-muted);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.btn-zora-primary {
+  background-color: var(--zora-teal);
+  color: white !important;
+  border-radius: 50px;
+  padding: 10px 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-zora-primary:hover {
+  background-color: #08635f;
+  box-shadow: 0 8px 20px rgba(11, 121, 116, 0.2);
 }

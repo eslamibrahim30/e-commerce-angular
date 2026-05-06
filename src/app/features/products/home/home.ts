@@ -15,6 +15,7 @@ import { ZoraModalComponent } from '../../../shared/components/zora-modal/zora-m
   standalone: true,
   imports: [CommonModule, RouterModule, ProductCard, ZoraModalComponent],
   templateUrl: './home.html',
+  styleUrl:'./home.css'
 })
 export class Home {
   showModal = false;
