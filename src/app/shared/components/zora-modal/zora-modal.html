@@ -1,0 +1,23 @@
+@if (isOpen) {
+  <div class="zora-modal-backdrop" (click)="close()"></div>
+
+  <div class="zora-modal-wrapper">
+    <div class="zora-modal-content" [ngClass]="'modal-' + size" (click)="$event.stopPropagation()">
+      
+      <div class="zora-modal-header">
+        <h5 class="m-0">{{ title }}</h5>
+        <button class="close-btn" (click)="close()">&times;</button>
+      </div>
+
+      <div class="zora-modal-body">
+        <ng-content></ng-content>
+      </div>
+
+      <div class="zora-modal-footer">
+        <button class="btn btn-light" (click)="close()">{{ cancelText }}</button>
+        <button class="btn btn-zora-gold" (click)="confirm()">{{ confirmText }}</button>
+      </div>
+      
+    </div>
+  </div>
+}

@@ -1,0 +1,119 @@
+<div class="auth-container d-flex align-items-center justify-content-center py-5">
+  <div class="zora-auth-card p-4 p-md-5">
+
+    <!-- Logo & Header -->
+    <div class="text-center mb-4">
+      <div class="brand-logo-wrapper mx-auto mb-3">
+        <img src="zora-logo.png" alt="Zora Logo" class="brand-logo">
+      </div>
+      <h2 class="auth-title mb-1">Create Account</h2>
+      <p class="auth-subtitle">Join Zora and start your journey</p>
+    </div>
+
+    <!-- Feedback Alerts -->
+    <div class="zora-alert success mb-4 animate__animated animate__fadeIn" *ngIf="successMessage">
+      <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()" novalidate class="zora-form">
+
+      <!-- Full Name -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-dark">Full name</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+          <input
+            formControlName="name"
+            type="text"
+            placeholder="user name"
+            class="form-control"
+            [class.is-invalid]="isInvalid('name')"
+          />
+          <div class="invalid-feedback">Name must be at least 3 characters.</div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-dark">Email address</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          <input
+            formControlName="email"
+            type="email"
+            placeholder="user@example.com"
+            class="form-control"
+            [class.is-invalid]="isInvalid('email')"
+          />
+          <div class="invalid-feedback">Please enter a valid email address.</div>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-3">
+        <label class="form-label small fw-bold text-dark">Password</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input
+            formControlName="password"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Min. 8 characters"
+            class="form-control border-end-0"
+            [class.is-invalid]="isInvalid('password')"
+          />
+          <button class="btn pass-toggle-btn border-start-0" type="button" (click)="togglePassword()">
+             <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+          </button>
+          <div class="invalid-feedback">Password must be at least 8 characters.</div>
+        </div>
+
+        <!-- Password Strength Bars -->
+        <div class="mt-2 px-1" *ngIf="registerForm.get('password')?.value">
+          <div class="d-flex gap-1 mb-1">
+            <div class="strength-bar flex-fill" [class]="getBarClass(1)"></div>
+            <div class="strength-bar flex-fill" [class]="getBarClass(2)"></div>
+            <div class="strength-bar flex-fill" [class]="getBarClass(3)"></div>
+            <div class="strength-bar flex-fill" [class]="getBarClass(4)"></div>
+          </div>
+          <small class="strength-text" [style.color]="strengthColor">
+            Strength: {{ strengthLabel }}
+          </small>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="mb-4">
+        <label class="form-label small fw-bold text-dark">Confirm password</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-check-double"></i></span>
+          <input
+            formControlName="confirmPassword"
+            type="password"
+            placeholder="Re-enter password"
+            class="form-control"
+            [class.is-invalid]="isInvalid('confirmPassword') || (registerForm.get('confirmPassword')?.touched && registerForm.errors?.['mismatch'])"
+          />
+          <div class="invalid-feedback">Passwords do not match.</div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="zora-btn-primary w-100 py-3 mt-2"
+        [disabled]="loading || registerForm.invalid"
+      >
+        <span *ngIf="!loading">Create Account</span>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+      </button>
+
+    </form>
+
+    <div class="zora-divider my-4"><span>OR</span></div>
+    
+    <p class="text-center small text-muted mb-0">
+      Already have an account? 
+      <a routerLink="/login" class="zora-link fw-bold">Sign In</a>
+    </p>
+
+  </div>
+</div>

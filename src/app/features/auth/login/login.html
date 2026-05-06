@@ -1,0 +1,85 @@
+<div class="auth-container d-flex align-items-center justify-content-center py-4">
+  <div class="zora-auth-card p-4 p-md-5">
+
+    <!-- Logo Section -->
+    <div class="text-center mb-4">
+      <div class="brand-logo-wrapper mx-auto mb-3">
+        <img src="zora-logo.png" alt="Zora Logo" class="brand-logo">
+      </div>
+      <h2 class="auth-title mb-1">Welcome Back</h2>
+      <p class="auth-subtitle">Log in to your account</p>
+    </div>
+
+    <!-- Feedback Alerts -->
+    <div class="zora-alert danger mb-3 animate__animated animate__fadeIn" *ngIf="error">
+      <i class="fas fa-exclamation-circle me-2"></i> {{ error }}
+    </div>
+    
+    <div class="zora-alert success mb-3 animate__animated animate__fadeIn" *ngIf="successMessage">
+      <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+    </div>
+
+    <form #form="ngForm" (ngSubmit)="login()" novalidate class="zora-form">
+
+      <!-- Email Section -->
+      <div class="mb-4">
+        <label class="form-label small fw-bold text-dark">Email address</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            #emailRef="ngModel"
+            placeholder="user@example.com"
+            [class.is-invalid]="emailRef.invalid && emailRef.touched"
+          />
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div class="mb-2">
+        <label class="form-label small fw-bold text-dark">Password</label>
+        <div class="input-group zora-input-group">
+          <span class="input-group-text"><i class="fas fa-lock"></i></span>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            class="form-control border-end-0"
+            name="password"
+            [(ngModel)]="password"
+            required
+            #passRef="ngModel"
+            placeholder="••••••••"
+            [class.is-invalid]="passRef.invalid && passRef.touched"
+          />
+          <button class="btn pass-toggle-btn border-start-0" type="button" (click)="togglePassword()">
+             <i class="fas" [class.fa-eye]="!showPassword" [class.fa-eye-slash]="showPassword"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="zora-btn-primary w-100 py-3"
+        [disabled]="form.invalid || loading"
+      >
+        <span *ngIf="!loading">Sign in</span>
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+      </button>
+
+    </form>
+
+    <!-- Footer -->
+    <div class="zora-divider my-4"><span>OR</span></div>
+    
+    <p class="text-center small text-muted mb-0">
+      Don't have an account?
+      <a routerLink="/register" class="zora-link fw-bold">Create one</a>
+    </p>
+
+  </div>
+</div>

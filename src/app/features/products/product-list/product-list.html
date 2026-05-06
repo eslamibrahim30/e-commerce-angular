@@ -1,0 +1,201 @@
+<div class="container py-5">
+
+  <!-- Page Header -->
+  <div class="zora-pl-header mb-5">
+    <h2 class="page-title mb-1">Our Products</h2>
+    <p class="page-sub">{{ filteredProducts.length }} products available</p>
+  </div>
+
+  <!-- Filters Card -->
+  <div class="zora-card mb-5 zora-filters">
+    <div class="row g-3 align-items-end">
+
+      <!-- Search -->
+      <div class="col-12 col-md-4">
+        <label class="zora-filter-label">Search</label>
+        <div class="zora-search-wrap">
+          <i class="fas fa-search zora-search-icon"></i>
+          <input
+            class="form-control zora-input ps-5"
+            placeholder="Search products..."
+            [(ngModel)]="filters.search"
+            (input)="applyFilters()"
+          />
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="col-6 col-md-2">
+        <label class="zora-filter-label">Category</label>
+        <select
+          class="form-select zora-input"
+          [(ngModel)]="filters.category"
+          (change)="applyFilters()"
+        >
+          <option value="">All</option>
+          <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+        </select>
+      </div>
+
+      <!-- Min Price -->
+      <div class="col-6 col-md-2">
+        <label class="zora-filter-label">Min Price ($)</label>
+        <input
+          type="number"
+          class="form-control zora-input"
+          placeholder="0"
+          [(ngModel)]="filters.min"
+          (input)="applyFilters()"
+          min="0"
+        />
+      </div>
+
+      <!-- Max Price -->
+      <div class="col-6 col-md-2">
+        <label class="zora-filter-label">Max Price ($)</label>
+        <input
+          type="number"
+          class="form-control zora-input"
+          placeholder="Any"
+          [(ngModel)]="filters.max"
+          (input)="applyFilters()"
+          min="0"
+        />
+      </div>
+
+      <!-- Sort -->
+      <div class="col-6 col-md-2">
+        <label class="zora-filter-label">Sort By</label>
+        <select
+          class="form-select zora-input"
+          [(ngModel)]="filters.sort"
+          (change)="applyFilters()"
+        >
+          <option value="">Default</option>
+          <option value="priceAsc">Price ↑</option>
+          <option value="priceDesc">Price ↓</option>
+          <option value="name">Name A–Z</option>
+          <option value="newest">Newest</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Active Filters + Reset -->
+    <div
+      *ngIf="filters.search || filters.category || filters.min !== null || filters.max !== null || filters.sort"
+      class="mt-3 pt-3 d-flex align-items-center gap-2 flex-wrap"
+      style="border-top: 1px solid var(--border-color);"
+    >
+      <span class="text-muted small me-1">Active filters:</span>
+      <span *ngIf="filters.search" class="zora-filter-chip">
+        "{{ filters.search }}"
+        <button (click)="filters.search=''; applyFilters()">×</button>
+      </span>
+      <span *ngIf="filters.category" class="zora-filter-chip">
+        {{ filters.category }}
+        <button (click)="filters.category=''; applyFilters()">×</button>
+      </span>
+      <span *ngIf="filters.min !== null" class="zora-filter-chip">
+        Min ${{ filters.min }}
+        <button (click)="filters.min=null; applyFilters()">×</button>
+      </span>
+      <span *ngIf="filters.max !== null" class="zora-filter-chip">
+        Max ${{ filters.max }}
+        <button (click)="filters.max=null; applyFilters()">×</button>
+      </span>
+      <button
+        class="btn btn-sm btn-outline-secondary ms-auto rounded-pill px-3"
+        (click)="resetFilters()"
+      >
+        Reset All
+      </button>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="row g-4" *ngIf="pagedProducts.length > 0">
+    <div
+      class="col-12 col-sm-6 col-md-4 col-lg-3"
+      *ngFor="let p of pagedProducts; trackBy: trackById"
+    >
+      <app-product-card [product]="p" (addToCart)="addToCart(p)"></app-product-card>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="filteredProducts.length === 0" class="zora-empty-state">
+    <div class="zora-empty-icon">
+      <i class="fas fa-box-open"></i>
+    </div>
+    <h5 class="fw-bold mt-4 mb-2">No products found</h5>
+    <p class="text-muted mb-4">Try adjusting your search or filter criteria.</p>
+    <button class="btn btn-zora-gold px-4 rounded-pill" (click)="resetFilters()">
+      Clear Filters
+    </button>
+  </div>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="zora-pagination-wrap mt-5">
+
+    <!-- Info -->
+    <p class="zora-pagination-info">
+      Showing
+      <strong>{{ (currentPage - 1) * pageSize + 1 }}</strong>
+      –
+      <strong>{{ currentPage * pageSize > filteredProducts.length ? filteredProducts.length : currentPage * pageSize }}</strong>
+      of <strong>{{ filteredProducts.length }}</strong> products
+    </p>
+
+    <!-- Controls -->
+    <div class="zora-pagination">
+
+      <!-- Prev -->
+      <button
+        class="zora-page-btn zora-page-btn--nav"
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        <i class="fas fa-chevron-left"></i>
+      </button>
+
+      <!-- Pages -->
+      <ng-container *ngFor="let page of pages">
+        <!-- Show first, last, current, and neighbors — hide others with ellipsis -->
+        <ng-container *ngIf="page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)">
+          <button
+            class="zora-page-btn"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)"
+          >
+            {{ page }}
+          </button>
+        </ng-container>
+        <!-- Ellipsis before current group -->
+        <span
+          *ngIf="page === currentPage - 2 && currentPage - 2 > 1"
+          class="zora-page-ellipsis"
+        >…</span>
+        <!-- Ellipsis after current group -->
+        <span
+          *ngIf="page === currentPage + 2 && currentPage + 2 < totalPages"
+          class="zora-page-ellipsis"
+        >…</span>
+      </ng-container>
+
+      <!-- Next -->
+      <button
+        class="zora-page-btn zora-page-btn--nav"
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </button>
+
+    </div>
+  </div>
+
+</div>
+
+
+

@@ -1,0 +1,80 @@
+<div class="checkout-container w-full" [formGroup]="shippingForm">
+  
+  <!-- Shipping Section -->
+  <div class="zora-auth-card p-4 mb-4">
+    <div class="d-flex align-items-center mb-4">
+      <div class="step-badge me-3">1</div>
+      <h2 class="auth-title h5 mb-0">Shipping Information</h2>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">First Name</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="First Name" formControlName="firstName" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Last Name</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="Last Name" formControlName="lastName" />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Email Address</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="user@example.com" formControlName="email" />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Phone Number</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="1234567890" formControlName="phone" />
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label small fw-bold">Street Address</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="123 Zora St, Apt 4" formControlName="address" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">City</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="Cairo" formControlName="city" />
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label small fw-bold">Postal Code</label>
+        <div class="zora-input-group">
+          <input class="form-control" placeholder="12345" formControlName="postalCode" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Section -->
+  <div class="zora-auth-card p-4">
+    <div class="d-flex align-items-center mb-4">
+      <div class="step-badge me-3">2</div>
+      <h2 class="auth-title h5 mb-0">Payment Method</h2>
+    </div>
+
+    <label class="zora-payment-option d-flex align-items-center gap-3 p-3" [class.active]="shippingForm.get('paymentMethod')?.value === 'cod'">
+      <input type="radio" value="cod" formControlName="paymentMethod" class="zora-radio" />
+      <div class="payment-icon">
+        <i class="fas fa-money-bill-wave"></i>
+      </div>
+      <div>
+        <p class="mb-0 fw-bold small text-dark">Cash on Delivery</p>
+        <p class="mb-0 text-muted extra-small">Pay safely when your order arrives</p>
+      </div>
+    </label>
+  </div>
+</div>

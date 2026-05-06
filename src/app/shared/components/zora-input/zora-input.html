@@ -1,0 +1,22 @@
+<div class="form-group mb-3">
+  @if (label) {
+    <label class="form-label small fw-medium text-secondary">{{ label }}</label>
+  }
+  
+  <div class="input-group">
+    <input 
+      [type]="type" 
+      [value]="value"
+      (input)="handleInput($event)"
+      (blur)="onTouched()"
+      [class.is-invalid]="checkInvalid"
+      class="form-control zora-form-control" 
+      [placeholder]="placeholder">
+
+    @if (checkInvalid) {
+      <div class="invalid-feedback animate__animated animate__fadeIn">
+        Invalid {{ label }}.
+      </div>
+    }
+  </div>
+</div>

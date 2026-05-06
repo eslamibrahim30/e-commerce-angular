@@ -1,0 +1,143 @@
+<!-- ===== HERO SECTION ===== -->
+<section class="zora-hero position-relative overflow-hidden">
+
+  <!-- Background layers -->
+  <div class="zora-hero-bg"></div>
+  <div class="zora-hero-glow zora-hero-glow--1"></div>
+  <div class="zora-hero-glow zora-hero-glow--2"></div>
+  <div class="zora-hero-glow zora-hero-glow--3"></div>
+
+  <!-- Floating shapes -->
+  <div class="zora-hero-shape zora-hero-shape--circle"></div>
+  <div class="zora-hero-shape zora-hero-shape--ring"></div>
+
+  <div class="container position-relative" style="z-index: 2;">
+    <div class="row align-items-center py-5" style="min-height: 520px;">
+
+      <!-- Left: Text -->
+      <div class="col-lg-6 text-white py-4">
+
+        <div class="zora-hero-badge mb-4">
+          <span class="badge-dot"></span>
+          New arrivals every week
+        </div>
+
+        <h1 class="zora-hero-title mb-3">
+          Discover <span class="zora-hero-highlight">Premium</span><br>
+          Products You'll Love
+        </h1>
+
+        <p class="zora-hero-sub mb-5">
+          Shop thousands of curated products with the best prices,<br class="d-none d-md-block">
+          fast delivery, and a seamless experience.
+        </p>
+
+        <div class="d-flex flex-wrap gap-3">
+          <a routerLink="/products" class="btn btn-zora-gold btn-lg px-4 fw-semibold zora-hero-cta">
+            <i class="fas fa-bag-shopping me-2"></i>Shop Now
+          </a>
+          <a routerLink="/products" class="btn zora-hero-btn-ghost btn-lg px-4 fw-semibold">
+            Explore All →
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="d-flex gap-4 mt-5 flex-wrap">
+          <div class="zora-hero-stat">
+            <span class="zora-hero-stat__num">20+</span>
+            <span class="zora-hero-stat__label">Products</span>
+          </div>
+          <div class="zora-hero-stat-divider"></div>
+          <div class="zora-hero-stat">
+            <span class="zora-hero-stat__num">6</span>
+            <span class="zora-hero-stat__label">Categories</span>
+          </div>
+          <div class="zora-hero-stat-divider"></div>
+          <div class="zora-hero-stat">
+            <span class="zora-hero-stat__num">Free</span>
+            <span class="zora-hero-stat__label">Shipping $50+</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Floating Cards -->
+      <div class="col-lg-6 d-none d-lg-flex justify-content-center align-items-center py-4">
+        <div class="zora-hero-cards">
+
+          <div class="zora-hero-card zora-hero-card--main">
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=180&fit=crop"
+              alt="Featured product" />
+            <div class="zora-hero-card__body">
+              <span class="zora-hero-card__label">Best Seller</span>
+              <p class="zora-hero-card__name">Noise-Cancelling Headphones</p>
+              <p class="zora-hero-card__price">
+                $254.99 <s class="zora-hero-card__old">$299.99</s>
+              </p>
+            </div>
+          </div>
+
+          <div class="zora-hero-card zora-hero-card--sm zora-hero-card--top">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=140&h=80&fit=crop"
+              alt="Smart watch" />
+            <div class="zora-hero-card__body">
+              <p class="zora-hero-card__name" style="font-size:0.78rem;">Smart Watch</p>
+              <p class="zora-hero-card__price" style="font-size:0.8rem;">$179.99</p>
+            </div>
+          </div>
+
+          <div class="zora-hero-card zora-hero-card--sm zora-hero-card--bottom">
+            <div class="p-3 text-center">
+              <i class="fas fa-truck text-success mb-1" style="font-size:1.3rem;"></i>
+              <p class="mb-0 fw-semibold" style="font-size:0.75rem; color: var(--text-main);">Free Delivery</p>
+              <p class="mb-0" style="font-size:0.7rem; color: var(--text-muted);">Orders over $50</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+
+<!-- ===== CATEGORIES ===== -->
+<div class="container mb-5 mt-4">
+  <h4 class="mb-3 fw-semibold">Browse by Category</h4>
+  <div class="d-flex gap-2 flex-wrap">
+    @for (cat of categories(); track cat) {
+    <a routerLink="/products" [queryParams]="{ category: cat }"
+      class="btn btn-outline-teal rounded-pill px-3 text-decoration-none">
+      {{ cat }}
+    </a>
+    }
+  </div>
+</div>
+
+<!-- ===== FEATURED PRODUCTS ===== -->
+<div class="container mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold mb-0">Featured Products</h4>
+    <a routerLink="/products" class="btn btn-outline-teal btn-sm">View All →</a>
+  </div>
+
+  <div class="row g-4">
+    @for (p of featuredProducts(); track p.id) {
+    <div class="col-6 col-md-4 col-lg-3">
+      <app-product-card [product]="p" (addToCart)="addToCart(p)"></app-product-card>
+    </div>
+    }
+  </div>
+</div>
+
+<!-- ===== MODAL ===== -->
+<app-zora-modal [isOpen]="showModal" title="Success" confirmText="Go to Cart" cancelText="Continue Shopping"
+  (confirmed)="goToCart()" (canceled)="showModal = false">
+  <div class="text-center py-3">
+    <i class="fas fa-check-circle text-success fa-3x mb-3"></i>
+    <p>Product has been successfully added to your cart!</p>
+  </div>
+</app-zora-modal>

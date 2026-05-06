@@ -1,3 +1,147 @@
-/* You can add global styles to this file, and also import other style files */
+/* 
+  ZORA PREMIUM E-COMMERCE - GLOBAL STYLES
+  Designed by: Merna Elnshar (Full-Stack Developer)
+*/
 
-@import 'tailwindcss';
+:root {
+  /* --- Brand Colors --- */
+  --zora-teal: #0b7974;
+  --zora-teal-hover: #085a56;
+  --zora-teal-glow: rgba(11, 121, 116, 0.4);
+  
+  --zora-gold: #d4af37;
+  --zora-gold-hover: #b8860b;
+  --zora-gold-glow: rgba(212, 175, 55, 0.4);
+
+  --zora-primary: var(--zora-teal);
+  --zora-primary-rgb: 11, 121, 116;
+
+  /* --- Light Theme Defaults --- */
+  --bg-color: #f8fafb;
+  --card-bg: #ffffff;
+  --text-main: #1a1a1a;
+  --text-muted: #64748b;
+  --navbar-bg: rgba(255, 255, 255, 0.85);
+  --border-color: #e2e8f0;
+
+  /* --- Shadows & Elevations --- */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* --- DARK THEME OVERRIDES --- */
+[data-theme='dark'] {
+  --bg-color: #0f172a;
+  --card-bg: #1e293b;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --navbar-bg: rgba(15, 23, 42, 0.9);
+  --border-color: #334155;
+}
+
+/* Bootstrap Dark Mode Integration */
+[data-theme='dark'] .bg-light { background-color: rgba(255, 255, 255, 0.03) !important; color: var(--text-main) !important; }
+[data-theme='dark'] .modal-content, [data-theme='dark'] .card { background-color: var(--card-bg) !important; border-color: var(--border-color) !important; }
+[data-theme='dark'] .form-control, [data-theme='dark'] .form-select { background-color: var(--card-bg) !important; border-color: var(--border-color) !important; color: var(--text-main) !important; }
+
+/* --- GLOBAL BASE STYLES --- */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Inter', 'Outfit', -apple-system, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- ZORA BUTTONS --- */
+.btn-zora-gold {
+  background: var(--zora-gold) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-shadow: 0 4px 6px -1px var(--zora-gold-glow) !important;
+}
+
+.btn-zora-gold:hover:not(:disabled) {
+  background: var(--zora-gold-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px var(--zora-gold-glow) !important;
+}
+
+.btn-outline-teal {
+  color: var(--zora-teal) !important;
+  border: 2px solid var(--zora-teal) !important;
+  background: transparent !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-outline-teal:hover:not(:disabled) {
+  background: var(--zora-teal) !important;
+  color: white !important;
+  box-shadow: 0 0 15px var(--zora-teal-glow);
+}
+
+/* --- PRODUCT CARDS --- */
+.product-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--zora-teal);
+}
+
+.product-card img {
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* --- ADMIN LAYOUT UI --- */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-color);
+}
+
+.admin-main {
+  margin-left: 280px;
+  flex: 1;
+  padding: 32px;
+  transition: all 0.4s ease;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.025em;
+}
+
+/* --- SCROLLBAR CUSTOMIZATION --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: var(--zora-teal); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--zora-teal-hover); }
+
+/* --- UTILITIES --- */
+.zora-glass {
+  background: var(--navbar-bg) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+}

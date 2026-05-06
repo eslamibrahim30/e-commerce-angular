@@ -1,0 +1,99 @@
+<div class="container py-4">
+  <div class="row g-4">
+
+    <!-- Cart Items -->
+    <div class="col-lg-8 d-flex flex-column gap-3">
+
+      @if (isLoading()) {
+
+        @for (item of [1,2,3]; track item) {
+          <div class="d-flex gap-3 p-3 bg-white rounded shadow-sm">
+
+            <div style="width:110px;height:110px;" class="bg-light rounded"></div>
+
+            <div class="flex-grow-1">
+
+              <div class="bg-light rounded mb-2" style="height:20px;width:40%"></div>
+
+              <div class="bg-light rounded mb-2" style="height:16px;width:25%"></div>
+
+              <div class="bg-light rounded" style="height:16px;width:15%"></div>
+
+            </div>
+
+          </div>
+        }
+
+      } @else {
+
+        @if (cartItems().items.length === 0) {
+
+          <div class="text-center py-5">
+
+            <div style="font-size:60px">🛒</div>
+
+            <h3 class="fw-semibold mt-3">Your cart is empty</h3>
+
+            <p class="text-muted">
+              Looks like you haven't added anything yet
+            </p>
+
+            <button
+              routerLink="/products"
+              class="btn btn-teal text-white rounded-pill px-4 py-2 fw-semibold"
+            >
+              Continue Shopping
+            </button>
+
+          </div>
+
+        } @else {
+
+          @for (item of cartItems().items; track item.productId) {
+            <app-cart-card [item]="item"></app-cart-card>
+          }
+
+        }
+
+      }
+
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-lg-4">
+
+      @if (isLoading()) {
+
+        <div class="bg-white p-4 rounded shadow-sm">
+
+          <div class="bg-light rounded mb-4" style="height:24px;width:50%"></div>
+
+          <div class="d-flex justify-content-between mb-3">
+            <div class="bg-light rounded" style="height:16px;width:80px"></div>
+            <div class="bg-light rounded" style="height:16px;width:60px"></div>
+          </div>
+
+          <div class="d-flex justify-content-between mb-3">
+            <div class="bg-light rounded" style="height:16px;width:80px"></div>
+            <div class="bg-light rounded" style="height:16px;width:60px"></div>
+          </div>
+
+          <div class="d-flex justify-content-between mb-4">
+            <div class="bg-light rounded" style="height:20px;width:80px"></div>
+            <div class="bg-light rounded" style="height:20px;width:80px"></div>
+          </div>
+
+          <div class="bg-light rounded" style="height:45px"></div>
+
+        </div>
+
+      } @else {
+
+        <app-order-summary></app-order-summary>
+
+      }
+
+    </div>
+
+  </div>
+</div>

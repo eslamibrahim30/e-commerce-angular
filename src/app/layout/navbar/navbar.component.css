@@ -1,0 +1,253 @@
+:host {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  --nav-bg: var(--navbar-bg);
+  --nav-text: var(--text-main);
+  --nav-text-hover: var(--zora-teal);
+  --nav-border: var(--border-color);
+  --glass-shadow: var(--shadow-md);
+  --badge-bg: #ef4444;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.premium-navbar {
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--nav-border);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s ease;
+  padding: 0.75rem 0;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0;
+}
+
+.logo-wrapper {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background: transparent;
+}
+
+.main-logo {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--zora-teal);
+  letter-spacing: -0.5px;
+}
+
+/* Nav Links */
+.nav-links {
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--nav-text) !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem !important;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--zora-teal) !important;
+}
+
+.link-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 1rem;
+  right: 1rem;
+  height: 2px;
+  background: var(--zora-gold);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-link:hover .link-indicator,
+.nav-link.active .link-indicator {
+  transform: scaleX(1);
+}
+
+/* Actions */
+.nav-actions-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: var(--bg-color);
+  border-radius: 100px;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  width: 240px;
+}
+
+.search-box:focus-within {
+  border-color: var(--zora-teal);
+  box-shadow: 0 0 0 4px var(--zora-teal-glow);
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.25rem 0.75rem;
+  color: var(--nav-text);
+  font-size: 0.85rem;
+  width: 100%;
+}
+
+.search-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.search-btn:hover {
+  color: var(--zora-teal);
+}
+
+.action-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.action-btn {
+  position: relative;
+  color: var(--text-muted);
+  font-size: 1.15rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  background: var(--zora-teal);
+  color: white;
+  border-color: var(--zora-teal);
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--zora-gold);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 2px solid var(--nav-bg);
+}
+
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+  color: var(--text-main);
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 991px) {
+  .collapse {
+    background: var(--nav-bg);
+    margin-top: 1rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--nav-border);
+  }
+
+  .nav-links {
+    margin-bottom: 1.5rem;
+    align-items: center;
+  }
+
+  .nav-actions-wrapper {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .action-group {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.theme-btn {
+  background: transparent;
+  color: var(--zora-teal); /* اللون اللي عرفناه في الـ Variables */
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+
+/* في حالة الدارك مود ممكن نغير لون الأيقونة */
+[data-theme='dark'] .theme-btn:hover {
+  color: #fbbf24;
+}

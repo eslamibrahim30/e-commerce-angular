@@ -1,0 +1,65 @@
+<div class="container py-5" style="max-width: 850px">
+  <div class="header-section mb-5 text-center">
+    <h2 class="fw-bold zora-text-primary">My Orders</h2>
+    <p class="text-muted small">View and track your purchase history</p>
+  </div>
+
+  @for (order of orders(); track order.id) {
+    <div class="order-card mb-4">
+      <!-- Order Header -->
+      <div class="order-header" [class.expanded]="expandedOrders().has(order.id)" (click)="toggleOrder(order.id)">
+        <div class="d-flex justify-content-between align-items-center w-100">
+          <div class="d-flex align-items-center gap-3">
+            <div class="order-icon-box">
+              <i class="fas fa-box" style="color: #0b7974;"></i>
+            </div>
+            <div>
+              <h6 class="mb-0 fw-bold">Order #{{ order.id }}</h6>
+              <span class="text-muted extra-small">{{ order.date | date: 'mediumDate' }}</span>
+            </div>
+          </div>
+          
+          <div class="d-flex align-items-center gap-4">
+            <span class="status-badge" [ngClass]="order.status.toLowerCase()">
+              {{ order.status }}
+            </span>
+            <span class="order-total">${{ order.total }}</span>
+            <i class="fas {{ expandedOrders().has(order.id) ? 'fa-chevron-up' : 'fa-chevron-down' }} chevron-icon"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Body -->
+      @if (expandedOrders().has(order.id)) {
+        <div class="order-body animate__animated animate__fadeIn">
+          <div class="items-list">
+            @for (item of order.items; track item.productId) {
+              <div class="item-row d-flex align-items-center gap-3">
+                <div class="product-img-wrapper">
+                  <img [src]="item.image" alt="{{ item.name }}" />
+                </div>
+                <div class="flex-grow-1">
+                  <h6 class="mb-0 item-name">{{ item.name }}</h6>
+                  <span class="text-muted small">Qty: {{ item.quantity }}</span>
+                </div>
+                <span class="item-price">${{ item.price }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (orders().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon-circle">
+        <i class="fas fa-shopping-bag"></i>
+      </div>
+      <h4>Your cart is lonely</h4>
+      <p>You haven't placed any orders yet. Start shopping to fill it up!</p>
+      <button class="btn btn-zora-primary mt-3" routerLink="/home">Start Shopping</button>
+    </div>
+  }
+</div>

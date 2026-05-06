@@ -1,0 +1,84 @@
+/* --- Zora Cart Component Styles --- */
+
+/* الحاوية الرئيسية لخلفية متناسقة */
+.auth-container {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  transition: background-color 0.3s ease;
+}
+
+/* استايل الكروت بنظام Glassmorphism بسيط */
+.zora-glass {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 1.25rem; /* rounded-4 */
+  transition: all 0.3s ease;
+}
+
+[data-theme='dark'] .zora-glass {
+  background: rgba(30, 41, 59, 0.7); /* Slate-800 مع شفافية */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* --- Skeleton Loader (Zora Edition) --- */
+.bg-skeleton {
+  background-color: var(--border-color);
+  opacity: 0.6;
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+/* --- Empty Cart State --- */
+.border-dashed {
+  border: 2px dashed var(--border-color) !important;
+  background: transparent !important;
+}
+
+.auth-title {
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+}
+
+/* --- Utilities & Details --- */
+.page-title {
+  color: var(--text-main);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.zora-divider {
+  height: 1px;
+  background: var(--border-color);
+  border: none;
+}
+
+/* تحسين شكل الأزرار في السلة */
+.btn-zora-gold {
+  background-color: var(--zora-gold);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-zora-gold:hover {
+  background-color: var(--zora-gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px var(--zora-gold-glow);
+}
+
+/* تجعل ملخص الطلب ثابت أثناء التمرير */
+.sticky-top {
+  z-index: 10;
+}
