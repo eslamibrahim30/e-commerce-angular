@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   private hashPassword(password: string): string {
-  return CryptoJS.SHA256(password).toString();
-}
+    return CryptoJS.SHA256(password).toString();
+  }
 
 }
