@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../shared/models/user.model';
+
 
 @Component({
   selector: 'app-profile',
@@ -14,8 +15,8 @@ import { User } from '../../shared/models/user.model';
 export class ProfileComponent implements OnInit {
 
   user!: User;
-  loading = false;
-  successMessage = '';
+  loading = signal(false);
+  successMessage = signal('');
   memberSince = '';
 
   constructor(private auth: AuthService) {}
@@ -35,18 +36,39 @@ export class ProfileComponent implements OnInit {
   }
 
   update() {
-    this.loading = true;
-    this.successMessage = '';
+    if (!this.user) return; // حماية
+    
+    this.loading.set(true);
+    this.successMessage.set('');
 
-    setTimeout(() => {
-      let users: User[] = JSON.parse(localStorage.getItem('users_data') || '[]');
-      users = users.map(u => u.id === this.user.id ? this.user : u);
-      localStorage.setItem('users_data', JSON.stringify(users));
-      localStorage.setItem('session', JSON.stringify(this.user));
-
-      this.loading = false;
-      this.successMessage = 'Changes saved successfully!';
-      setTimeout(() => this.successMessage = '', 3000);
-    }, 900);
+    // جربي تشيلي الـ setTimeout دي الأول عشان تتأكدي إن الكود شغال
+    try {
+      let usersData = localStorage.getItem('users_data');
+      let users: any[] = JSON.parse(usersData || '[]');
+      
+      // تحديث البيانات
+      const index = users.findIndex(u => u.id === this.user.id);
+      if (index !== -1) {
+        users[index] = { ...this.user }; // Update the user in the array
+        localStorage.setItem('users_data', JSON.stringify(users));
+        localStorage.setItem('session', JSON.stringify(this.user));
+        
+        // تأخير بسيط جداً لعمل "Effect" التحميل
+        setTimeout(() => {
+          this.loading.set(false);
+          this.successMessage.set('Changes saved successfully!');
+          
+          // مسح الرسالة بعد 3 ثواني
+          setTimeout(() => this.successMessage.set(''), 3000);
+        }, 800);
+        
+      } else {
+        this.loading.set(false);
+        console.error('User not found in localStorage');
+      }
+    } catch (error) {
+      this.loading.set(false);
+      console.error('Update failed:', error);
+    }
   }
 }
