@@ -66,6 +66,7 @@ export const SEED_PRODUCTS: Product[] = [
     description: 'Slim-fitting style, contrast raglan long sleeve, three-button henley placket, light weight & soft fabric for breathable and comfortable wearing.',
     image: 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_t.png',
     stock: 259,
+    isFeatured: true,
   },
   {
     id: 'p-3',
