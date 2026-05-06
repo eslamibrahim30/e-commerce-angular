@@ -20,17 +20,14 @@ export class AuthService {
    * login can find them immediately without delay.j
    */
   private initUsers(): void {
-         localStorage.removeItem(this.USERS_KEY);// clar users on each load for testing purposes
-           localStorage.removeItem('session');  // clear session on each load for testing purposes
-
-  if (!localStorage.getItem(this.USERS_KEY)) {
-    const hashed = SEED_USERS.map(u => ({
-      ...u,
-      password: this.hashPassword(u.password)
-    }));
-    localStorage.setItem(this.USERS_KEY, JSON.stringify(hashed));
+    if (!localStorage.getItem(this.USERS_KEY)) {
+      const hashed = SEED_USERS.map(u => ({
+        ...u,
+        password: this.hashPassword(u.password)
+      }));
+      localStorage.setItem(this.USERS_KEY, JSON.stringify(hashed));
+    }
   }
-}
 
   private userService = inject(UserService);
 
