@@ -27,6 +27,8 @@ export class AuthService {
       }));
       localStorage.setItem(this.USERS_KEY, JSON.stringify(hashed));
     }
+    // Sync UserService signal with localStorage data
+    this.userService.refresh();
   }
 
   private userService = inject(UserService);
@@ -52,16 +54,19 @@ export class AuthService {
   }
 
   register(userData: Omit<User, 'id'>) {
-  const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
-  const user: User = {
-    ...userData,
-    id: Date.now().toString(),
-    password: this.hashPassword(userData.password)  //  hash
-  };
+    const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
+    const user: User = {
+      ...userData,
+      id: Date.now().toString(),
+      password: this.hashPassword(userData.password)
+    };
 
-  users.push(user);
-  localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
-}
+    users.push(user);
+    localStorage.setItem(this.USERS_KEY, JSON.stringify(users));
+
+    // Update UserService signal so admin table reflects the new user
+    this.userService.addUser(user);
+  }
 
   logout() {
     localStorage.removeItem('session');
@@ -81,7 +86,7 @@ export class AuthService {
   }
 
   private hashPassword(password: string): string {
-  return CryptoJS.SHA256(password).toString();
-}
+    return CryptoJS.SHA256(password).toString();
+  }
 
 }
