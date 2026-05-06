@@ -1,3 +1,145 @@
+/* --- Layout --- */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--zora-bg);
+}
+
+.admin-main {
+  flex-grow: 1;
+  padding: 2rem 0;
+  margin-left: 280px;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 991px) {
+  .admin-main {
+    margin-left: 0;
+    padding-top: 5rem;
+  }
+}
+
+/* --- Typography & Header --- */
+.page-title {
+  color: var(--text-main);
+  font-weight: 800;
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.page-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* --- Filters Section --- */
+.filters-container {
+  background: var(--card-bg);
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.search-box .form-control {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-main);
+}
+
+.search-box .form-control:focus {
+  border-color: var(--zora-primary);
+  box-shadow: 0 0 0 4px var(--zora-primary-light);
+  background-color: var(--card-bg);
+}
+
+.form-select {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* --- Table Customization --- */
+.zora-table-wrapper {
+  background: var(--card-bg);
+  border-radius: 20px 20px 0 0;
+}
+
+/* --- Buttons --- */
+.btn-primary {
+  background-color: var(--zora-primary);
+  border: none;
+  border-radius: 12px;
+  padding: 0.6rem 1.5rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--zora-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(var(--zora-primary-rgb), 0.2);
+}
+
+.btn-light {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
+}
+
+/* --- Pagination Footer --- */
+.zora-pagination-footer {
+  background: var(--card-bg);
+  padding: 1.25rem 2rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 20px 20px;
+}
+
+/* --- Modals & Forms --- */
+.modal-content {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+}
+
+.modal-header {
+  border-bottom-color: var(--border-color);
+}
+
+.modal-footer {
+  border-top-color: var(--border-color);
+}
+
+[data-theme='dark'] .modal-header .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.form-label {
+  letter-spacing: 0.05em;
+  color: var(--text-muted) !important;
+}
+
+textarea.form-control,
+input.form-control {
+  background-color: var(--zora-bg);
+  border: 1.5px solid var(--border-color);
+  color: var(--text-main);
+  border-radius: 12px;
+}
+
+textarea.form-control:focus,
+input.form-control:focus {
+  background-color: var(--card-bg);
+  border-color: var(--zora-primary);
+  box-shadow: 0 0 0 4px var(--zora-primary-light);
+}
+
 /* Sold Progress Bar */
 .sold-progress {
   width: 60px;

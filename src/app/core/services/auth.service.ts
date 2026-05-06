@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { User } from '../../shared/models/user.model';
 import { SEED_USERS } from '../../shared/data/seed.data';
+import { UserService } from './user.service';
 import * as CryptoJS from 'crypto-js';
 
 
@@ -31,6 +32,8 @@ export class AuthService {
   }
 }
 
+  private userService = inject(UserService);
+
   login(email: string, password: string): boolean {
     const users: User[] = JSON.parse(localStorage.getItem(this.USERS_KEY) || '[]');
 
@@ -40,6 +43,10 @@ export class AuthService {
     );
 
     if (user) {
+      // Prevent disabled users from logging in
+      if (this.userService.isDisabled(user.id)) {
+        return false;
+      }
       localStorage.setItem('session', JSON.stringify(user));
       return true;
     }

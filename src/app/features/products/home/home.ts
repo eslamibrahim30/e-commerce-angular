@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { CartService } from '../../../core/services/cart.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 
 
@@ -22,16 +23,20 @@ export class Home {
 
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private authService = inject(AuthService);
   private router = inject(Router);
 
-
-  featuredProducts = computed(() => this.productService.products().slice(0, 6));
+  featuredProducts = computed(() => this.productService.featured());
 
   categories = computed(() =>
     [...new Set(this.productService.products().map(p => p.category))]
   );
 
   addToCart(product: any) {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
     this.cartService.add({
       productId: product.id,
       name: product.name,
