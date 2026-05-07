@@ -201,4 +201,183 @@ input.form-control:focus {
   border-radius: 12px;
 }
 
+/* --- Expandable Row --- */
+.order-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
 
+.order-row:hover {
+  background-color: var(--zora-primary-light, rgba(99, 102, 241, 0.06)) !important;
+}
+
+.order-row.expanded {
+  background-color: var(--zora-primary-light, rgba(99, 102, 241, 0.06)) !important;
+  border-bottom: none;
+}
+
+.expand-chevron {
+  color: var(--text-muted);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.expand-chevron.rotated {
+  transform: rotate(90deg);
+  color: var(--zora-primary);
+}
+
+.detail-row {
+  background: transparent !important;
+}
+
+.detail-row:hover {
+  background: transparent !important;
+}
+
+.detail-row td {
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* --- Order Detail Panel --- */
+.order-detail-panel {
+  padding: 1.5rem 2rem 2rem;
+  background: linear-gradient(135deg,
+    var(--zora-bg) 0%,
+    color-mix(in srgb, var(--zora-primary, #6366f1) 4%, var(--zora-bg, #f8f9fa)) 100%);
+  border-top: 2px solid var(--zora-primary, #6366f1);
+  animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Detail Cards --- */
+.detail-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  height: 100%;
+}
+
+.detail-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem 1.25rem;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-main);
+}
+
+.detail-card-header svg {
+  color: var(--zora-primary, #6366f1);
+}
+
+.detail-card-body {
+  padding: 1rem 1.25rem;
+}
+
+/* --- Shipping Info --- */
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  text-align: right;
+  word-break: break-word;
+}
+
+/* --- Items Table (nested) --- */
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.items-table thead th {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: var(--zora-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.items-table tbody td {
+  padding: 0.75rem 1.25rem;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.items-table tbody tr:last-child td {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.items-table tfoot td {
+  padding: 0.85rem 1.25rem;
+  background: var(--zora-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+.product-name {
+  font-weight: 600;
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.qty-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--zora-primary-light, rgba(99, 102, 241, 0.1));
+  color: var(--zora-primary, #6366f1);
+  font-weight: 700;
+  font-size: 0.82rem;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  padding: 0 6px;
+}
+
+.total-amount {
+  color: var(--zora-primary, #6366f1);
+  font-size: 1rem;
+}
