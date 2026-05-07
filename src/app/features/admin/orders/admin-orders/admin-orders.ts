@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AdminSidebar } from '../../../../shared/components/admin-sidebar.component/admin-sidebar.component';
 import { OrderService } from '../../../../core/services/order.service';
+import { ProductService } from '../../../../core/services/product.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -13,6 +14,31 @@ import { OrderService } from '../../../../core/services/order.service';
 })
 export class AdminOrders {
   protected orderService = inject(OrderService);
+  protected productService = inject(ProductService);
+
+  // Expanded row state
+  expandedOrderId = signal<string | null>(null);
+
+  toggleOrder(orderId: string) {
+    this.expandedOrderId.update(current => current === orderId ? null : orderId);
+  }
+
+  getProductName(productId: string): string {
+    const product = this.productService.getById(productId);
+    return product ? product.name : productId;
+  }
+
+  getShippingName(shipping: any): string {
+    if (shipping.name) return shipping.name;
+    const first = shipping.firstName || '';
+    const last = shipping.lastName || '';
+    return `${first} ${last}`.trim() || '—';
+  }
+
+  getShippingAddress(shipping: any): string {
+    const parts = [shipping.address, shipping.city, shipping.postalCode].filter(Boolean);
+    return parts.join(', ') || '—';
+  }
 
   getStatusBootstrapClass(status: string): string {
     switch (status) {
