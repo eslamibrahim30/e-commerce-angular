@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
+import { UserService } from '../../core/services/user.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { User } from '../../shared/models/user.model';
+
 
 @Component({
   selector: 'app-profile',
@@ -14,11 +16,11 @@ import { User } from '../../shared/models/user.model';
 export class ProfileComponent implements OnInit {
 
   user!: User;
-  loading = false;
-  successMessage = '';
+  loading = signal(false);
+  successMessage = signal('');
   memberSince = '';
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private userService: UserService) { }
 
   ngOnInit() {
     this.user = this.auth.getUser() ?? { id: '', name: '', email: '', password: '', role: 'customer' };
@@ -35,18 +37,36 @@ export class ProfileComponent implements OnInit {
   }
 
   update() {
-    this.loading = true;
-    this.successMessage = '';
+    if (!this.user) return;
 
-    setTimeout(() => {
-      let users: User[] = JSON.parse(localStorage.getItem('users_data') || '[]');
-      users = users.map(u => u.id === this.user.id ? this.user : u);
-      localStorage.setItem('users_data', JSON.stringify(users));
-      localStorage.setItem('session', JSON.stringify(this.user));
+    this.loading.set(true);
+    this.successMessage.set('');
 
-      this.loading = false;
-      this.successMessage = 'Changes saved successfully!';
-      setTimeout(() => this.successMessage = '', 3000);
-    }, 900);
+    try {
+      let usersData = localStorage.getItem('users_data');
+      let users: any[] = JSON.parse(usersData || '[]');
+
+      const index = users.findIndex(u => u.id === this.user.id);
+      if (index !== -1) {
+        users[index] = { ...this.user }; // Update the user in the array
+        localStorage.setItem('users_data', JSON.stringify(users));
+        localStorage.setItem('session', JSON.stringify(this.user));
+        this.userService.refresh(); // Sync the signal so admin table reflects changes
+
+        setTimeout(() => {
+          this.loading.set(false);
+          this.successMessage.set('Changes saved successfully!');
+
+          setTimeout(() => this.successMessage.set(''), 3000);
+        }, 800);
+
+      } else {
+        this.loading.set(false);
+        console.error('User not found in localStorage');
+      }
+    } catch (error) {
+      this.loading.set(false);
+      console.error('Update failed:', error);
+    }
   }
 }

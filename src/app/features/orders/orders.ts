@@ -4,6 +4,8 @@ import { OrderService } from '../../core/services/order.service';
 import { AuthService } from '../../core/services/auth.service';
 import { ProductService } from '../../core/services/product.service';
 import { Order, OrderItem } from '../../shared/models/order.model';
+import { RouterLink } from '@angular/router';
+
 
 export interface OrderItemDisplay extends OrderItem {
   name: string;
@@ -14,7 +16,7 @@ interface OrderWithExpanded extends Order {
 }
 @Component({
   selector: 'app-orders',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './orders.html',
   styleUrl: './orders.css',
 })
