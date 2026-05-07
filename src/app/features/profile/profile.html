@@ -1,5 +1,6 @@
 <div class="auth-container d-flex align-items-center justify-content-center py-5">
-  <div class="zora-auth-card profile-card-layout overflow-hidden" *ngIf="user">
+  @if (user) {
+  <div class="zora-auth-card profile-card-layout overflow-hidden">
 
     <!-- Header Band (Zora Style) -->
     <div class="profile-header-band text-center">
@@ -12,30 +13,27 @@
 
     <!-- Body Content -->
     <div class="p-4 p-md-5 pt-0">
-      
-      <div class="zora-alert success mb-4 animate__animated animate__fadeIn" *ngIf="successMessage">
-        <i class="fas fa-check-circle me-2"></i> {{ successMessage }}
+
+      @if (successMessage()) {
+      <div class="zora-alert success mb-4 animate__animated animate__fadeIn">
+        <i class="fas fa-check-circle me-2"></i> {{ successMessage() }}
       </div>
+      }
 
       <!-- Full Name Input -->
       <div class="mb-4">
         <label class="form-label small fw-bold text-dark">Full name</label>
         <div class="input-group zora-input-group">
           <span class="input-group-text"><i class="fas fa-user"></i></span>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="user.name"
-            placeholder="Edit your name"
-          />
+          <input type="text" class="form-control" [(ngModel)]="user.name" placeholder="Edit your name" />
         </div>
       </div>
 
       <!-- Email (Read-only Style) -->
       <div class="mb-4">
         <div class="d-flex justify-content-between">
-            <label class="form-label small fw-bold text-dark">Email address</label>
-            <span class="badge zora-read-only-tag">Read only</span>
+          <label class="form-label small fw-bold text-dark">Email address</label>
+          <span class="badge zora-read-only-tag">Read only</span>
         </div>
         <div class="input-group zora-input-group disabled-group">
           <span class="input-group-text"><i class="fas fa-envelope"></i></span>
@@ -58,15 +56,26 @@
       </div>
 
       <!-- Save Button -->
-      <button
-        class="zora-btn-primary w-100 py-3"
-        (click)="update()"
-        [disabled]="loading"
-      >
-        <span *ngIf="!loading">Save Changes</span>
-        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+      <button class="zora-btn-primary w-100 py-3" (click)="update()" [disabled]="loading()">
+        @if (!loading()) {
+          <span>Save Changes</span>
+        }
+
+        @if (loading()) {
+          <span>
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Updating...
+          </span>
+        }
       </button>
+
+      @if (successMessage()) {
+      <div class="alert alert-success mt-3 py-2 border-0 shadow-sm text-center">
+        <i class="fa-solid fa-check-circle me-2"></i> {{ successMessage() }}
+      </div>
+      }
 
     </div>
   </div>
+  }
 </div>
