@@ -1,6 +1,9 @@
-# ECommerceAngular
+# 🛒 Zora - E-Commerce Angular Project
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.7.
+
+##🌐 Live Demo
+[Check it out here](https://chic-kelpie-06534e.netlify.app/)
 
 ## Development server
 
